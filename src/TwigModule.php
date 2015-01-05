@@ -15,6 +15,28 @@ use BEAR\Resource\RenderInterface;
 class TwigModule extends AbstractModule
 {
     /**
+     * @var array
+     */
+    private $paths;
+
+    /**
+     * @var array
+     */
+    private $options;
+
+    /**
+     * @param array $paths   Twig template paths
+     * @param array $options Twig_Environment options
+     *
+     * @see http://twig.sensiolabs.org/api/master/Twig_Environment.html
+     */
+    public function __construct($paths = [], $options = [])
+    {
+        $this->paths = $paths;
+        $this->options = $options;
+    }
+
+    /**
      * Configure dependency binding
      *
      * @return void
@@ -23,7 +45,7 @@ class TwigModule extends AbstractModule
     {
         $this->bind(RenderInterface::class)->to(TwigRenderer::class);
 
-        $this->bind()->annotatedWith('twig_paths')->toInstance([]);
+        $this->bind()->annotatedWith('twig_paths')->toInstance($this->paths);
 
         $this
             ->bind(Twig_LoaderInterface::class)
@@ -33,7 +55,7 @@ class TwigModule extends AbstractModule
                 'paths=twig_paths'
             );
 
-        $this->bind()->annotatedWith('twig_options')->toInstance([]);
+        $this->bind()->annotatedWith('twig_options')->toInstance($this->options);
 
         $this
             ->bind(Twig_Environment::class)
