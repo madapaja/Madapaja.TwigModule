@@ -15,12 +15,7 @@
   ],
   "require": {
     "twig/twig": "~1.0",
-    "bear/sunday": "~1.0"
-  },
-  "require-dev": {
-    "bear/dev-package": "*",
-    "fabpot/php-cs-fixer": "~1",
-    "phpmd/phpmd" : "~2"
+    "bear/sunday": "~1.0@dev"
   },
   "autoload":{
     "psr-4":{
