@@ -1,0 +1,32 @@
+{
+  "name": "madapaja/twig-module",
+  "description": "BEAR.Sunday Twig adapter module",
+  "keywords":[
+    "BEAR.Sunday",
+    "Twig",
+    "BEAR.Sunday module"
+  ],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Koji Iwasaki",
+      "email": "iwasaki@cresc.com"
+    }
+  ],
+  "require": {
+    "twig/twig": "~1.0",
+    "bear/sunday": "~1.0"
+  },
+  "require-dev": {
+    "bear/dev-package": "*",
+    "fabpot/php-cs-fixer": "~1",
+    "phpmd/phpmd" : "~2"
+  },
+  "autoload":{
+    "psr-4":{
+      "Madapaja\\TwigModule\\": "src/"
+    }
+  },
+  "prefer-stable": true,
+  "minimum-stability": "dev"
+}
