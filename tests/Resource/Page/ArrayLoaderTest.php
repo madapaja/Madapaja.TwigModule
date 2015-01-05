@@ -2,10 +2,10 @@
 
 namespace Madapaja\TwigModule\Resource\Page;
 
-use PHPUnit_Framework_TestCase;
-use Ray\Di\Injector;
 use Madapaja\TwigModule\TwigArrayLoaderTestModule;
 use Madapaja\TwigModule\TwigRenderer;
+use PHPUnit_Framework_TestCase;
+use Ray\Di\Injector;
 
 class ArrayLoaderTest extends PHPUnit_Framework_TestCase
 {

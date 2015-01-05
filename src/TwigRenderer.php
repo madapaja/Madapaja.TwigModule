@@ -4,8 +4,8 @@ namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
-use Twig_Environment;
 use Ray\Aop\WeavedInterface;
+use Twig_Environment;
 
 class TwigRenderer implements RenderInterface
 {

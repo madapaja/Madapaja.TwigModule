@@ -2,12 +2,12 @@
 
 namespace Madapaja\TwigModule;
 
+use BEAR\Resource\RenderInterface;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
-use Twig_LoaderInterface;
-use Twig_Loader_Filesystem;
 use Twig_Environment;
-use BEAR\Resource\RenderInterface;
+use Twig_Loader_Filesystem;
+use Twig_LoaderInterface;
 
 class TwigModule extends AbstractModule
 {

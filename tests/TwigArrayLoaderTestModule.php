@@ -3,11 +3,8 @@
 namespace Madapaja\TwigModule;
 
 use Ray\Di\AbstractModule;
-use Ray\Di\Scope;
-use Twig_LoaderInterface;
 use Twig_Loader_Array;
-use Twig_Environment;
-use BEAR\Resource\RenderInterface;
+use Twig_LoaderInterface;
 
 class TwigArrayLoaderTestModule extends AbstractModule
 {
