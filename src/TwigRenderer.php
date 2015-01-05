@@ -57,8 +57,6 @@ class TwigRenderer implements RenderInterface
         } catch (\Twig_Error_Loader $e) {
             throw new Exception\TemplateNotFound($e->getMessage());
         }
-
-        throw new Exception\TemplateNotFound();
     }
 
     private function getObject($obj)
