@@ -22,8 +22,6 @@ class TwigRenderer implements RenderInterface
     public $twig;
 
     /**
-     * Constructor
-     *
      * @param \Twig_Environment $twig
      */
     public function __construct(\Twig_Environment $twig)
@@ -39,10 +37,9 @@ class TwigRenderer implements RenderInterface
         if (!isset($ro->headers['content-type'])) {
             $ro->headers['content-type'] = 'text/html; charset=utf-8';
         }
-
         $template = $this->loadTemplate($ro);
-
         $ro->view = $template->render($ro->body);
+
         return $ro->view;
     }
 
@@ -52,6 +49,7 @@ class TwigRenderer implements RenderInterface
             if ($this->twig->getLoader() instanceof \Twig_Loader_Filesystem) {
                 $path = $this->getTemplatePath($ro);
                 $this->twig->getLoader()->prependPath(dirname($path));
+
                 return $this->twig->loadTemplate(basename($path));
             }
 
@@ -76,6 +74,7 @@ class TwigRenderer implements RenderInterface
     private function changeExtension($name, $from = '.php', $to = self::EXT)
     {
         $pos = strrpos($name, $from);
+
         return substr($name, 0, $pos) . $to;
     }
 }

@@ -9,9 +9,6 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use BEAR\Resource\RenderInterface;
 
-/**
- * Twig module
- */
 class TwigModule extends AbstractModule
 {
     /**
@@ -37,16 +34,13 @@ class TwigModule extends AbstractModule
     }
 
     /**
-     * Configure dependency binding
-     *
-     * @return void
+     * {@inheritdoc}
      */
     protected function configure()
     {
         $this->bind(RenderInterface::class)->to(TwigRenderer::class);
-
         $this->bind()->annotatedWith('twig_paths')->toInstance($this->paths);
-
+        $this->bind()->annotatedWith('twig_options')->toInstance($this->options);
         $this
             ->bind(Twig_LoaderInterface::class)
             ->annotatedWith('twig_loader')
@@ -54,9 +48,6 @@ class TwigModule extends AbstractModule
                 Twig_Loader_Filesystem::class,
                 'paths=twig_paths'
             );
-
-        $this->bind()->annotatedWith('twig_options')->toInstance($this->options);
-
         $this
             ->bind(Twig_Environment::class)
             ->toConstructor(

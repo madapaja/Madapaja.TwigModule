@@ -9,20 +9,14 @@ use Twig_Loader_Array;
 use Twig_Environment;
 use BEAR\Resource\RenderInterface;
 
-/**
- * Twig module
- */
 class TwigArrayLoaderTestModule extends AbstractModule
 {
     /**
-     * Configure dependency binding
-     *
-     * @return void
+     * {@inheritdoc}
      */
     protected function configure()
     {
         $this->install(new TwigModule);
-
         $this->bind()->annotatedWith('twig_templates')->toInstance([
             'Layout.html.twig' => '<!DOCTYPE html><html><head><title>{% block title %}{% endblock %}</title><body>{% block body %}{% endblock %}</body></html>',
             'Madapaja\TwigModule\Resource\Page\Index.html.twig' => 'Hello, {{ name }}!',
@@ -33,7 +27,6 @@ class TwigArrayLoaderTestModule extends AbstractModule
 {% block body %}Hello, {{ name }}!{% endblock %}
 EOD
         ]);
-
         $this
             ->bind(Twig_LoaderInterface::class)
             ->annotatedWith('twig_loader')
