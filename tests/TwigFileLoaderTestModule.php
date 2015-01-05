@@ -3,21 +3,11 @@
 namespace Madapaja\TwigModule;
 
 use Ray\Di\AbstractModule;
-use Ray\Di\Scope;
-use Twig_LoaderInterface;
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-use BEAR\Resource\RenderInterface;
 
-/**
- * Twig module
- */
 class TwigFileLoaderTestModule extends AbstractModule
 {
     /**
-     * Configure dependency binding
-     *
-     * @return void
+     * {@inheritdoc}
      */
     protected function configure()
     {

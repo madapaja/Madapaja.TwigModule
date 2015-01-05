@@ -2,29 +2,45 @@
 
 namespace Madapaja\TwigModule;
 
+use BEAR\Resource\RenderInterface;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
-use Twig_LoaderInterface;
-use Twig_Loader_Filesystem;
 use Twig_Environment;
-use BEAR\Resource\RenderInterface;
+use Twig_Loader_Filesystem;
+use Twig_LoaderInterface;
 
-/**
- * Twig module
- */
 class TwigModule extends AbstractModule
 {
     /**
-     * Configure dependency binding
+     * @var array
+     */
+    private $paths;
+
+    /**
+     * @var array
+     */
+    private $options;
+
+    /**
+     * @param array $paths   Twig template paths
+     * @param array $options Twig_Environment options
      *
-     * @return void
+     * @see http://twig.sensiolabs.org/api/master/Twig_Environment.html
+     */
+    public function __construct($paths = [], $options = [])
+    {
+        $this->paths = $paths;
+        $this->options = $options;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function configure()
     {
         $this->bind(RenderInterface::class)->to(TwigRenderer::class);
-
-        $this->bind()->annotatedWith('twig_paths')->toInstance([]);
-
+        $this->bind()->annotatedWith('twig_paths')->toInstance($this->paths);
+        $this->bind()->annotatedWith('twig_options')->toInstance($this->options);
         $this
             ->bind(Twig_LoaderInterface::class)
             ->annotatedWith('twig_loader')
@@ -32,9 +48,6 @@ class TwigModule extends AbstractModule
                 Twig_Loader_Filesystem::class,
                 'paths=twig_paths'
             );
-
-        $this->bind()->annotatedWith('twig_options')->toInstance([]);
-
         $this
             ->bind(Twig_Environment::class)
             ->toConstructor(

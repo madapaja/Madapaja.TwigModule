@@ -15,10 +15,10 @@
   ],
   "require": {
     "twig/twig": "~1.0",
-    "bear/sunday": "~1.0"
+    "bear/sunday": "~1.0@dev"
   },
   "require-dev": {
-    "bear/dev-package": "*",
+    "phpunit/phpunit": "4.4.*",
     "fabpot/php-cs-fixer": "~1",
     "phpmd/phpmd" : "~2"
   },
