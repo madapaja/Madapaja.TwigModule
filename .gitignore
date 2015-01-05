@@ -2,3 +2,4 @@ vendor/
 *.iml
 .idea/
 build/
+composer.lock
