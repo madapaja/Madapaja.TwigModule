@@ -11,7 +11,6 @@ class TwigFileLoaderTestModule extends AbstractModule
      */
     protected function configure()
     {
-        $this->install(new TwigModule);
-        $this->bind()->annotatedWith('twig_paths')->toInstance([__DIR__ . '/Resource/']);
+        $this->install(new TwigModule([__DIR__ . '/Resource/']));
     }
 }
