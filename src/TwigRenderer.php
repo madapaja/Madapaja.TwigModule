@@ -53,20 +53,29 @@ class TwigRenderer implements RenderInterface
                 return $this->twig->loadTemplate(basename($path));
             }
 
-            return $this->twig->loadTemplate(get_class($this->getObject($ro)) . self::EXT);
+            return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
         } catch (\Twig_Error_Loader $e) {
             throw new Exception\TemplateNotFound($e->getMessage());
         }
     }
 
-    private function getObject($obj)
+    /**
+     * @param ResourceObject $ro
+     *
+     * @return \ReflectionClass
+     */
+    private function getReflection(ResourceObject $ro)
     {
-        return $obj instanceof WeavedInterface ? (new \ReflectionClass($obj))->getParentClass()->name : $obj;
+        if ($ro instanceof WeavedInterface) {
+            return (new \ReflectionClass($ro))->getParentClass();
+        }
+
+        return (new \ReflectionClass($ro));
     }
 
     private function getTemplatePath(ResourceObject $ro)
     {
-        return $this->changeExtension((new \ReflectionClass($this->getObject($ro)))->getFileName());
+        return $this->changeExtension($this->getReflection($ro)->getFileName());
     }
 
     private function changeExtension($name, $from = '.php', $to = self::EXT)
