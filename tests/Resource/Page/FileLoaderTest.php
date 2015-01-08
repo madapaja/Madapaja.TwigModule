@@ -16,7 +16,7 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->injector = new Injector(new TwigFileLoaderTestModule);
+        $this->injector = new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Resource/']));
     }
 
     public function testRenderer()
@@ -58,5 +58,13 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
         $ro = $this->injector->getInstance(Page::class);
 
         $this->assertSame('<!DOCTYPE html><html><head><title>Page</title><body>Hello, BEAR.Sunday!</body></html>', (string) $ro->onGet());
+    }
+
+    public function testIndexTemplateWithoutPaths()
+    {
+        $injector = new Injector(new TwigFileLoaderTestModule([]));
+        $ro = $injector->getInstance(Index::class);
+
+        $this->assertSame('Hello, BEAR.Sunday!', (string) $ro->onGet());
     }
 }

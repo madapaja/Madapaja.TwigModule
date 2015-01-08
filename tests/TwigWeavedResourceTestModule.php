@@ -2,9 +2,10 @@
 
 namespace Madapaja\TwigModule;
 
+use BEAR\Resource\ResourceObject;
 use Ray\Di\AbstractModule;
 
-class TwigFileLoaderTestModule extends AbstractModule
+class TwigWeavedResourceTestModule extends AbstractModule
 {
     private $paths;
 
@@ -19,5 +20,10 @@ class TwigFileLoaderTestModule extends AbstractModule
     protected function configure()
     {
         $this->install(new TwigModule($this->paths));
+        $this->bindInterceptor(
+            $this->matcher->subclassesOf(ResourceObject::class),
+            $this->matcher->startsWith('on'),
+            [EmptyInterceptor::class]
+        );
     }
 }

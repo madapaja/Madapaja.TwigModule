@@ -43,14 +43,22 @@ class TwigRenderer implements RenderInterface
         return $ro->view;
     }
 
+    /**
+     * @param ResourceObject $ro
+     * @return \Twig_TemplateInterface
+     */
     private function loadTemplate(ResourceObject $ro)
     {
         try {
-            if ($this->twig->getLoader() instanceof \Twig_Loader_Filesystem) {
-                $path = $this->getTemplatePath($ro);
-                $this->twig->getLoader()->prependPath(dirname($path));
+            $loader = $this->twig->getLoader();
+            if ($loader instanceof \Twig_Loader_Filesystem) {
+                list($file, $dir) = $this->getTemplate($ro, $loader->getPaths());
+                if ($dir) {
+                    // if the file not in paths, register the directory
+                    $loader->prependPath($dir);
+                }
 
-                return $this->twig->loadTemplate(basename($path));
+                return $this->twig->loadTemplate($file);
             }
 
             return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
@@ -61,7 +69,6 @@ class TwigRenderer implements RenderInterface
 
     /**
      * @param ResourceObject $ro
-     *
      * @return \ReflectionClass
      */
     private function getReflection(ResourceObject $ro)
@@ -73,11 +80,45 @@ class TwigRenderer implements RenderInterface
         return (new \ReflectionClass($ro));
     }
 
+    /**
+     * return templete file full path
+     *
+     * @param ResourceObject $ro
+     * @return string
+     */
     private function getTemplatePath(ResourceObject $ro)
     {
         return $this->changeExtension($this->getReflection($ro)->getFileName());
     }
 
+    /**
+     * return template path and directory
+     *
+     * @param ResourceObject $ro
+     * @param array $paths
+     * @return array
+     */
+    private function getTemplate(ResourceObject $ro, array $paths = [])
+    {
+        $file = $this->getTemplatePath($ro);
+
+        foreach ($paths as $path) {
+            if (strpos($file, $path . '/') === 0) {
+                return [substr($file, strlen($path . '/')), null];
+            }
+        }
+
+        return [basename($file), dirname($file)];
+    }
+
+    /**
+     * change file extension
+     *
+     * @param $name
+     * @param string $from  extension
+     * @param string $to    extension
+     * @return string
+     */
     private function changeExtension($name, $from = '.php', $to = self::EXT)
     {
         $pos = strrpos($name, $from);
