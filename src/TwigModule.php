@@ -41,8 +41,10 @@ class TwigModule extends AbstractModule
     protected function configure()
     {
         $this->bind(RenderInterface::class)->to(TwigRenderer::class);
-        $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
-        $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
+        if ($this->paths) {
+            $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
+            $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
+        }
         $this
             ->bind(Twig_LoaderInterface::class)
             ->annotatedWith('twig_loader')
