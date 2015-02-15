@@ -81,7 +81,7 @@ class TwigRenderer implements RenderInterface
     }
 
     /**
-     * return templete file full path
+     * return template file full path
      *
      * @param ResourceObject $ro
      * @return string
