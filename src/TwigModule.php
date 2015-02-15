@@ -3,6 +3,7 @@
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Madapaja\TwigModule\Annotation\TwigOptions;
 use Madapaja\TwigModule\Annotation\TwigPaths;
 use Ray\Di\AbstractModule;
@@ -40,6 +41,7 @@ class TwigModule extends AbstractModule
      */
     protected function configure()
     {
+        AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
         $this->bind(RenderInterface::class)->to(TwigRenderer::class);
         if ($this->paths) {
             $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
