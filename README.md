@@ -39,30 +39,34 @@ For example you are using [BEAR.Package](https://github.com/koriym/BEAR.Package)
 modifying your `AppModule` as:
 
 ```php
-namespace YourVendor\YourApp\Module;
+namespace MyVendor\MyPackage\Module;
 
+use Madapaja\TwigModule\Annotation\TwigOptions;
+use Madapaja\TwigModule\Annotation\TwigPaths;
 use Madapaja\TwigModule\TwigModule;
+use Ray\Di\AbstractModule;
 
 class AppModule extends AbstractModule
 {
     protected function configure()
     {
-        $appDir = dirname(dirname(__DIR__));
-        $this->install(new TwigModule([$appDir . '/src/Resource']));
+        $this->install(new TwigModule());
 
         // You can add twig template paths by the following
-        // $this->install(new TwigModule([$appDir . '/src/Resource', $appDir . '/var/lib/twig']));
+        $appDir = dirname(dirname(__DIR__));
+        $paths = [$appDir . '/src/Resource', $appDir . '/var/lib/twig'];
+        $this->bind()->annotatedWith(TwigPaths::class)->toInstance($paths);
 
-        // Or you can set environment options by 2nd argument
-        // see: http://twig.sensiolabs.org/doc/api.html#environment-options
-        // $this->install(new TwigModule([$appDir . '/src/Resource'], [
-        //   'debug' => true,
-        //   'cache' => '/tmp/'
-        // ]));
-
-        // (Existing configurations here)
+        // Also you can set environment options
+        // @see http://twig.sensiolabs.org/doc/api.html#environment-options
+        $options = [
+            'debug' => true,
+            'cache' => '/tmp/'
+        ];
+        $this->bind()->annotatedWith(TwigOptions::class)->toInstance($options);
     }
 }
+
 ```
 
 And you put twig template file into the resource directory.
