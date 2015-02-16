@@ -3,6 +3,9 @@
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Madapaja\TwigModule\Annotation\TwigOptions;
+use Madapaja\TwigModule\Annotation\TwigPaths;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 use Twig_Environment;
@@ -38,21 +41,24 @@ class TwigModule extends AbstractModule
      */
     protected function configure()
     {
+        AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
         $this->bind(RenderInterface::class)->to(TwigRenderer::class);
-        $this->bind()->annotatedWith('twig_paths')->toInstance($this->paths);
-        $this->bind()->annotatedWith('twig_options')->toInstance($this->options);
+        if ($this->paths) {
+            $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
+            $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
+        }
         $this
             ->bind(Twig_LoaderInterface::class)
             ->annotatedWith('twig_loader')
             ->toConstructor(
                 Twig_Loader_Filesystem::class,
-                'paths=twig_paths'
+                'paths=Madapaja\TwigModule\Annotation\TwigPaths'
             );
         $this
             ->bind(Twig_Environment::class)
             ->toConstructor(
                 Twig_Environment::class,
-                'loader=twig_loader,options=twig_options'
+                'loader=twig_loader,options=Madapaja\TwigModule\Annotation\TwigOptions'
             )
             ->in(Scope::SINGLETON);
     }
