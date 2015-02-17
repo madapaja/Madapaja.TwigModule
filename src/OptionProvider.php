@@ -29,7 +29,7 @@ class OptionProvider implements ProviderInterface
         $this->appMeta = $appMeta;
         $this->isDebug = $isDebug;
     }
-    
+
     /**
      * {@inheritdoc}
      */
