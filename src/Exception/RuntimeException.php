@@ -2,6 +2,6 @@
 
 namespace Madapaja\TwigModule\Exception;
 
-class TemplateNotFound extends RuntimeException
+class RuntimeException extends \RuntimeException
 {
 }
