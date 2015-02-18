@@ -15,6 +15,7 @@
   ],
   "require": {
     "twig/twig": "~1.0",
+    "bear/app-meta": "~0.1",
     "bear/resource": "~1.0"
   },
   "require-dev": {
@@ -25,6 +26,11 @@
   "autoload":{
     "psr-4":{
       "Madapaja\\TwigModule\\": "src/"
+    }
+  },
+  "autoload-dev":{
+    "psr-4":{
+      "Madapaja\\TwigModule\\": "tests/Fake/src"
     }
   },
   "prefer-stable": true,
