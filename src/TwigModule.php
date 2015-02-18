@@ -42,7 +42,7 @@ class TwigModule extends AbstractModule
     protected function configure()
     {
         AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
-        $this->bind(RenderInterface::class)->to(TwigRenderer::class);
+        $this->bind(RenderInterface::class)->to(TwigRenderer::class)->in(Scope::SINGLETON);
         if ($this->paths) {
             $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
             $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
