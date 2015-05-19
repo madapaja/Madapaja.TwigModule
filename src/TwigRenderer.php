@@ -17,16 +17,23 @@ class TwigRenderer implements RenderInterface
     const EXT = '.html.twig';
 
     /**
+    /**
      * @var \Twig_Environment
      */
     public $twig;
 
     /**
+     * @var TemplateFinder
+     */
+    private $templateFinder;
+
+    /**
      * @param \Twig_Environment $twig
      */
-    public function __construct(\Twig_Environment $twig)
+    public function __construct(\Twig_Environment $twig, TemplateFinderInterface $templateFinder = null)
     {
         $this->twig = $twig;
+        $this->templateFinder = $templateFinder ?: new TemplateFinder;
     }
 
     /**
@@ -60,7 +67,6 @@ class TwigRenderer implements RenderInterface
 
                 return $this->twig->loadTemplate($file);
             }
-
             return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
         } catch (\Twig_Error_Loader $e) {
             throw new Exception\TemplateNotFound($e->getMessage());
@@ -88,7 +94,9 @@ class TwigRenderer implements RenderInterface
      */
     private function getTemplatePath(ResourceObject $ro)
     {
-        return $this->changeExtension($this->getReflection($ro)->getFileName());
+        $file = $this->getReflection($ro)->getFileName();
+
+        return $this->templateFinder->__invoke($file);
     }
 
     /**
@@ -109,20 +117,5 @@ class TwigRenderer implements RenderInterface
         }
 
         return [basename($file), dirname($file)];
-    }
-
-    /**
-     * change file extension
-     *
-     * @param $name
-     * @param string $from  extension
-     * @param string $to    extension
-     * @return string
-     */
-    private function changeExtension($name, $from = '.php', $to = self::EXT)
-    {
-        $pos = strrpos($name, $from);
-
-        return substr($name, 0, $pos) . $to;
     }
 }
