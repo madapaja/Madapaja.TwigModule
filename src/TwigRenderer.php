@@ -2,6 +2,7 @@
 
 namespace Madapaja\TwigModule;
 
+use BEAR\Resource\Code;
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
 use Ray\Aop\WeavedInterface;
@@ -44,11 +45,18 @@ class TwigRenderer implements RenderInterface
         if (!isset($ro->headers['content-type'])) {
             $ro->headers['content-type'] = 'text/html; charset=utf-8';
         }
+        if ($ro->code === Code::NO_CONTENT) {
+            $ro->view = '';
+        }
+        if ($ro->view === '') {
+            return '';
+        }
         $template = $this->loadTemplate($ro);
         $ro->view = $template->render($ro->body);
 
         return $ro->view;
     }
+
 
     /**
      * @param ResourceObject $ro
