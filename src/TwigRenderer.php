@@ -2,6 +2,7 @@
 
 namespace Madapaja\TwigModule;
 
+use BEAR\Resource\Code;
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
 use Ray\Aop\WeavedInterface;
@@ -44,11 +45,27 @@ class TwigRenderer implements RenderInterface
         if (!isset($ro->headers['content-type'])) {
             $ro->headers['content-type'] = 'text/html; charset=utf-8';
         }
-        $template = $this->loadTemplate($ro);
+        if ($ro->code === Code::NO_CONTENT) {
+            $ro->view = '';
+        }
+        if ($ro->view === '') {
+            return '';
+        }
+        try {
+            $template = $this->loadTemplate($ro);
+        } catch (\Twig_Error_Loader $e) {
+            if ($ro->code !== 200) {
+                $ro->view = '';
+
+                return '';
+            }
+            throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
+        }
         $ro->view = $template->render($ro->body);
 
         return $ro->view;
     }
+
 
     /**
      * @param ResourceObject $ro
@@ -56,21 +73,17 @@ class TwigRenderer implements RenderInterface
      */
     private function loadTemplate(ResourceObject $ro)
     {
-        try {
-            $loader = $this->twig->getLoader();
-            if ($loader instanceof \Twig_Loader_Filesystem) {
-                list($file, $dir) = $this->getTemplate($ro, $loader->getPaths());
-                if ($dir) {
-                    // if the file not in paths, register the directory
-                    $loader->prependPath($dir);
-                }
-
-                return $this->twig->loadTemplate($file);
+        $loader = $this->twig->getLoader();
+        if ($loader instanceof \Twig_Loader_Filesystem) {
+            list($file, $dir) = $this->getTemplate($ro, $loader->getPaths());
+            if ($dir) {
+                // if the file not in paths, register the directory
+                $loader->prependPath($dir);
             }
-            return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
-        } catch (\Twig_Error_Loader $e) {
-            throw new Exception\TemplateNotFound($e->getMessage());
+
+            return $this->twig->loadTemplate($file);
         }
+        return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
     }
 
     /**

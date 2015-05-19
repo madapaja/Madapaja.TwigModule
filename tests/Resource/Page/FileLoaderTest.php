@@ -53,6 +53,16 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
         $prop->getValue($ro)->render($ro);
     }
 
+    public function testNoViewWhenCode301()
+    {
+        $ro = $this->injector->getInstance(NoTemplate::class);
+        $ro->code = 303;
+        $prop = (new \ReflectionClass($ro))->getProperty('renderer');
+        $prop->setAccessible(true);
+        $view = $prop->getValue($ro)->render($ro);
+        $this->assertSame('', $view);
+    }
+
     public function testPage()
     {
         $ro = $this->injector->getInstance(Page::class);
