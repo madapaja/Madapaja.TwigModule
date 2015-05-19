@@ -10,6 +10,13 @@ class MobileTemplateFinder implements TemplateFinderInterface
 
     const TWIG_EXT = '.html.twig';
 
+    private $userAgent;
+
+    public function __construct($userAgent = null)
+    {
+        $this->userAgent = $userAgent;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -17,7 +24,7 @@ class MobileTemplateFinder implements TemplateFinderInterface
     {
         $pos = strrpos($name, self::PHP_EXT);
         $mobileFile = substr($name, 0, $pos) . self::MOBILE_EXT;
-        $detect = new \Mobile_Detect();
+        $detect = new \Mobile_Detect(null, $this->userAgent);
         $isMobile = $detect->isMobile() && !$detect->isTablet();
         if ($isMobile && file_exists($mobileFile)) {
             return $mobileFile;

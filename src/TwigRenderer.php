@@ -30,7 +30,7 @@ class TwigRenderer implements RenderInterface
     /**
      * @param \Twig_Environment $twig
      */
-    public function __construct(\Twig_Environment $twig, TemplateFinder $templateFinder = null)
+    public function __construct(\Twig_Environment $twig, TemplateFinderInterface $templateFinder = null)
     {
         $this->twig = $twig;
         $this->templateFinder = $templateFinder ?: new TemplateFinder;
