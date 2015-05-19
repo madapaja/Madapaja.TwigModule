@@ -51,7 +51,16 @@ class TwigRenderer implements RenderInterface
         if ($ro->view === '') {
             return '';
         }
-        $template = $this->loadTemplate($ro);
+        try {
+            $template = $this->loadTemplate($ro);
+        } catch (\Twig_Error_Loader $e) {
+            if ($ro->code !== 200) {
+                $ro->view = '';
+
+                return '';
+            }
+            throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
+        }
         $ro->view = $template->render($ro->body);
 
         return $ro->view;
@@ -64,21 +73,17 @@ class TwigRenderer implements RenderInterface
      */
     private function loadTemplate(ResourceObject $ro)
     {
-        try {
-            $loader = $this->twig->getLoader();
-            if ($loader instanceof \Twig_Loader_Filesystem) {
-                list($file, $dir) = $this->getTemplate($ro, $loader->getPaths());
-                if ($dir) {
-                    // if the file not in paths, register the directory
-                    $loader->prependPath($dir);
-                }
-
-                return $this->twig->loadTemplate($file);
+        $loader = $this->twig->getLoader();
+        if ($loader instanceof \Twig_Loader_Filesystem) {
+            list($file, $dir) = $this->getTemplate($ro, $loader->getPaths());
+            if ($dir) {
+                // if the file not in paths, register the directory
+                $loader->prependPath($dir);
             }
-            return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
-        } catch (\Twig_Error_Loader $e) {
-            throw new Exception\TemplateNotFound($e->getMessage());
+
+            return $this->twig->loadTemplate($file);
         }
+        return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
     }
 
     /**
