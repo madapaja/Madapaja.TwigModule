@@ -26,7 +26,7 @@ or to modify your `composer.json` and `composer update` command:
 ```json
 {
     "require": {
-        "madapaja/twig-module": "~0.2"
+        "madapaja/twig-module": "~1.0"
     }
 }
 ```
