@@ -12,4 +12,13 @@ class MobileTemplateFinderTest extends \PHPUnit_Framework_TestCase
         $expected = $_ENV['TEST_DIR'] . '/Resource/Page/Index.mobile.twig';
         $this->assertSame($expected, $file);
     }
+
+    public function testPcTemplate()
+    {
+        $pc = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)';
+        $templateFinder = new MobileTemplateFinder($pc);
+        $file = $templateFinder->__invoke($_ENV['TEST_DIR'] . '/Resource/Page/Index.php', $pc);
+        $expected = $_ENV['TEST_DIR'] . '/Resource/Page/Index.html.twig';
+        $this->assertSame($expected, $file);
+    }
 }

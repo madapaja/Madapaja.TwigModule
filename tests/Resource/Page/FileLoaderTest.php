@@ -2,6 +2,7 @@
 
 namespace Madapaja\TwigModule\Resource\Page;
 
+use BEAR\Resource\Code;
 use Madapaja\TwigModule\TwigFileLoaderTestModule;
 use Madapaja\TwigModule\TwigRenderer;
 use PHPUnit_Framework_TestCase;
@@ -57,6 +58,16 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
     {
         $ro = $this->injector->getInstance(NoTemplate::class);
         $ro->code = 303;
+        $prop = (new \ReflectionClass($ro))->getProperty('renderer');
+        $prop->setAccessible(true);
+        $view = $prop->getValue($ro)->render($ro);
+        $this->assertSame('', $view);
+    }
+
+    public function testNoContent()
+    {
+        $ro = $this->injector->getInstance(NoTemplate::class);
+        $ro->code = Code::NO_CONTENT;
         $prop = (new \ReflectionClass($ro))->getProperty('renderer');
         $prop->setAccessible(true);
         $view = $prop->getValue($ro)->render($ro);
