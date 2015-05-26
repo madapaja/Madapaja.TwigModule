@@ -15,7 +15,7 @@
   ],
   "require": {
     "twig/twig": "~1.0",
-    "bear/app-meta": "~0.1",
+    "bear/app-meta": "~1.0",
     "bear/resource": "~1.0",
     "bear/sunday": "~1.0@dev",
     "mobiledetect/mobiledetectlib": "~2.0@dev"
