@@ -61,7 +61,9 @@ class TwigRenderer implements RenderInterface
             }
             throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
         }
-        $ro->view = $template->render($ro->body);
+        $body = is_array($ro->body) ? $ro->body : [];
+        $body += ['_code' => $ro->code, '_headers' => $ro->headers];
+        $ro->view = $template->render($body);
 
         return $ro->view;
     }
