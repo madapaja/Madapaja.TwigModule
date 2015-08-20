@@ -81,6 +81,13 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
         $this->assertSame('<!DOCTYPE html><html><head><title>Page</title><body>Hello, BEAR.Sunday!</body></html>', (string) $ro->onGet());
     }
 
+    public function testCode()
+    {
+        $ro = $this->injector->getInstance(\Madapaja\TwigModule\Resource\Page\Code::class);
+
+        $this->assertSame('code:200 date:Tue, 15 Nov 1994 12:45:26 GMT', (string) $ro->onGet());
+    }
+
     public function testIndexTemplateWithoutPaths()
     {
         $injector = new Injector(new TwigFileLoaderTestModule([]));
