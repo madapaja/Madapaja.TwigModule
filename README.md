@@ -6,6 +6,7 @@ Twig Module for BEAR.Resource
 [![Latest Stable Version](https://poser.pugx.org/madapaja/twig-module/v/stable.svg)](https://packagist.org/packages/madapaja/twig-module)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/?branch=master)
 [![Build Status](https://travis-ci.org/madapaja/Madapaja.TwigModule.svg)](https://travis-ci.org/madapaja/Madapaja.TwigModule)
+[![Total Downloads](https://poser.pugx.org/madapaja/twig-module/downloads.png)](https://packagist.org/packages/madapaja/twig-module)
 
 Introduction
 ------------
