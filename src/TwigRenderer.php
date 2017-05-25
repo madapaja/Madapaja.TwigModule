@@ -18,7 +18,6 @@ class TwigRenderer implements RenderInterface
     const EXT = '.html.twig';
 
     /**
-    /**
      * @var \Twig_Environment
      */
     public $twig;
