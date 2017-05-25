@@ -10,11 +10,6 @@ use Ray\Di\Injector;
 
 class AppMetaTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @var Injector
-     */
-    private $injector;
-
     public function testRenderer()
     {
         /** @var $renderer TwigRenderer */
