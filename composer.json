@@ -34,6 +34,5 @@
     "psr-4":{
       "Madapaja\\TwigModule\\": "tests/Fake/src"
     }
-  },
-  "prefer-stable": true
+  }
 }
