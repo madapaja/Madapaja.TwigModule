@@ -34,7 +34,7 @@ class MobileTemplateFinderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $file);
     }
 
-    public function testRenderer()
+    public function testMobileTemplateFinder()
     {
         $templateFinder = $this->injector->getInstance(TemplateFinderInterface::class);
         $this->assertInstanceOf(MobileTemplateFinder::class, $templateFinder);
