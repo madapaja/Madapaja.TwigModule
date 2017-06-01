@@ -2,8 +2,20 @@
 
 namespace Madapaja\TwigModule;
 
+use Ray\Di\Injector;
+
 class MobileTemplateFinderTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Injector
+     */
+    private $injector;
+
+    public function setUp()
+    {
+        $this->injector = new Injector(new MobileTwigModule());
+    }
+
     public function testMobileTemplate()
     {
         $iphone = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A523 Safari/8536.25';
@@ -20,5 +32,11 @@ class MobileTemplateFinderTest extends \PHPUnit_Framework_TestCase
         $file = $templateFinder->__invoke($_ENV['TEST_DIR'] . '/Resource/Page/Index.php', $pc);
         $expected = $_ENV['TEST_DIR'] . '/Resource/Page/Index.html.twig';
         $this->assertSame($expected, $file);
+    }
+
+    public function testMobileTemplateFinder()
+    {
+        $templateFinder = $this->injector->getInstance(TemplateFinderInterface::class);
+        $this->assertInstanceOf(MobileTemplateFinder::class, $templateFinder);
     }
 }
