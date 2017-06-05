@@ -23,12 +23,13 @@ class TwigRenderer implements RenderInterface
     public $twig;
 
     /**
-     * @var TemplateFinder
+     * @var TemplateFinderInterface
      */
     private $templateFinder;
 
     /**
-     * @param \Twig_Environment $twig
+     * @param Twig_Environment             $twig
+     * @param TemplateFinderInterface|null $templateFinder
      */
     public function __construct(\Twig_Environment $twig, TemplateFinderInterface $templateFinder = null)
     {
@@ -117,7 +118,7 @@ class TwigRenderer implements RenderInterface
      * return template path and directory
      *
      * @param ResourceObject $ro
-     * @param array $paths
+     * @param array          $paths
      * @return array
      */
     private function getTemplate(ResourceObject $ro, array $paths = [])
