@@ -34,5 +34,12 @@
     "psr-4":{
       "Madapaja\\TwigModule\\": "tests/Fake/src"
     }
+  },
+  "scripts": {
+    "test": [
+      "php -d memory_limit=-1 -n ./vendor/bin/phpmd src text phpmd.xml",
+      "php -d memory_limit=-1 -n ./vendor/bin/php-cs-fixer fix -v --dry-run --level=psr2 src",
+      "./vendor/bin/phpunit --coverage-text"
+    ]
   }
 }
