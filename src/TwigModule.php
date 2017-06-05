@@ -45,8 +45,11 @@ class TwigModule extends AbstractModule
 
         $this->bind(RenderInterface::class)->to(TwigRenderer::class)->in(Scope::SINGLETON);
 
-        if ($this->paths) {
+        if (is_array($this->paths) && !empty($this->paths)) {
             $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
+        }
+
+        if (is_array($this->options) && !empty($this->options)) {
             $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
         }
 
