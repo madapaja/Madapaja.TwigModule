@@ -1,0 +1,29 @@
+<?php
+
+namespace Madapaja\TwigModule;
+
+use Ray\Di\AbstractModule;
+use Ray\Di\Scope;
+use Twig_Environment;
+
+class TwigExtensionTestModule extends AbstractModule
+{
+    private $paths;
+
+    public function __construct(array $paths = []) {
+        $this->paths = $paths;
+        parent::__construct();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure()
+    {
+        $this->install(new TwigModule($this->paths));
+        $this
+            ->bind(Twig_Environment::class)
+            ->toProvider(ExtendedTwigEnvironmentProvider::class)
+            ->in(Scope::SINGLETON);
+    }
+}
