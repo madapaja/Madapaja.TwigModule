@@ -8,7 +8,7 @@ use Twig_Environment;
 
 class TwigEnvironmentProvider implements ProviderInterface
 {
-    public $twig;
+    private $twig;
 
     /**
      * @Named("original")

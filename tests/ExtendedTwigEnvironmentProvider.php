@@ -2,13 +2,28 @@
 
 namespace Madapaja\TwigModule;
 
-class ExtendedTwigEnvironmentProvider extends TwigEnvironmentProvider
+use Ray\Di\Di\Named;
+use Ray\Di\ProviderInterface;
+use Twig_Environment;
+
+class ExtendedTwigEnvironmentProvider implements ProviderInterface
 {
+    private $twig;
+
+    /**
+     * @Named("original")
+     * @param Twig_Environment $twig
+     */
+    public function __construct(Twig_Environment $twig)
+    {
+        // $twig is an original Twig_Environment instance
+        $this->twig = $twig;
+    }
+
     public function get()
     {
-        $twig = parent::get();
-        $twig->addExtension(new MyTwigExtension());
+        $this->twig->addExtension(new MyTwigExtension());
 
-        return $twig;
+        return $this->twig;
     }
 }

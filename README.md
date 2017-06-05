@@ -84,23 +84,35 @@ And you put twig template file into the resource directory.
 Make a provider class.
 
 ```php
-use Madapaja\TwigModule\TwigEnvironmentProvider
+use Ray\Di\Di\Named;
+use Ray\Di\ProviderInterface;
+use Twig_Environment;
 
-class MyTwigEnvironmentProvider extends TwigEnvironmentProvider
+class MyTwigEnvironmentProvider implements ProviderInterface
 {
+    private $twig;
+
+    /**
+     * @Named("original")
+     * @param Twig_Environment $twig
+     */
+    public function __construct(Twig_Environment $twig)
+    {
+        // $twig is an original Twig_Environment instance
+        $this->twig = $twig;
+    }
+
     public function get()
     {
-        $twig = parent::get(); // You can get an original Twig_Environment instance
-        
         // Extending Twig
-        $twig->addExtension(new MyTwigExtension());
+        $this->twig->addExtension(new MyTwigExtension());
 
-        return $twig;
+        return $this->twig;
     }
 }
 ```
 
-And use it.
+And bind it.
 
 ```php
 class AppModule extends AbstractModule
@@ -114,6 +126,7 @@ class AppModule extends AbstractModule
             ->bind(Twig_Environment::class)
             ->toProvider(MyTwigEnvironmentProvider::class)
             ->in(Scope::SINGLETON);
+    }
 }
 
 ```
