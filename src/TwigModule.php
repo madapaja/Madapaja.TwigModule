@@ -42,11 +42,14 @@ class TwigModule extends AbstractModule
     protected function configure()
     {
         AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
+
         $this->bind(RenderInterface::class)->to(TwigRenderer::class)->in(Scope::SINGLETON);
+
         if ($this->paths) {
             $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
             $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
         }
+
         $this
             ->bind(Twig_LoaderInterface::class)
             ->annotatedWith('twig_loader')
@@ -54,12 +57,10 @@ class TwigModule extends AbstractModule
                 Twig_Loader_Filesystem::class,
                 'paths=Madapaja\TwigModule\Annotation\TwigPaths'
             );
+
         $this
             ->bind(Twig_Environment::class)
-            ->toConstructor(
-                Twig_Environment::class,
-                'loader=twig_loader,options=Madapaja\TwigModule\Annotation\TwigOptions'
-            )
+            ->toProvider(TwigEnvironmentProvider::class)
             ->in(Scope::SINGLETON);
     }
 }
