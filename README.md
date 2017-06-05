@@ -79,4 +79,43 @@ And you put twig template file into the resource directory.
 <h1>{{ greeting }}</h1>
 ```
 
+### Extending Twig
+
+Make a provider class.
+
+```php
+use Madapaja\TwigModule\TwigEnvironmentProvider
+
+class MyTwigEnvironmentProvider extends TwigEnvironmentProvider
+{
+    public function get()
+    {
+        $twig = parent::get(); // You can get an original Twig_Environment instance
+        
+        // Extending Twig
+        $twig->addExtension(new MyTwigExtension());
+
+        return $twig;
+    }
+}
+```
+
+And use it.
+
+```php
+class AppModule extends AbstractModule
+{
+    protected function configure()
+    {
+        $this->install(new TwigModule());
+        
+        // override Twig_Environment provider
+        $this
+            ->bind(Twig_Environment::class)
+            ->toProvider(MyTwigEnvironmentProvider::class)
+            ->in(Scope::SINGLETON);
+}
+
+```
+
 Run your app, enjoy!

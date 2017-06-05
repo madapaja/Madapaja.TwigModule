@@ -2,7 +2,6 @@
 
 namespace Madapaja\TwigModule;
 
-
 class ExtendedTwigEnvironmentProvider extends TwigEnvironmentProvider
 {
     public function get()
