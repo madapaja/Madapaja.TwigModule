@@ -93,8 +93,9 @@ class MyTwigEnvironmentProvider implements ProviderInterface
     private $twig;
 
     /**
-     * @Named("original")
      * @param Twig_Environment $twig
+     *
+     * @Named("original")
      */
     public function __construct(Twig_Environment $twig)
     {
