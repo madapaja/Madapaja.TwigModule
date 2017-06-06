@@ -11,8 +11,6 @@ class TwigEnvironmentProvider implements ProviderInterface
     private $twig;
 
     /**
-     * @param Twig_Environment $twig
-     *
      * @Named("original")
      */
     public function __construct(Twig_Environment $twig)

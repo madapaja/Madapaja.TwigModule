@@ -16,7 +16,6 @@ class OriginalTwigEnvironmentProvider implements ProviderInterface
 
     /**
      * @Named("twig_loader")
-     * @param Twig_LoaderInterface $loader
      */
     public function __construct(Twig_LoaderInterface $loader)
     {
@@ -26,7 +25,6 @@ class OriginalTwigEnvironmentProvider implements ProviderInterface
     /**
      * @Inject
      * @TwigOptions
-     * @param array $options
      */
     public function setOptions(array $options = [])
     {

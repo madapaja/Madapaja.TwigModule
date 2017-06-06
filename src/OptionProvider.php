@@ -19,9 +19,6 @@ class OptionProvider implements ProviderInterface
     private $isDebug;
 
     /**
-     * @param AbstractAppMeta $appMeta
-     * @param bool            $isDebug
-     *
      * @TwigDebug("isDebug")
      */
     public function __construct(AbstractAppMeta $appMeta, $isDebug = false)
