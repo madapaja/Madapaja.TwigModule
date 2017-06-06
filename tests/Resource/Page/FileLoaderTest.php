@@ -29,6 +29,17 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(TwigRenderer::class, $prop->getValue($ro));
     }
 
+    public function testTwigOptions()
+    {
+        /** @var $renderer TwigRenderer */
+        $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Resource/'], ['debug' => true])))->getInstance(TwigRenderer::class);
+        $this->assertSame(true, $renderer->twig->isDebug());
+
+        /** @var $renderer TwigRenderer */
+        $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Resource/'], ['debug' => false])))->getInstance(TwigRenderer::class);
+        $this->assertSame(false, $renderer->twig->isDebug());
+    }
+
     public function testIndex()
     {
         $ro = $this->injector->getInstance(Index::class);

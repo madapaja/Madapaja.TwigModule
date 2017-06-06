@@ -7,9 +7,12 @@ use Ray\Di\AbstractModule;
 class TwigFileLoaderTestModule extends AbstractModule
 {
     private $paths;
+    private $options;
 
-    public function __construct(array $paths = []) {
+    public function __construct(array $paths = [], array $options = []) {
         $this->paths = $paths;
+        $this->options = $options;
+
         parent::__construct();
     }
 
@@ -18,6 +21,6 @@ class TwigFileLoaderTestModule extends AbstractModule
      */
     protected function configure()
     {
-        $this->install(new TwigModule($this->paths));
+        $this->install(new TwigModule($this->paths, $this->options));
     }
 }

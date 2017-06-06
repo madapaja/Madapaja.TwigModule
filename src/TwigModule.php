@@ -34,6 +34,8 @@ class TwigModule extends AbstractModule
     {
         $this->paths = $paths;
         $this->options = $options;
+
+        parent::__construct();
     }
 
     /**
@@ -44,14 +46,6 @@ class TwigModule extends AbstractModule
         AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
 
         $this->bind(RenderInterface::class)->to(TwigRenderer::class)->in(Scope::SINGLETON);
-
-        if (is_array($this->paths) && !empty($this->paths)) {
-            $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
-        }
-
-        if (is_array($this->options) && !empty($this->options)) {
-            $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
-        }
 
         $this
             ->bind(Twig_LoaderInterface::class)
@@ -71,5 +65,18 @@ class TwigModule extends AbstractModule
             ->bind(Twig_Environment::class)
             ->toProvider(TwigEnvironmentProvider::class)
             ->in(Scope::SINGLETON);
+
+        $this->bindOptionalParameters();
+    }
+
+    private function bindOptionalParameters()
+    {
+        if (is_array($this->paths) && !empty($this->paths)) {
+            $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
+        }
+
+        if (is_array($this->options) && !empty($this->options)) {
+            $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
+        }
     }
 }
