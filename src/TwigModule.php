@@ -45,8 +45,22 @@ class TwigModule extends AbstractModule
     {
         AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
 
-        $this->bind(RenderInterface::class)->to(TwigRenderer::class)->in(Scope::SINGLETON);
+        $this->bindRender();
+        $this->bindTwigLoader();
+        $this->bindTwigEnvironment();
+        $this->bindTwigPaths();
+        $this->bindTwigOptions();
+    }
 
+    private function bindRender()
+    {
+        $this->bind(RenderInterface::class)
+             ->to(TwigRenderer::class)
+             ->in(Scope::SINGLETON);
+    }
+
+    private function bindTwigLoader()
+    {
         $this
             ->bind(Twig_LoaderInterface::class)
             ->annotatedWith('twig_loader')
@@ -54,7 +68,10 @@ class TwigModule extends AbstractModule
                 Twig_Loader_Filesystem::class,
                 'paths=Madapaja\TwigModule\Annotation\TwigPaths'
             );
+    }
 
+    private function bindTwigEnvironment()
+    {
         $this
             ->bind(Twig_Environment::class)
             ->annotatedWith('original')
@@ -65,18 +82,24 @@ class TwigModule extends AbstractModule
             ->bind(Twig_Environment::class)
             ->toProvider(TwigEnvironmentProvider::class)
             ->in(Scope::SINGLETON);
-
-        $this->bindOptionalParameters();
     }
 
-    private function bindOptionalParameters()
+    private function bindTwigPaths()
     {
-        if (is_array($this->paths) && !empty($this->paths)) {
+        if ($this->isNotEmpty($this->paths)) {
             $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
         }
+    }
 
-        if (is_array($this->options) && !empty($this->options)) {
+    private function bindTwigOptions()
+    {
+        if ($this->isNotEmpty($this->options)) {
             $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
         }
+    }
+
+    private function isNotEmpty($var)
+    {
+        return is_array($var) && !empty($var);
     }
 }
