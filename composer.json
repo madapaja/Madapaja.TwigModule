@@ -15,7 +15,7 @@
   ],
   "require": {
     "twig/twig": "~1.28",
-    "bear/app-meta": "~1.0",
+    "bear/app-meta": "~1.1",
     "nikic/php-parser": "~1.2",
     "bear/sunday": "~1.0",
     "ray/di": "~2.5",

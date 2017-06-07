@@ -13,8 +13,11 @@ use Ray\Di\AbstractModule;
 
 class AppPathProviderTestModule extends AbstractModule
 {
-    public function __construct()
+    private $dir;
+
+    public function __construct($dir)
     {
+        $this->dir = $dir;
         parent::__construct(null);
     }
 
@@ -23,7 +26,7 @@ class AppPathProviderTestModule extends AbstractModule
      */
     protected function configure()
     {
-        $this->bind(AbstractAppMeta::class)->toInstance(new AppMeta('Madapaja\TwigModule', null));
+        $this->bind(AbstractAppMeta::class)->toInstance(new AppMeta('Madapaja\TwigModule', null, $this->dir));
         $this->install(new TwigModule());
         $this->bind()->annotatedWith(TwigPaths::class)->toProvider(AppPathProvider::class);
     }
