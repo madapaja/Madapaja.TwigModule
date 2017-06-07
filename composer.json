@@ -6,7 +6,7 @@
     "Twig",
     "BEAR.Sunday module"
   ],
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "authors": [
     {
       "name": "Koji Iwasaki",
@@ -14,11 +14,9 @@
     }
   ],
   "require": {
-    "bear/app-meta": "^1.1",
     "bear/sunday": "^1.1",
-    "ray/di": "^2.4",
+    "bear/app-meta": "~1.1",
     "twig/twig": "^1.28",
-    "nikic/php-parser": "^1.2",
     "mobiledetect/mobiledetectlib": "^2.7"
   },
   "require-dev": {
