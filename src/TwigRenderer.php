@@ -18,7 +18,7 @@ class TwigRenderer implements RenderInterface
     const EXT = '.html.twig';
 
     /**
-     * @var \Twig_Environment
+     * @var Twig_Environment
      */
     public $twig;
 
@@ -27,36 +27,16 @@ class TwigRenderer implements RenderInterface
      */
     private $templateFinder;
 
-    public function __construct(\Twig_Environment $twig, TemplateFinderInterface $templateFinder = null)
+    public function __construct(Twig_Environment $twig, TemplateFinderInterface $templateFinder = null)
     {
         $this->twig = $twig;
         $this->templateFinder = $templateFinder ?: new TemplateFinder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render(ResourceObject $ro)
     {
         $this->beforeRender($ro);
-
-        if ($ro->view === '') {
-            return '';
-        }
-
-        try {
-            $template = $this->loadTemplate($ro);
-        } catch (\Twig_Error_Loader $e) {
-            if ($ro->code !== 200) {
-                $ro->view = '';
-
-                return '';
-            }
-
-            throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
-        }
-
-        $ro->view = $template->render($this->buildBody($ro));
+        $ro->view = $this->isNoContent($ro) ? '' : $this->renderView($ro);
 
         return $ro->view;
     }
@@ -66,23 +46,35 @@ class TwigRenderer implements RenderInterface
         if (!isset($ro->headers['content-type'])) {
             $ro->headers['content-type'] = 'text/html; charset=utf-8';
         }
-
-        if ($ro->code === Code::NO_CONTENT) {
-            $ro->view = '';
-        }
     }
 
-    private function buildBody(ResourceObject $ro)
+    private function renderView(ResourceObject $ro)
     {
-        $body = is_array($ro->body) ? $ro->body : [];
-        $body += ['_code' => $ro->code, '_headers' => $ro->headers];
+        $template = $this->load($ro);
 
-        return $body;
+        return $template ? $template->render($this->buildBody($ro)) : '';
     }
 
+    private function load(ResourceObject $ro)
+    {
+        try {
+            return $this->loadTemplate($ro);
+        } catch (\Twig_Error_Loader $e) {
+            if ($ro->code !== 200) {
+                return false;
+            }
+        }
+
+        throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
+    }
+
+    private function isNoContent(ResourceObject $ro)
+    {
+        return $ro->code === Code::NO_CONTENT || $ro->view === '';
+    }
 
     /**
-     * @return \Twig_TemplateInterface
+     * @return \Twig_TemplateWrapper
      */
     private function loadTemplate(ResourceObject $ro)
     {
@@ -94,9 +86,9 @@ class TwigRenderer implements RenderInterface
                 $loader->prependPath($dir);
             }
 
-            return $this->twig->loadTemplate($file);
+            return $this->twig->load($file);
         }
-        return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
+        return $this->twig->load($this->getReflection($ro)->name . self::EXT);
     }
 
     /**
@@ -139,5 +131,13 @@ class TwigRenderer implements RenderInterface
         }
 
         return [basename($file), dirname($file)];
+    }
+
+    private function buildBody(ResourceObject $ro)
+    {
+        $body = is_array($ro->body) ? $ro->body : [];
+        $body += ['_code' => $ro->code, '_headers' => $ro->headers];
+
+        return $body;
     }
 }
