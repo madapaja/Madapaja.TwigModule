@@ -14,11 +14,12 @@
     }
   ],
   "require": {
-    "twig/twig": "~1.0",
+    "twig/twig": "~1.28",
     "bear/app-meta": "~1.0",
-    "bear/resource": "~1.0",
+    "nikic/php-parser": "~1.2",
     "bear/sunday": "~1.0",
-    "mobiledetect/mobiledetectlib": "~2.0"
+    "ray/di": "~2.5",
+    "mobiledetect/mobiledetectlib": "~2.7"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.3",
@@ -41,7 +42,7 @@
     "cs": ["php -n ./vendor/bin/php-cs-fixer fix -v --dry-run", "php -n ./vendor/bin/phpcs --standard=./phpcs.xml src"],
     "cs-fix": ["php -n ./vendor/bin/php-cs-fixer fix -v", "php -n ./vendor/bin/phpcbf src"],
     "coverage": ["php -dzend_extension=xdebug.so ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"],
-    "md": ["php -n ./vendor/bin/phpmd src text phpmd.xml"],
+    "md": ["phpmd src text phpmd.xml"],
     "check-all": ["@cs", "@md", "@coverage"]
   }
 }

@@ -86,7 +86,6 @@ Make a provider class.
 ```php
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
-use Twig_Environment;
 
 class MyTwigEnvironmentProvider implements ProviderInterface
 {
@@ -95,9 +94,9 @@ class MyTwigEnvironmentProvider implements ProviderInterface
     /**
      * @Named("original")
      */
-    public function __construct(Twig_Environment $twig)
+    public function __construct(\Twig_Environment $twig)
     {
-        // $twig is an original Twig_Environment instance
+        // $twig is an original \Twig_Environment instance
         $this->twig = $twig;
     }
 
@@ -120,9 +119,9 @@ class AppModule extends AbstractModule
     {
         $this->install(new TwigModule());
         
-        // override Twig_Environment provider
+        // override \Twig_Environment provider
         $this
-            ->bind(Twig_Environment::class)
+            ->bind(\Twig_Environment::class)
             ->toProvider(MyTwigEnvironmentProvider::class)
             ->in(Scope::SINGLETON);
     }
