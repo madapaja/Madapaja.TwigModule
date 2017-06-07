@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule;
 
 use PHPUnit_Framework_TestCase;
@@ -9,8 +13,8 @@ class OptionProviderTest extends PHPUnit_Framework_TestCase
 {
     public function testOptionProvider()
     {
-        $tmpDir = __DIR__.'/tmp/optionProvider/tmp';
-        if (!is_dir($tmpDir)) {
+        $tmpDir = __DIR__ . '/tmp/optionProvider/tmp';
+        if (! is_dir($tmpDir)) {
             mkdir($tmpDir, 0777, true);
         }
 

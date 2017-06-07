@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule\Resource\Page;
 
 use BEAR\Resource\Code;
@@ -33,11 +37,11 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
     {
         /** @var $renderer TwigRenderer */
         $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Resource/'], ['debug' => true])))->getInstance(TwigRenderer::class);
-        $this->assertSame(true, $renderer->twig->isDebug());
+        $this->assertTrue($renderer->twig->isDebug());
 
         /** @var $renderer TwigRenderer */
         $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Resource/'], ['debug' => false])))->getInstance(TwigRenderer::class);
-        $this->assertSame(false, $renderer->twig->isDebug());
+        $this->assertFalse($renderer->twig->isDebug());
     }
 
     public function testIndex()

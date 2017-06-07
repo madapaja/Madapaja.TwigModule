@@ -1,11 +1,15 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule;
 
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
-use Twig_LoaderInterface;
 use Twig_Environment;
+use Twig_LoaderInterface;
 
 class OriginalTwigEnvironmentProvider implements ProviderInterface
 {

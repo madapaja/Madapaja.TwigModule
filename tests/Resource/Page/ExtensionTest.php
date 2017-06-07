@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule\Resource\Page;
 
 use Madapaja\TwigModule\TwigExtensionTestModule;
@@ -21,6 +25,6 @@ class ExtensionTest extends PHPUnit_Framework_TestCase
     public function testTwigFilter()
     {
         $ro = $this->injector->getInstance(TwigFilter::class);
-        $this->assertSame('Twig => "'.str_rot13('Twig').'"', (string) trim($ro->onGet()));
+        $this->assertSame('Twig => "' . str_rot13('Twig') . '"', (string) trim($ro->onGet()));
     }
 }

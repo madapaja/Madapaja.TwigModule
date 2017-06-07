@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\Code;
@@ -43,7 +47,7 @@ class TwigRenderer implements RenderInterface
 
     private function beforeRender(ResourceObject $ro)
     {
-        if (!isset($ro->headers['content-type'])) {
+        if (! isset($ro->headers['content-type'])) {
             $ro->headers['content-type'] = 'text/html; charset=utf-8';
         }
     }
@@ -88,6 +92,7 @@ class TwigRenderer implements RenderInterface
 
             return $this->twig->load($file);
         }
+
         return $this->twig->load($this->getReflection($ro)->name . self::EXT);
     }
 
@@ -100,7 +105,7 @@ class TwigRenderer implements RenderInterface
             return (new \ReflectionClass($ro))->getParentClass();
         }
 
-        return (new \ReflectionClass($ro));
+        return new \ReflectionClass($ro);
     }
 
     /**

@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
@@ -100,6 +104,6 @@ class TwigModule extends AbstractModule
 
     private function isNotEmpty($var)
     {
-        return is_array($var) && !empty($var);
+        return is_array($var) && ! empty($var);
     }
 }
