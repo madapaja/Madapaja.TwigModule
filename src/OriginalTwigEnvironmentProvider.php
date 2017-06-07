@@ -2,8 +2,6 @@
 
 namespace Madapaja\TwigModule;
 
-use Madapaja\TwigModule\Annotation\TwigOptions;
-use Ray\Di\Di\Inject;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 use Twig_LoaderInterface;
@@ -15,19 +13,11 @@ class OriginalTwigEnvironmentProvider implements ProviderInterface
     private $options = [];
 
     /**
-     * @Named("twig_loader")
+     * @Named("loader=twig_loader,options=Madapaja\TwigModule\Annotation\TwigOptions")
      */
-    public function __construct(Twig_LoaderInterface $loader)
+    public function __construct(Twig_LoaderInterface $loader, array $options = [])
     {
         $this->loader = $loader;
-    }
-
-    /**
-     * @Inject
-     * @TwigOptions
-     */
-    public function setOptions(array $options = [])
-    {
         $this->options = $options;
     }
 
