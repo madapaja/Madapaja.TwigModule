@@ -18,7 +18,7 @@
     "bear/app-meta": "~1.1",
     "nikic/php-parser": "~1.2",
     "bear/sunday": "~1.0",
-    "ray/di": "~2.5",
+    "ray/di": "~2.4",
     "mobiledetect/mobiledetectlib": "~2.7"
   },
   "require-dev": {
