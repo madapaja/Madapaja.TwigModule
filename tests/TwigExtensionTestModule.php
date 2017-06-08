@@ -7,17 +7,16 @@
 namespace Madapaja\TwigModule;
 
 use Ray\Di\AbstractModule;
+use Ray\Di\Scope;
+use Twig_Environment;
 
-class TwigFileLoaderTestModule extends AbstractModule
+class TwigExtensionTestModule extends AbstractModule
 {
     private $paths;
-    private $options;
 
-    public function __construct(array $paths = [], array $options = [])
+    public function __construct(array $paths = [])
     {
         $this->paths = $paths;
-        $this->options = $options;
-
         parent::__construct();
     }
 
@@ -26,6 +25,10 @@ class TwigFileLoaderTestModule extends AbstractModule
      */
     protected function configure()
     {
-        $this->install(new TwigModule($this->paths, $this->options));
+        $this->install(new TwigModule($this->paths));
+        $this
+            ->bind(Twig_Environment::class)
+            ->toProvider(ExtendedTwigEnvironmentProvider::class)
+            ->in(Scope::SINGLETON);
     }
 }

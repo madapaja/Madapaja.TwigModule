@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\Code;
@@ -18,59 +22,63 @@ class TwigRenderer implements RenderInterface
     const EXT = '.html.twig';
 
     /**
-     * @var \Twig_Environment
+     * @var Twig_Environment
      */
     public $twig;
 
     /**
-     * @var TemplateFinder
+     * @var TemplateFinderInterface
      */
     private $templateFinder;
 
-    /**
-     * @param \Twig_Environment $twig
-     */
-    public function __construct(\Twig_Environment $twig, TemplateFinderInterface $templateFinder = null)
+    public function __construct(Twig_Environment $twig, TemplateFinderInterface $templateFinder = null)
     {
         $this->twig = $twig;
         $this->templateFinder = $templateFinder ?: new TemplateFinder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render(ResourceObject $ro)
     {
-        if (!isset($ro->headers['content-type'])) {
-            $ro->headers['content-type'] = 'text/html; charset=utf-8';
-        }
-        if ($ro->code === Code::NO_CONTENT) {
-            $ro->view = '';
-        }
-        if ($ro->view === '') {
-            return '';
-        }
-        try {
-            $template = $this->loadTemplate($ro);
-        } catch (\Twig_Error_Loader $e) {
-            if ($ro->code !== 200) {
-                $ro->view = '';
-
-                return '';
-            }
-            throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
-        }
-        $body = is_array($ro->body) ? $ro->body : [];
-        $body += ['_code' => $ro->code, '_headers' => $ro->headers];
-        $ro->view = $template->render($body);
+        $this->beforeRender($ro);
+        $ro->view = $this->isNoContent($ro) ? '' : $this->renderView($ro);
 
         return $ro->view;
     }
 
+    private function beforeRender(ResourceObject $ro)
+    {
+        if (! isset($ro->headers['content-type'])) {
+            $ro->headers['content-type'] = 'text/html; charset=utf-8';
+        }
+    }
+
+    private function renderView(ResourceObject $ro)
+    {
+        $template = $this->load($ro);
+
+        return $template ? $template->render($this->buildBody($ro)) : '';
+    }
+
+    private function load(ResourceObject $ro)
+    {
+        try {
+            return $this->loadTemplate($ro);
+        } catch (\Twig_Error_Loader $e) {
+            if ($ro->code !== 200) {
+                return false;
+            }
+        }
+
+        throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
+    }
+
+    private function isNoContent(ResourceObject $ro)
+    {
+        return $ro->code === Code::NO_CONTENT || $ro->view === '';
+    }
 
     /**
-     * @param ResourceObject $ro
-     * @return \Twig_TemplateInterface
+     * @return \Twig_TemplateWrapper
      */
     private function loadTemplate(ResourceObject $ro)
     {
@@ -82,13 +90,13 @@ class TwigRenderer implements RenderInterface
                 $loader->prependPath($dir);
             }
 
-            return $this->twig->loadTemplate($file);
+            return $this->twig->load($file);
         }
-        return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
+
+        return $this->twig->load($this->getReflection($ro)->name . self::EXT);
     }
 
     /**
-     * @param ResourceObject $ro
      * @return \ReflectionClass
      */
     private function getReflection(ResourceObject $ro)
@@ -97,13 +105,12 @@ class TwigRenderer implements RenderInterface
             return (new \ReflectionClass($ro))->getParentClass();
         }
 
-        return (new \ReflectionClass($ro));
+        return new \ReflectionClass($ro);
     }
 
     /**
      * return template file full path
      *
-     * @param ResourceObject $ro
      * @return string
      */
     private function getTemplatePath(ResourceObject $ro)
@@ -116,8 +123,6 @@ class TwigRenderer implements RenderInterface
     /**
      * return template path and directory
      *
-     * @param ResourceObject $ro
-     * @param array $paths
      * @return array
      */
     private function getTemplate(ResourceObject $ro, array $paths = [])
@@ -131,5 +136,13 @@ class TwigRenderer implements RenderInterface
         }
 
         return [basename($file), dirname($file)];
+    }
+
+    private function buildBody(ResourceObject $ro)
+    {
+        $body = is_array($ro->body) ? $ro->body : [];
+        $body += ['_code' => $ro->code, '_headers' => $ro->headers];
+
+        return $body;
     }
 }

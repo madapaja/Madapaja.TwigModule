@@ -79,4 +79,54 @@ And you put twig template file into the resource directory.
 <h1>{{ greeting }}</h1>
 ```
 
+### Extending Twig
+
+Make a provider class.
+
+```php
+use Ray\Di\Di\Named;
+use Ray\Di\ProviderInterface;
+
+class MyTwigEnvironmentProvider implements ProviderInterface
+{
+    private $twig;
+
+    /**
+     * @Named("original")
+     */
+    public function __construct(\Twig_Environment $twig)
+    {
+        // $twig is an original \Twig_Environment instance
+        $this->twig = $twig;
+    }
+
+    public function get()
+    {
+        // Extending Twig
+        $this->twig->addExtension(new MyTwigExtension());
+
+        return $this->twig;
+    }
+}
+```
+
+And bind it.
+
+```php
+class AppModule extends AbstractModule
+{
+    protected function configure()
+    {
+        $this->install(new TwigModule());
+        
+        // override \Twig_Environment provider
+        $this
+            ->bind(\Twig_Environment::class)
+            ->toProvider(MyTwigEnvironmentProvider::class)
+            ->in(Scope::SINGLETON);
+    }
+}
+
+```
+
 Run your app, enjoy!

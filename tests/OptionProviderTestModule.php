@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule;
 
 use BEAR\AppMeta\AbstractAppMeta;
@@ -15,7 +19,7 @@ class OptionProviderTestModule extends AbstractModule
 
     /**
      * @param string $tmpDir
-     * @param bool $isDebug
+     * @param bool   $isDebug
      */
     public function __construct($tmpDir, $isDebug)
     {

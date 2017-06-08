@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule\Resource\Page;
 
 use BEAR\Resource\RenderInterface;
@@ -17,5 +21,4 @@ class AppMetaTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(TwigRenderer::class, $renderer);
         $this->assertFalse($renderer->twig->isDebug());
     }
-
 }

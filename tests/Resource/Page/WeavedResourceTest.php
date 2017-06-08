@@ -1,9 +1,13 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule\Resource\Page;
 
-use Madapaja\TwigModule\TwigWeavedResourceTestModule;
 use Madapaja\TwigModule\TwigRenderer;
+use Madapaja\TwigModule\TwigWeavedResourceTestModule;
 use PHPUnit_Framework_TestCase;
 use Ray\Di\Injector;
 

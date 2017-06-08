@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule;
 
 class MobileTemplateFinder implements TemplateFinderInterface
@@ -25,7 +29,7 @@ class MobileTemplateFinder implements TemplateFinderInterface
         $pos = strrpos($name, self::PHP_EXT);
         $mobileFile = substr($name, 0, $pos) . self::MOBILE_EXT;
         $detect = new \Mobile_Detect(null, $this->userAgent);
-        $isMobile = $detect->isMobile() && !$detect->isTablet();
+        $isMobile = $detect->isMobile() && ! $detect->isTablet();
         if ($isMobile && file_exists($mobileFile)) {
             return $mobileFile;
         }

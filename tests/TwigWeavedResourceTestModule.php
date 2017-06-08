@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\ResourceObject;
@@ -9,7 +13,8 @@ class TwigWeavedResourceTestModule extends AbstractModule
 {
     private $paths;
 
-    public function __construct(array $paths = []) {
+    public function __construct(array $paths = [])
+    {
         $this->paths = $paths;
         parent::__construct();
     }
