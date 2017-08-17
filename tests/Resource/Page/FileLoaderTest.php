@@ -51,6 +51,13 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
         $this->assertSame('Hello, BEAR.Sunday!', (string) $ro->onGet());
     }
 
+    public function testTemplatePath()
+    {
+        $ro = $this->injector->getInstance(Index::class);
+
+        $this->assertSame('Your Name is MyName!', trim((string) $ro->onPost('MyName')));
+    }
+
     public function testIndexWithArg()
     {
         $ro = $this->injector->getInstance(Index::class);

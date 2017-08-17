@@ -10,8 +10,18 @@ use BEAR\Resource\ResourceObject;
 
 class Index extends ResourceObject
 {
+    public $templatePath;
+
     public function onGet($name = 'BEAR.Sunday')
     {
+        $this['name'] = $name;
+
+        return $this;
+    }
+
+    public function onPost($name = 'BEAR.Sunday')
+    {
+        $this->templatePath = __DIR__ . '/IndexPost.html.twig';
         $this['name'] = $name;
 
         return $this;
