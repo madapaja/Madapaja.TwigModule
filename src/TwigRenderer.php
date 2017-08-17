@@ -115,7 +115,7 @@ class TwigRenderer implements RenderInterface
      */
     private function getTemplatePath(ResourceObject $ro)
     {
-        if (isset($ro->templatePath)) {
+        if (isset($ro->templatePath) && ! empty($ro->templatePath)) {
             return $ro->templatePath;
         }
 

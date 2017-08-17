@@ -7,7 +7,6 @@
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Madapaja\TwigModule\Annotation\TwigOptions;
 use Madapaja\TwigModule\Annotation\TwigPaths;
 use Ray\Di\AbstractModule;
@@ -47,8 +46,6 @@ class TwigModule extends AbstractModule
      */
     protected function configure()
     {
-        AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
-
         $this->bindRender();
         $this->bindTwigLoader();
         $this->bindTwigEnvironment();
