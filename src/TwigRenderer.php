@@ -48,9 +48,6 @@ class TwigRenderer implements RenderInterface
         return $ro->view;
     }
 
-    /**
-     * @return void
-     */
     private function beforeRender(ResourceObject $ro)
     {
         if (! isset($ro->headers['content-type'])) {
@@ -58,9 +55,6 @@ class TwigRenderer implements RenderInterface
         }
     }
 
-    /**
-     * @return void
-     */
     private function renderView(ResourceObject $ro)
     {
         $template = $this->load($ro);
