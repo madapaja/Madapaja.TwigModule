@@ -76,12 +76,22 @@ class TwigModule extends AbstractModule
         $this
             ->bind(Twig_Environment::class)
             ->annotatedWith('original')
-            ->toProvider(OriginalTwigEnvironmentProvider::class)
+            ->toConstructor(Twig_Environment::class,
+                [
+                    'loader' => 'twig_loader',
+                    'options' => TwigOptions::class
+                ]
+            )
             ->in(Scope::SINGLETON);
 
         $this
             ->bind(Twig_Environment::class)
-            ->toProvider(TwigEnvironmentProvider::class)
+            ->toConstructor(Twig_Environment::class,
+                [
+                    'loader' => 'twig_loader',
+                    'options' => TwigOptions::class
+                ]
+            )
             ->in(Scope::SINGLETON);
     }
 
