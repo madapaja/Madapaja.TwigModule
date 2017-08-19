@@ -77,7 +77,8 @@ class TwigModule extends AbstractModule
         $this
             ->bind(Twig_Environment::class)
             ->annotatedWith('original')
-            ->toConstructor(Twig_Environment::class,
+            ->toConstructor(
+                Twig_Environment::class,
                 [
                     'loader' => TwigLoader::class,
                     'options' => TwigOptions::class
@@ -86,7 +87,8 @@ class TwigModule extends AbstractModule
 
         $this
             ->bind(Twig_Environment::class)
-            ->toConstructor(Twig_Environment::class,
+            ->toConstructor(
+                Twig_Environment::class,
                 [
                     'loader' => TwigLoader::class,
                     'options' => TwigOptions::class
