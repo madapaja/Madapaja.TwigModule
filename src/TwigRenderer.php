@@ -78,7 +78,7 @@ class TwigRenderer implements RenderInterface
     }
 
     /**
-     * @return \Twig_TemplateWrapper
+     * @return \Twig_TemplateInterface
      */
     private function loadTemplate(ResourceObject $ro)
     {
@@ -90,10 +90,10 @@ class TwigRenderer implements RenderInterface
                 $loader->prependPath($dir);
             }
 
-            return $this->twig->load($file);
+            return $this->twig->loadTemplate($file);
         }
 
-        return $this->twig->load($this->getReflection($ro)->name . self::EXT);
+        return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
     }
 
     /**
