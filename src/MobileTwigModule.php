@@ -7,7 +7,6 @@
 namespace Madapaja\TwigModule;
 
 use Ray\Di\AbstractModule;
-use Ray\Di\Scope;
 
 class MobileTwigModule extends AbstractModule
 {
