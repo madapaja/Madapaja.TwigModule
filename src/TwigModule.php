@@ -81,8 +81,7 @@ class TwigModule extends AbstractModule
                     'loader' => 'twig_loader',
                     'options' => TwigOptions::class
                 ]
-            )
-            ->in(Scope::SINGLETON);
+            );
 
         $this
             ->bind(Twig_Environment::class)
@@ -91,8 +90,7 @@ class TwigModule extends AbstractModule
                     'loader' => 'twig_loader',
                     'options' => TwigOptions::class
                 ]
-            )
-            ->in(Scope::SINGLETON);
+            );
     }
 
     private function bindTwigPaths()
