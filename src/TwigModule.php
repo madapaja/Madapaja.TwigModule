@@ -7,6 +7,7 @@
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
+use Madapaja\TwigModule\Annotation\TwigLoader;
 use Madapaja\TwigModule\Annotation\TwigOptions;
 use Madapaja\TwigModule\Annotation\TwigPaths;
 use Ray\Di\AbstractModule;
@@ -64,7 +65,7 @@ class TwigModule extends AbstractModule
     {
         $this
             ->bind(Twig_LoaderInterface::class)
-            ->annotatedWith('twig_loader')
+            ->annotatedWith(TwigLoader::class)
             ->toConstructor(
                 Twig_Loader_Filesystem::class,
                 'paths=Madapaja\TwigModule\Annotation\TwigPaths'
@@ -78,7 +79,7 @@ class TwigModule extends AbstractModule
             ->annotatedWith('original')
             ->toConstructor(Twig_Environment::class,
                 [
-                    'loader' => 'twig_loader',
+                    'loader' => TwigLoader::class,
                     'options' => TwigOptions::class
                 ]
             );
@@ -87,7 +88,7 @@ class TwigModule extends AbstractModule
             ->bind(Twig_Environment::class)
             ->toConstructor(Twig_Environment::class,
                 [
-                    'loader' => 'twig_loader',
+                    'loader' => TwigLoader::class,
                     'options' => TwigOptions::class
                 ]
             );

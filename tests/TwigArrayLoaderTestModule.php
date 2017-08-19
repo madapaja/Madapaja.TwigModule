@@ -6,6 +6,7 @@
  */
 namespace Madapaja\TwigModule;
 
+use Madapaja\TwigModule\Annotation\TwigLoader;
 use Ray\Di\AbstractModule;
 use Twig_Loader_Array;
 use Twig_LoaderInterface;
@@ -30,7 +31,7 @@ EOD
         ]);
         $this
             ->bind(Twig_LoaderInterface::class)
-            ->annotatedWith('twig_loader')
+            ->annotatedWith(TwigLoader::class)
             ->toConstructor(
                 Twig_Loader_Array::class,
                 'templates=twig_templates'
