@@ -15,7 +15,7 @@ class TemplateFinder implements TemplateFinderInterface
     /**
      * {@inheritdoc}
      */
-    public function __invoke($name)
+    public function __invoke(string $name) : string
     {
         $pos = strrpos($name, self::PHP_EXT);
         $file = substr($name, 0, $pos) . self::TWIG_EXT;
