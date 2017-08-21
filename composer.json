@@ -37,8 +37,8 @@
   },
   "scripts": {
     "test": ["@cs", "php -n ./vendor/bin/phpunit"],
-    "cs": ["php -n ./vendor/bin/php-cs-fixer fix -v --dry-run", "php -n ./vendor/bin/phpcs --standard=./phpcs.xml src"],
-    "cs-fix": ["php -n ./vendor/bin/php-cs-fixer fix -v", "php -n ./vendor/bin/phpcbf src"],
+    "cs": ["php -n ./vendor/bin/phpcs --standard=./phpcs.xml src"],
+    "cs-fix": ["php -n ./vendor/bin/phpcbf src"],
     "coverage": ["php -dzend_extension=xdebug.so ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"],
     "md": ["phpmd src text phpmd.xml"],
     "check-all": ["@cs", "@md", "@coverage"]
