@@ -112,9 +112,9 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
 
     public function testIndexTemplateWithoutPaths()
     {
-        $injector = new Injector(new TwigFileLoaderTestModule([]));
+        $injector = new Injector(new TwigFileLoaderTestModule());
         $ro = $injector->getInstance(Index::class);
-
-        $this->assertSame('Hello, BEAR.Sunday!', (string) $ro->onGet());
+        $ro->onGet();
+        $this->assertSame('Hello, BEAR.Sunday!', (string) $ro);
     }
 }

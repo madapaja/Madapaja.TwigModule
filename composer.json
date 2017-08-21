@@ -14,13 +14,13 @@
     }
   ],
   "require": {
+    "ray/di": "^2.5.3",
     "bear/sunday": "^1.1",
     "bear/app-meta": "^1.1",
     "twig/twig": "^2.0",
     "mobiledetect/mobiledetectlib": "^2.7"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2.3",
     "phpunit/phpunit": "~5.7 < 6.0",
     "squizlabs/php_codesniffer": "^2.8",
     "phpmd/phpmd": "^2.6"

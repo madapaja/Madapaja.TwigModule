@@ -8,10 +8,5 @@ namespace Madapaja\TwigModule;
 
 interface TemplateFinderInterface
 {
-    /**
-     * @param string $name target class file name
-     *
-     * @return string
-     */
-    public function __invoke($name);
+    public function __invoke(string $name) : string;
 }

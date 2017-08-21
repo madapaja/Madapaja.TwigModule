@@ -19,4 +19,9 @@ class MyTwigExtension extends Twig_Extension
             }),
         ];
     }
+
+    public function getName()
+    {
+        return 'my_twig_extension';
+    }
 }

@@ -24,7 +24,7 @@ class MobileTemplateFinder implements TemplateFinderInterface
     /**
      * {@inheritdoc}
      */
-    public function __invoke($name)
+    public function __invoke(string $name) : string
     {
         $pos = strrpos($name, self::PHP_EXT);
         $mobileFile = substr($name, 0, $pos) . self::MOBILE_EXT;

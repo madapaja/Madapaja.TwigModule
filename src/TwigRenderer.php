@@ -37,6 +37,9 @@ class TwigRenderer implements RenderInterface
         $this->templateFinder = $templateFinder ?: new TemplateFinder;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function render(ResourceObject $ro)
     {
         $this->beforeRender($ro);
@@ -59,6 +62,9 @@ class TwigRenderer implements RenderInterface
         return $template ? $template->render($this->buildBody($ro)) : '';
     }
 
+    /**
+     * @return bool|\Twig_Template
+     */
     private function load(ResourceObject $ro)
     {
         try {
@@ -72,15 +78,12 @@ class TwigRenderer implements RenderInterface
         throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
     }
 
-    private function isNoContent(ResourceObject $ro)
+    private function isNoContent(ResourceObject $ro) : bool
     {
         return $ro->code === Code::NO_CONTENT || $ro->view === '';
     }
 
-    /**
-     * @return \Twig_TemplateWrapper
-     */
-    private function loadTemplate(ResourceObject $ro)
+    private function loadTemplate(ResourceObject $ro) : \Twig_Template
     {
         $loader = $this->twig->getLoader();
         if ($loader instanceof \Twig_Loader_Filesystem) {
@@ -90,16 +93,13 @@ class TwigRenderer implements RenderInterface
                 $loader->prependPath($dir);
             }
 
-            return $this->twig->load($file);
+            return $this->twig->loadTemplate($file);
         }
 
-        return $this->twig->load($this->getReflection($ro)->name . self::EXT);
+        return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
     }
 
-    /**
-     * @return \ReflectionClass
-     */
-    private function getReflection(ResourceObject $ro)
+    private function getReflection(ResourceObject $ro) : \ReflectionClass
     {
         if ($ro instanceof WeavedInterface) {
             return (new \ReflectionClass($ro))->getParentClass();
@@ -110,10 +110,8 @@ class TwigRenderer implements RenderInterface
 
     /**
      * return template file full path
-     *
-     * @return string
      */
-    private function getTemplatePath(ResourceObject $ro)
+    private function getTemplatePath(ResourceObject $ro) : string
     {
         if (isset($ro->templatePath) && ! empty($ro->templatePath)) {
             return $ro->templatePath;
@@ -126,10 +124,8 @@ class TwigRenderer implements RenderInterface
 
     /**
      * return template path and directory
-     *
-     * @return array
      */
-    private function getTemplate(ResourceObject $ro, array $paths = [])
+    private function getTemplate(ResourceObject $ro, array $paths = []) : array
     {
         $file = $this->getTemplatePath($ro);
 
@@ -142,7 +138,7 @@ class TwigRenderer implements RenderInterface
         return [basename($file), dirname($file)];
     }
 
-    private function buildBody(ResourceObject $ro)
+    private function buildBody(ResourceObject $ro) : array
     {
         $body = is_array($ro->body) ? $ro->body : [];
         $body += ['_code' => $ro->code, '_headers' => $ro->headers];
