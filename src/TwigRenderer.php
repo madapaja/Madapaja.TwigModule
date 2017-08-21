@@ -62,7 +62,10 @@ class TwigRenderer implements RenderInterface
         return $template ? $template->render($this->buildBody($ro)) : '';
     }
 
-    private function load(ResourceObject $ro) : ?\Twig_TemplateWrapper
+    /**
+     * @return null|\Twig_TemplateWrapper
+     */
+    private function load(ResourceObject $ro)
     {
         try {
             return $this->loadTemplate($ro);
