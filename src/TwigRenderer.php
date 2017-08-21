@@ -63,7 +63,7 @@ class TwigRenderer implements RenderInterface
     }
 
     /**
-     * @return bool|\Twig_Template
+     * @return null|\Twig_TemplateWrapper
      */
     private function load(ResourceObject $ro)
     {
@@ -71,7 +71,7 @@ class TwigRenderer implements RenderInterface
             return $this->loadTemplate($ro);
         } catch (\Twig_Error_Loader $e) {
             if ($ro->code !== 200) {
-                return false;
+                return null;
             }
         }
 
@@ -83,7 +83,7 @@ class TwigRenderer implements RenderInterface
         return $ro->code === Code::NO_CONTENT || $ro->view === '';
     }
 
-    private function loadTemplate(ResourceObject $ro) : \Twig_Template
+    private function loadTemplate(ResourceObject $ro) : \Twig_TemplateWrapper
     {
         $loader = $this->twig->getLoader();
         if ($loader instanceof \Twig_Loader_Filesystem) {
@@ -93,10 +93,10 @@ class TwigRenderer implements RenderInterface
                 $loader->prependPath($dir);
             }
 
-            return $this->twig->loadTemplate($file);
+            return $this->twig->load($file);
         }
 
-        return $this->twig->loadTemplate($this->getReflection($ro)->name . self::EXT);
+        return $this->twig->load($this->getReflection($ro)->name . self::EXT);
     }
 
     private function getReflection(ResourceObject $ro) : \ReflectionClass
