@@ -48,7 +48,7 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
     {
         $ro = $this->injector->getInstance(Index::class);
 
-        $this->assertSame('Hello, BEAR.Sunday!', (string) $ro->onGet());
+        $this->assertSame('Hello, BEAR.Sunday!', trim((string) $ro->onGet()));
     }
 
     public function testTemplatePath()
@@ -62,7 +62,7 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
     {
         $ro = $this->injector->getInstance(Index::class);
 
-        $this->assertSame('Hello, Madapaja!', (string) $ro->onGet('Madapaja'));
+        $this->assertSame('Hello, Madapaja!', trim((string) $ro->onGet('Madapaja')));
     }
 
     /**
@@ -115,6 +115,6 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
         $injector = new Injector(new TwigFileLoaderTestModule());
         $ro = $injector->getInstance(Index::class);
         $ro->onGet();
-        $this->assertSame('Hello, BEAR.Sunday!', (string) $ro);
+        $this->assertSame('Hello, BEAR.Sunday!', trim((string) $ro));
     }
 }
