@@ -20,7 +20,7 @@ Add the package name to your `composer.json`.
 To composer command:
 
 ```
-composer require madapaja/twig-module
+composer require madapaja/twig-module ^1.0
 ```
 
 or to modify your `composer.json` and `composer update` command:
@@ -28,7 +28,7 @@ or to modify your `composer.json` and `composer update` command:
 ```json
 {
     "require": {
-        "madapaja/twig-module": "~1.0"
+        "madapaja/twig-module": "^1.0"
     }
 }
 ```
