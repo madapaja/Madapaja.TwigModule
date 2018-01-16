@@ -42,13 +42,13 @@ class TwigRenderer implements RenderInterface
      */
     public function render(ResourceObject $ro)
     {
-        $this->beforeRender($ro);
+        $this->setContentType($ro);
         $ro->view = $this->isNoContent($ro) ? '' : $this->renderView($ro);
 
         return $ro->view;
     }
 
-    private function beforeRender(ResourceObject $ro)
+    private function setContentType(ResourceObject $ro)
     {
         if (! isset($ro->headers['content-type'])) {
             $ro->headers['content-type'] = 'text/html; charset=utf-8';
