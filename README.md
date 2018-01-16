@@ -1,87 +1,55 @@
-Madapaja.TwigModule
-===================
+# Madapaja.TwigModule
 
-Twig Module for BEAR.Resource
+Madapaja.TwigModule is [Twig](http://twig.sensiolabs.org/) **v2** adaptor extension for [BEAR.Sunday](https://github.com/koriym/BEAR.Sunday) framework.
 
 [![Latest Stable Version](https://poser.pugx.org/madapaja/twig-module/v/stable.svg)](https://packagist.org/packages/madapaja/twig-module)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/badges/quality-score.png?b=1.x)](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/?branch=1.x)
-[![Code Coverage](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/badges/coverage.png?b=1.x)](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/?branch=1.x)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/badges/quality-score.png?b=2.x)](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/?branch=2.x)
+[![Code Coverage](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/badges/coverage.png?b=2.x)](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/?branch=2.x)
 [![Build Status](https://travis-ci.org/madapaja/Madapaja.TwigModule.svg)](https://travis-ci.org/madapaja/Madapaja.TwigModule)
 [![Total Downloads](https://poser.pugx.org/madapaja/twig-module/downloads.png)](https://packagist.org/packages/madapaja/twig-module)
 
-Introduction
-------------
-Madapaja.TwigModule is [Twig](http://twig.sensiolabs.org/) adaptor extension for [BEAR.Sunday](https://github.com/koriym/BEAR.Sunday) framework.
+# Installation
 
-Installation
-------------
-Add the package name to your `composer.json`.
-
-To composer command:
+## Composer install
 
 ```
-composer require madapaja/twig-module
+composer require madapaja/twig-module 2.x-dev
 ```
 
-or to modify your `composer.json` and `composer update` command:
-
-```json
-{
-    "require": {
-        "madapaja/twig-module": "~1.0"
-    }
-}
-```
-
-Usage
------
-
-For example you are using [BEAR.Package](https://github.com/koriym/BEAR.Package) ...
-
-modifying your `AppModule` as:
+## Module Install
 
 ```php
 namespace MyVendor\MyPackage\Module;
 
-use Madapaja\TwigModule\Annotation\TwigOptions;
-use Madapaja\TwigModule\Annotation\TwigPaths;
-use Madapaja\TwigModule\TwigModule;
 use Ray\Di\AbstractModule;
 
-class AppModule extends AbstractModule
+class HtmlModule extends AbstractModule
 {
     protected function configure()
     {
-        $this->install(new TwigModule());
-
-        // You can add twig template paths by the following
-        $appDir = dirname(dirname(__DIR__));
-        $paths = [$appDir . '/src/Resource', $appDir . '/var/lib/twig'];
-        $this->bind()->annotatedWith(TwigPaths::class)->toInstance($paths);
-
-        // Also you can set environment options
-        // @see http://twig.sensiolabs.org/doc/api.html#environment-options
-        $options = [
-            'debug' => true,
-            'cache' => '/tmp/'
-        ];
-        $this->bind()->annotatedWith(TwigOptions::class)->toInstance($options);
+        $this->install(new TwigModule);
     }
 }
-
 ```
 
-And you put twig template file into the resource directory.
-
-### Resource/Page/Index.html.twig
+Place twig template file in the same directory of resource class or `var/lib/twig/` directory.
 
 ```twig
 <h1>{{ greeting }}</h1>
 ```
 
-### Extending Twig
+For example, The template file for `Resource/Page/Index` class should be place either
 
-Make a provider class.
+ * `src/Resource/Page/Index.html.twig`
+ 
+or
+
+ * `var/lib/twig/Page/Index.html.twig`
+
+## Extending Twig
+
+You may want to extend twig with `addExtension()` method.
+In that case, provide your own Twig Provider class.
 
 ```php
 use Ray\Di\Di\Named;
@@ -110,10 +78,10 @@ class MyTwigEnvironmentProvider implements ProviderInterface
 }
 ```
 
-And bind it.
+And bind it to `Twig_Environment` class.
 
 ```php
-class AppModule extends AbstractModule
+class HtmlModule extends AbstractModule
 {
     protected function configure()
     {
@@ -126,7 +94,27 @@ class AppModule extends AbstractModule
             ->in(Scope::SINGLETON);
     }
 }
-
 ```
 
-Run your app, enjoy!
+## Options
+
+You may want to specify custom path or options for Twig template engine.
+
+```php
+class HtmlModule extends AbstractModule
+{
+    protected function configure()
+    {
+        $appDir = dirname(dirname(__DIR__));
+        $paths = [
+             $appDir . '/src/Resource',
+             $appDir . '/var/lib/twig'
+        ];
+        $options = [
+            'debug' => true,
+            'cache' => $appDir . '/tmp/twig'
+        ];
+        $this->install(new TwigModule($paths, $options));
+    }
+}
+```
