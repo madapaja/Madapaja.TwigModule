@@ -87,11 +87,7 @@ class TwigRenderer implements RenderInterface
     {
         $loader = $this->twig->getLoader();
         if ($loader instanceof \Twig_Loader_Filesystem) {
-            list($file, $dir) = $this->getTemplate($ro, $loader->getPaths());
-            if ($dir) {
-                // if the file not in paths, register the directory
-                $loader->prependPath($dir);
-            }
+            $file = $this->getTemplatePath($ro);
 
             return $this->twig->load($file);
         }
@@ -118,26 +114,10 @@ class TwigRenderer implements RenderInterface
         return $this->templateFinder->__invoke($file);
     }
 
-    /**
-     * return template path and directory
-     */
-    private function getTemplate(ResourceObject $ro, array $paths = []) : array
-    {
-        $file = $this->getTemplatePath($ro);
-
-        foreach ($paths as $path) {
-            if (strpos($file, $path . '/') === 0) {
-                return [substr($file, strlen($path . '/')), null];
-            }
-        }
-
-        return [basename($file), dirname($file)];
-    }
-
     private function buildBody(ResourceObject $ro) : array
     {
         $body = is_array($ro->body) ? $ro->body : [];
-        $body += ['_code' => $ro->code, '_headers' => $ro->headers];
+        $body += ['_ro' => $ro,];
 
         return $body;
     }

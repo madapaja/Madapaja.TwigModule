@@ -8,18 +8,15 @@ namespace Madapaja\TwigModule;
 
 class TemplateFinder implements TemplateFinderInterface
 {
-    const PHP_EXT = '.php';
-
-    const TWIG_EXT = '.html.twig';
-
     /**
      * {@inheritdoc}
      */
-    public function __invoke(string $name) : string
+    public function __invoke(string $resourceFilePath) : string
     {
-        $pos = strrpos($name, self::PHP_EXT);
-        $file = substr($name, 0, $pos) . self::TWIG_EXT;
+        $pos = strpos($resourceFilePath, '/Resource/');
+        $relativePath = substr($resourceFilePath, $pos + 10);
+        $templateFile =  str_replace('.php', '.html.twig', $relativePath);
 
-        return $file;
+        return $templateFile;
     }
 }

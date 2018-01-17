@@ -20,7 +20,7 @@ class WeavedResourceTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->injector = new Injector(new TwigWeavedResourceTestModule([$_ENV['TEST_DIR'] . '/Resource/']));
+        $this->injector = new Injector(new TwigWeavedResourceTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource']));
     }
 
     public function testRenderer()
