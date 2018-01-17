@@ -100,7 +100,9 @@ class TwigModule extends AbstractModule
     {
         if ($this->isNotEmpty($this->paths)) {
             $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
+            return;
         }
+        $this->bind()->annotatedWith(TwigPaths::class)->toProvider(AppPathProvider::class);
     }
 
     private function bindTwigOptions()

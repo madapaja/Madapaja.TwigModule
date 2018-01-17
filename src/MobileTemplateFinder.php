@@ -6,19 +6,27 @@
  */
 namespace Madapaja\TwigModule;
 
+use Madapaja\TwigModule\Annotation\TwigPaths;
+
 class MobileTemplateFinder implements TemplateFinderInterface
 {
-    const PHP_EXT = '.php';
-
-    const MOBILE_EXT = '.mobile.twig';
-
-    const TWIG_EXT = '.html.twig';
-
+    /**
+     * @var string
+     */
     private $userAgent;
 
-    public function __construct($userAgent = null)
+    /**
+     * @var TemplateFinder
+     */
+    private $templateFinder;
+
+    /**
+     * @TwigPaths("paths")
+     */
+    public function __construct($userAgent = '', array $paths = null)
     {
         $this->userAgent = $userAgent;
+        $this->templateFinder = new TemplateFinder;
     }
 
     /**
@@ -26,15 +34,15 @@ class MobileTemplateFinder implements TemplateFinderInterface
      */
     public function __invoke(string $name) : string
     {
-        $pos = strrpos($name, self::PHP_EXT);
-        $mobileFile = substr($name, 0, $pos) . self::MOBILE_EXT;
+        $templateFile = $this->templateFinder->__invoke($name);
         $detect = new \Mobile_Detect(null, $this->userAgent);
         $isMobile = $detect->isMobile() && ! $detect->isTablet();
-        if ($isMobile && file_exists($mobileFile)) {
+        if ($isMobile) {
+            $mobileFile = str_replace('.html.twig', '.mobile.twig', $templateFile);
+
             return $mobileFile;
         }
-        $file = substr($name, 0, $pos) . self::TWIG_EXT;
 
-        return $file;
+        return $templateFile;
     }
 }
