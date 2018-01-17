@@ -38,6 +38,16 @@ Place twig template file in the same directory of resource class or `var/lib/twi
 <h1>{{ greeting }}</h1>
 ```
 
+`_ro` is automatically assigned as target resoure.
+
+```twig
+{{ _ro.code }} // resouce code
+{{ _ro.header.content-type }} // header
+{% for todo in _ro.body %} // body
+  {{ todo.title }}
+{% endfor %}
+```
+
 For example, The template file for `Resource/Page/Index` class should be place either
 
  * `src/Resource/Page/Index.html.twig`
