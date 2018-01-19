@@ -2,11 +2,9 @@
 
 Madapaja.TwigModule is [Twig](http://twig.sensiolabs.org/) **v2** adaptor extension for [BEAR.Sunday](https://github.com/koriym/BEAR.Sunday) framework.
 
-[![Latest Stable Version](https://poser.pugx.org/madapaja/twig-module/v/stable.svg)](https://packagist.org/packages/madapaja/twig-module)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/badges/quality-score.png?b=2.x)](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/?branch=2.x)
 [![Code Coverage](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/badges/coverage.png?b=2.x)](https://scrutinizer-ci.com/g/madapaja/Madapaja.TwigModule/?branch=2.x)
 [![Build Status](https://travis-ci.org/madapaja/Madapaja.TwigModule.svg)](https://travis-ci.org/madapaja/Madapaja.TwigModule)
-[![Total Downloads](https://poser.pugx.org/madapaja/twig-module/downloads.png)](https://packagist.org/packages/madapaja/twig-module)
 
 # Installation
 
