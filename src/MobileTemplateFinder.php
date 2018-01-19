@@ -21,12 +21,18 @@ class MobileTemplateFinder implements TemplateFinderInterface
     private $templateFinder;
 
     /**
+     * @var array
+     */
+    private $paths;
+
+    /**
      * @TwigPaths("paths")
      */
-    public function __construct($userAgent = '', array $paths = null)
+    public function __construct($userAgent = '', array $paths = [])
     {
         $this->userAgent = $userAgent;
         $this->templateFinder = new TemplateFinder;
+        $this->paths = $paths;
     }
 
     /**
@@ -34,15 +40,19 @@ class MobileTemplateFinder implements TemplateFinderInterface
      */
     public function __invoke(string $name) : string
     {
-        $templateFile = $this->templateFinder->__invoke($name);
+        $templatePath = $this->templateFinder->__invoke($name);
         $detect = new \Mobile_Detect(null, $this->userAgent);
         $isMobile = $detect->isMobile() && ! $detect->isTablet();
         if ($isMobile) {
-            $mobileFile = str_replace('.html.twig', '.mobile.twig', $templateFile);
-
-            return $mobileFile;
+            $mobilePath = str_replace('.html.twig', '.mobile.twig', $templatePath);
+            foreach ($this->paths as $path) {
+                $mobileFile = sprintf('%s/%s', $path, $mobilePath);
+                if (file_exists($mobileFile)) {
+                    return $mobilePath;
+                }
+            }
         }
 
-        return $templateFile;
+        return $templatePath;
     }
 }
