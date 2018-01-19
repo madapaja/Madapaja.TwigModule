@@ -32,7 +32,7 @@ class HtmlModule extends AbstractModule
 }
 ```
 
-Place twig template file in the same directory of resource class or `var/lib/twig/` directory.
+Place twig template file in the same directory of resource class or `var/templates/` directory.
 
 ```twig
 <h1>{{ greeting }}</h1>
@@ -54,7 +54,7 @@ For example, The template file for `Resource/Page/Index` class should be place e
  
 or
 
- * `var/lib/twig/Page/Index.html.twig`
+ * `var/templates/Page/Index.html.twig`
 
 ## Extending Twig
 
@@ -118,7 +118,7 @@ class HtmlModule extends AbstractModule
         $appDir = dirname(dirname(__DIR__));
         $paths = [
              $appDir . '/src/Resource',
-             $appDir . '/var/lib/twig'
+             $appDir . '/var/templates'
         ];
         $options = [
             'debug' => true,

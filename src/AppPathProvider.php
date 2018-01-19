@@ -29,7 +29,7 @@ class AppPathProvider implements ProviderInterface
         $appDir = $this->appMeta->appDir;
         $paths = [
             $appDir . '/src/Resource',
-            $appDir . '/var/lib/twig'
+            $appDir . '/var/templates'
         ];
 
         return $paths;

@@ -109,6 +109,7 @@ class TwigModule extends AbstractModule
     {
         if ($this->isNotEmpty($this->options)) {
             $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
+            return;
         }
         $this->bind()->annotatedWith(TwigOptions::class)->toProvider(OptionProvider::class);
     }

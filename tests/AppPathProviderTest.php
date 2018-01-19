@@ -16,7 +16,7 @@ class AppPathProviderTest extends PHPUnit_Framework_TestCase
         $appDir = __DIR__ . '/Fake';
         $paths = [
             $appDir . '/src/Resource',
-            $appDir . '/var/lib/twig',
+            $appDir . '/var/templates',
         ];
 
         foreach ($paths as $path) {
