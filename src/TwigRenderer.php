@@ -87,9 +87,10 @@ class TwigRenderer implements RenderInterface
     {
         $loader = $this->twig->getLoader();
         if ($loader instanceof \Twig_Loader_Filesystem) {
-            $file = $this->getTemplatePath($ro);
+            $classFile = $this->getReflection($ro)->getFileName();
+            $templateFile = $this->templateFinder->__invoke($classFile);
 
-            return $this->twig->load($file);
+            return $this->twig->load($templateFile);
         }
 
         return $this->twig->load($this->getReflection($ro)->name . self::EXT);
@@ -102,16 +103,6 @@ class TwigRenderer implements RenderInterface
         }
 
         return new \ReflectionClass($ro);
-    }
-
-    /**
-     * return template file full path
-     */
-    private function getTemplatePath(ResourceObject $ro) : string
-    {
-        $file = $this->getReflection($ro)->getFileName();
-
-        return $this->templateFinder->__invoke($file);
     }
 
     private function buildBody(ResourceObject $ro) : array
