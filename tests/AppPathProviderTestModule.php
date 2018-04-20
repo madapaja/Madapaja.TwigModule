@@ -26,7 +26,7 @@ class AppPathProviderTestModule extends AbstractModule
      */
     protected function configure()
     {
-        $this->bind(AbstractAppMeta::class)->toInstance(new AppMeta('Madapaja\TwigModule', null));
+        $this->bind(AbstractAppMeta::class)->toInstance(new AppMeta('Madapaja\TwigModule'));
         $this->install(new TwigModule());
         $this->bind()->annotatedWith(TwigPaths::class)->toProvider(AppPathProvider::class);
     }
