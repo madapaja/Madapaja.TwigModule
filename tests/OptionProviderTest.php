@@ -26,7 +26,7 @@ class OptionProviderTest extends PHPUnit_Framework_TestCase
         /** @var $renderer TwigRenderer */
         $renderer = (new Injector(new OptionProviderTestModule($this->tmpDir, true)))->getInstance(TwigRenderer::class);
 
-        $this->assertSame($this->tmpDir, $renderer->twig->getCache());
+        $this->assertSame($this->tmpDir . '/twig', $renderer->twig->getCache());
         $this->assertSame(true, $renderer->twig->isDebug());
     }
 

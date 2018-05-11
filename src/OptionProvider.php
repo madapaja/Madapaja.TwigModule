@@ -37,9 +37,11 @@ class OptionProvider implements ProviderInterface
      */
     public function get()
     {
+        $tmpDir = $this->appMeta->tmpDir . '/twig';
+        ! \file_exists($tmpDir) && \mkdir($tmpDir);
         $options = [
             'debug' => $this->isDebug,
-            'cache' => $this->appMeta->tmpDir
+            'cache' => $tmpDir
         ];
 
         return $options;
