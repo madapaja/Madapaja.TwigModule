@@ -14,8 +14,8 @@
     }
   ],
   "require": {
-    "ray/di": "^2.5.3",
-    "bear/sunday": "^1.1",
+    "php": ">=7.0.0",
+    "bear/sunday": "^1.2",
     "bear/app-meta": "^1.1",
     "twig/twig": "^2.0",
     "mobiledetect/mobiledetectlib": "^2.7"
