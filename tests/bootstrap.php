@@ -4,6 +4,7 @@
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
+
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
 error_reporting(E_ALL);

@@ -7,6 +7,7 @@
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
+use BEAR\Sunday\Extension\Error\ErrorInterface;
 use Madapaja\TwigModule\Annotation\TwigLoader;
 use Madapaja\TwigModule\Annotation\TwigOptions;
 use Madapaja\TwigModule\Annotation\TwigPaths;
@@ -34,12 +35,11 @@ class TwigModule extends AbstractModule
      *
      * @see http://twig.sensiolabs.org/api/master/Twig_Environment.html
      */
-    public function __construct($paths = [], $options = [])
+    public function __construct($paths = [], $options = [], AbstractModule $module = null)
     {
         $this->paths = $paths;
         $this->options = $options;
-
-        parent::__construct();
+        parent::__construct($module);
     }
 
     /**
@@ -52,6 +52,9 @@ class TwigModule extends AbstractModule
         $this->bindTwigEnvironment();
         $this->bindTwigPaths();
         $this->bindTwigOptions();
+        $this->bind(RenderInterface::class)->annotatedWith('error_page')->to(ErrorPagerRenderer::class);
+        $this->bind(ErrorInterface::class)->to(TwigErrorHandler::class);
+        $this->bind(TwigErrorPage::class);
     }
 
     private function bindRender()

@@ -9,7 +9,6 @@ namespace Madapaja\TwigModule\Resource\Page;
 use BEAR\Resource\Code;
 use Madapaja\TwigModule\TwigAppMetaTestModule;
 use Madapaja\TwigModule\TwigFileLoaderTestModule;
-use Madapaja\TwigModule\TwigModule;
 use Madapaja\TwigModule\TwigRenderer;
 use PHPUnit_Framework_TestCase;
 use Ray\Di\Injector;

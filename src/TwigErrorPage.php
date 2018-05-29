@@ -6,12 +6,15 @@
  */
 namespace Madapaja\TwigModule;
 
-use BEAR\AppMeta\AbstractAppMeta;
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
+use Ray\Di\Di\Inject;
+use Ray\Di\Di\Named;
 
 class TwigErrorPage extends ResourceObject
 {
+    protected $renderer;
+
     /**
      * @var array
      */
@@ -20,41 +23,16 @@ class TwigErrorPage extends ResourceObject
     ];
 
     /**
-     * @var \Twig_Environment
+     * @Inject
+     * @Named("error_page")
      */
-    private $twig;
-
-    public function __construct(\Twig_Environment $twig)
+    public function setRenderer(RenderInterface $renderer)
     {
-        $this->twig = $twig;
-        $this->setRenderer(new class($twig) implements RenderInterface
-        {
-            /**
-             * @var \Twig_Environment
-             */
-            private $twig;
+        $this->renderer = $renderer;
+    }
 
-            /**
-             * @var string
-             */
-            private $errorTemplateDir;
-
-            public function __construct(\Twig_Environment $twig)
-            {
-                $this->twig = $twig;
-            }
-
-            public function render(ResourceObject $ro)
-            {
-                $template = "error.{$ro->code}.html.twig";
-                try {
-                    $ro->view = $this->twig->render($template, $ro->body);
-                } catch (\Twig_Error_Loader $e) {
-                    $ro->view = $this->twig->render('/error.html.twig', $ro->body);
-                }
-
-                return $ro->view;
-            }
-        });
+    public function __sleep()
+    {
+        return ['renderer'];
     }
 }

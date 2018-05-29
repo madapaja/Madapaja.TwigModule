@@ -6,32 +6,33 @@
  */
 namespace Madapaja\TwigModule;
 
-use BEAR\Sunday\Extension\Router\RouterMatch;
+use BEAR\AppMeta\AppMeta;
 use BEAR\Resource\Exception\ResourceNotFoundException as NotFound;
-use Twig\Loader\ArrayLoader;
-use Twig\Loader\FilesystemLoader;
 use BEAR\Resource\Exception\ServerErrorException as ServerError;
-
+use BEAR\Sunday\Extension\Router\RouterMatch;
+use Twig\Loader\FilesystemLoader;
 
 
 class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var TwigErrorPageHandler
+     * @var TwigErrorHandler
      */
     private $handler;
 
     public function setUp()
     {
-        $this->handler = new TwigErrorPageHandler(
-            new TwigErrorPage(
-                new \Twig_Environment(
-                    new FilesystemLoader(
-                        __DIR__ . '/Fake/templates/error'
-                    )
-                )
-            ),
-            new FakeHttpResponder
+        $twig = new \Twig_Environment(
+            new FilesystemLoader(
+                __DIR__ . '/Fake/templates'
+            )
+        );
+        $errorPage =  new TwigErrorPage;
+        $errorPage->setRenderer(new ErrorPagerRenderer($twig));
+        $this->handler = new TwigErrorHandler(
+            $errorPage,
+            new FakeHttpResponder(),
+            new AppMeta('Madapaja\TwigModule')
         );
     }
 
@@ -42,7 +43,7 @@ class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
         $request->path = '/';
         $request->query = [];
         $handler = $this->handler->handle(new NotFound, $request);
-        $this->assertInstanceOf(TwigErrorPageHandler::class, $handler);
+        $this->assertInstanceOf(TwigErrorHandler::class, $handler);
 
         return $handler;
     }
@@ -50,7 +51,7 @@ class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
     /**
      * @depends testHandle
      */
-    public function testTransfer404(TwigErrorPageHandler $handler)
+    public function testTransfer404(TwigErrorHandler $handler)
     {
         $handler->transfer();
         $this->assertSame(404, FakeHttpResponder::$code);
@@ -66,9 +67,9 @@ class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
         $request->query = [];
         $handler = $this->handler->handle(new ServerError, $request);
         $handler->transfer();
-        $this->assertSame(500, FakeHttpResponder::$code);
+        $this->assertSame(503, FakeHttpResponder::$code);
         $this->assertSame('text/html; charset=utf-8', FakeHttpResponder::$headers['content-type']);
-        $this->assertSame('<html>code:500 msg:Internal Server Error</html>', FakeHttpResponder::$content);
+        $this->assertSame('<html>code:503 msg:Service Unavailable</html>', FakeHttpResponder::$content);
     }
 
 }

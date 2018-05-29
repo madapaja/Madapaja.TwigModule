@@ -7,7 +7,7 @@
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\ResourceObject;
-use BEAR\Resource\TransferInterface;
+use BEAR\Sunday\Extension\Transfer\TransferInterface;
 
 class FakeHttpResponder implements TransferInterface
 {
