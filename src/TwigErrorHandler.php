@@ -57,6 +57,7 @@ final class TwigErrorHandler implements ErrorInterface
             ],
             'e' => [
                 'code' => $e->getCode(),
+                'class' => get_class($e),
                 'message' => $e->getMessage()
             ],
             'logref' => (string) $logRef
