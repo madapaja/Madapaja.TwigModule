@@ -14,6 +14,7 @@ use BEAR\Resource\Exception\ResourceNotFoundException as NotFound;
 use BEAR\Sunday\Extension\Error\ErrorInterface;
 use BEAR\Sunday\Extension\Router\RouterMatch as Request;
 use BEAR\Sunday\Extension\Transfer\TransferInterface;
+use Psr\Log\LoggerInterface;
 
 final class TwigErrorHandler implements ErrorInterface
 {
@@ -30,12 +31,16 @@ final class TwigErrorHandler implements ErrorInterface
      * @var AbstractAppMeta
      */
     private $appMeta;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
-    public function __construct(TwigErrorPage $errorPage, TransferInterface $transfer, AbstractAppMeta $appMeta)
+    public function __construct(TwigErrorPage $errorPage, TransferInterface $transfer, LoggerInterface $logger)
     {
         $this->transfer = $transfer;
         $this->errorPage = $errorPage;
-        $this->appMeta = $appMeta;
+        $this->logger = $logger;
     }
 
     /**
@@ -45,9 +50,10 @@ final class TwigErrorHandler implements ErrorInterface
     {
         unset($request);
         $code = $this->getCode($e);
-        $logRef = \hash('crc32b', (string) $e);
+        $eStr = (string) $e;
+        $logRef = crc32($eStr);
         if ($code >= 500) {
-            \error_log($logRef . ':' . (string) $e);
+            $this->logger->error(sprintf('logref:%s %s', $logRef, $eStr));
         }
         $this->errorPage->code = $code;
         $this->errorPage->body = [

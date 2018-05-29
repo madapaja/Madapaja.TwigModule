@@ -10,6 +10,7 @@ use BEAR\AppMeta\AppMeta;
 use BEAR\Resource\Exception\ResourceNotFoundException as NotFound;
 use BEAR\Resource\Exception\ServerErrorException as ServerError;
 use BEAR\Sunday\Extension\Router\RouterMatch;
+use Psr\Log\NullLogger;
 use Twig\Loader\FilesystemLoader;
 
 class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
@@ -27,11 +28,11 @@ class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
             )
         );
         $errorPage = new TwigErrorPage;
-        $errorPage->setRenderer(new ErrorPagerRenderer($twig));
+        $errorPage->setRenderer(new ErrorPagerRenderer($twig, '/error/error.html.twig'));
         $this->handler = new TwigErrorHandler(
             $errorPage,
             new FakeHttpResponder(),
-            new AppMeta('Madapaja\TwigModule')
+            new NullLogger
         );
     }
 
