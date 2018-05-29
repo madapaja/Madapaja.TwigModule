@@ -30,7 +30,7 @@ class ErrorPagerRenderer implements RenderInterface
      */
     public function render(ResourceObject $ro)
     {
-        $template = "error/error.{$ro->code}.html.twig";
+        $template = "error/error{$ro->code}.html.twig";
         try {
             $ro->view = $this->twig->render($template, $ro->body);
         } catch (\Twig_Error_Loader $e) {
