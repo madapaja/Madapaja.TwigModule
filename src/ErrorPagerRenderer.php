@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is part of the Madapaja.TwigModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
@@ -18,11 +22,11 @@ class ErrorPagerRenderer implements RenderInterface
     }
 
     /**
-     * @return string
-     *
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
+     *
+     * @return string
      */
     public function render(ResourceObject $ro)
     {

@@ -71,7 +71,7 @@ class TwigRenderer implements RenderInterface
             return $this->loadTemplate($ro);
         } catch (\Twig_Error_Loader $e) {
             if ($ro->code !== 200) {
-                return null;
+                return;
             }
         }
 
@@ -107,8 +107,8 @@ class TwigRenderer implements RenderInterface
 
     private function buildBody(ResourceObject $ro) : array
     {
-        $body = is_array($ro->body) ? $ro->body : [];
-        $body += ['_ro' => $ro,];
+        $body = \is_array($ro->body) ? $ro->body : [];
+        $body += ['_ro' => $ro];
 
         return $body;
     }

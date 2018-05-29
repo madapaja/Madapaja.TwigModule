@@ -103,6 +103,7 @@ class TwigModule extends AbstractModule
     {
         if ($this->isNotEmpty($this->paths)) {
             $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
+
             return;
         }
         $this->bind()->annotatedWith(TwigPaths::class)->toProvider(AppPathProvider::class);
@@ -112,6 +113,7 @@ class TwigModule extends AbstractModule
     {
         if ($this->isNotEmpty($this->options)) {
             $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
+
             return;
         }
         $this->bind()->annotatedWith(TwigOptions::class)->toProvider(OptionProvider::class);
@@ -119,6 +121,6 @@ class TwigModule extends AbstractModule
 
     private function isNotEmpty($var)
     {
-        return is_array($var) && ! empty($var);
+        return \is_array($var) && ! empty($var);
     }
 }

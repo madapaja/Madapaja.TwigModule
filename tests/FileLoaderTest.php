@@ -27,7 +27,7 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
 
     public function testRenderer()
     {
-        $injector = $this->getInjector();;
+        $injector = $this->getInjector();
         $ro = $injector->getInstance(Index::class);
         $prop = (new \ReflectionClass($ro))->getProperty('renderer');
         $prop->setAccessible(true);
@@ -48,26 +48,26 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
 
     public function testIndex()
     {
-        $injector = $this->getInjector();;
+        $injector = $this->getInjector();
         $ro = $injector->getInstance(Index::class);
 
-        $this->assertSame('Hello, BEAR.Sunday!', trim((string) $ro->onGet()));
+        $this->assertSame('Hello, BEAR.Sunday!', \trim((string) $ro->onGet()));
     }
 
     public function testTemplatePath()
     {
-        $injector = $this->getInjector();;
+        $injector = $this->getInjector();
         $ro = $injector->getInstance(Index::class);
 
-        $this->assertSame('Your Name is MyName!', trim((string) $ro->onPost('MyName')));
+        $this->assertSame('Your Name is MyName!', \trim((string) $ro->onPost('MyName')));
     }
 
     public function testIndexWithArg()
     {
-        $injector = $this->getInjector();;
+        $injector = $this->getInjector();
         $ro = $injector->getInstance(Index::class);
 
-        $this->assertSame('Hello, Madapaja!', trim((string) $ro->onGet('Madapaja')));
+        $this->assertSame('Hello, Madapaja!', \trim((string) $ro->onGet('Madapaja')));
     }
 
     /**
@@ -75,7 +75,7 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
      */
     public function testTemplateNotFoundException()
     {
-        $injector = $this->getInjector();;
+        $injector = $this->getInjector();
         $ro = $injector->getInstance(NoTemplate::class);
         $prop = (new \ReflectionClass($ro))->getProperty('renderer');
         $prop->setAccessible(true);
@@ -84,7 +84,7 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
 
     public function testNoViewWhenCode301()
     {
-        $injector = $this->getInjector();;
+        $injector = $this->getInjector();
         $ro = $injector->getInstance(NoTemplate::class);
         $ro->code = 303;
         $prop = (new \ReflectionClass($ro))->getProperty('renderer');
@@ -95,7 +95,7 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
 
     public function testNoContent()
     {
-        $injector = $this->getInjector();;
+        $injector = $this->getInjector();
         $ro = $injector->getInstance(NoTemplate::class);
         $ro->code = Code::NO_CONTENT;
         $prop = (new \ReflectionClass($ro))->getProperty('renderer');
@@ -106,7 +106,7 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
 
     public function testPage()
     {
-        $injector = $this->getInjector();;
+        $injector = $this->getInjector();
         $ro = $injector->getInstance(Page::class);
 
         $this->assertSame('<!DOCTYPE html><html><head><title>Page</title><body>Hello, BEAR.Sunday!</body></html>', (string) $ro->onGet());
@@ -114,7 +114,7 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
 
     public function testCode()
     {
-        $injector = $this->getInjector();;
+        $injector = $this->getInjector();
         $ro = $injector->getInstance(\Madapaja\TwigModule\Resource\Page\Code::class);
 
         $this->assertSame('code:200 date:Tue, 15 Nov 1994 12:45:26 GMT', (string) $ro->onGet());
@@ -125,6 +125,6 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
         $injector = new Injector(new TwigAppMetaTestModule);
         $ro = $injector->getInstance(Index::class);
         $ro->onGet();
-        $this->assertSame('Hello, BEAR.Sunday!', trim((string) $ro));
+        $this->assertSame('Hello, BEAR.Sunday!', \trim((string) $ro));
     }
 }

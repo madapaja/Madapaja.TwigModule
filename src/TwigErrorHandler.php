@@ -45,13 +45,13 @@ final class TwigErrorHandler implements ErrorInterface
     {
         unset($request);
         $code = $this->getCode($e);
-        $logRef = hash('crc32b', (string) $e);
+        $logRef = \hash('crc32b', (string) $e);
         if ($code >= 500) {
-            error_log($logRef . ':' . (string) $e);
+            \error_log($logRef . ':' . (string) $e);
         }
         $this->errorPage->code = $code;
         $this->errorPage->body = [
-            'status' =>  [
+            'status' => [
                 'code' => $code,
                 'message' => (new Code)->statusText[$code]
             ],

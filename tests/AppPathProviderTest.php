@@ -20,8 +20,8 @@ class AppPathProviderTest extends PHPUnit_Framework_TestCase
         ];
 
         foreach ($paths as $path) {
-            if (! is_dir($path)) {
-                mkdir($path, 0777, true);
+            if (! \is_dir($path)) {
+                \mkdir($path, 0777, true);
             }
         }
 

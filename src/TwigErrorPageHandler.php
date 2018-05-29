@@ -7,21 +7,11 @@
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\Code;
-use BEAR\Resource\RenderInterface;
-use BEAR\Resource\TransferInterface;
-use BEAR\Sunday\Extension\Error\ErrorInterface;
-use Madapaja\TwigModule\Annotation\TwigLoader;
-use Madapaja\TwigModule\Annotation\TwigOptions;
-use Madapaja\TwigModule\Annotation\TwigPaths;
-use Ray\Di\AbstractModule;
-use Ray\Di\Scope;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
-use Twig_LoaderInterface;
-
 use BEAR\Resource\Exception\BadRequestException as BadRequest;
 use BEAR\Resource\Exception\ResourceNotFoundException as NotFound;
 use BEAR\Resource\Exception\ServerErrorException as ServerError;
+use BEAR\Resource\TransferInterface;
+use BEAR\Sunday\Extension\Error\ErrorInterface;
 use BEAR\Sunday\Extension\Router\RouterMatch as Request;
 
 final class TwigErrorPageHandler implements ErrorInterface
@@ -46,11 +36,12 @@ final class TwigErrorPageHandler implements ErrorInterface
      */
     public function handle(\Exception $e, Request $request)
     {
+        unset($request);
         $code = $e->getCode();
         if ($this->isCodeExists($e)) {
             $this->errorPage->code = $code;
             $this->errorPage->body = [
-                'status' =>  [
+                'status' => [
                     'code' => $code,
                     'message' => (new Code)->statusText[$code]
                 ]

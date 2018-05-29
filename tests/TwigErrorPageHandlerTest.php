@@ -12,7 +12,6 @@ use BEAR\Resource\Exception\ServerErrorException as ServerError;
 use BEAR\Sunday\Extension\Router\RouterMatch;
 use Twig\Loader\FilesystemLoader;
 
-
 class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -27,7 +26,7 @@ class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
                 __DIR__ . '/Fake/templates'
             )
         );
-        $errorPage =  new TwigErrorPage;
+        $errorPage = new TwigErrorPage;
         $errorPage->setRenderer(new ErrorPagerRenderer($twig));
         $this->handler = new TwigErrorHandler(
             $errorPage,
@@ -71,5 +70,4 @@ class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('text/html; charset=utf-8', FakeHttpResponder::$headers['content-type']);
         $this->assertSame('<html>code:503 msg:Service Unavailable</html>', FakeHttpResponder::$content);
     }
-
 }
