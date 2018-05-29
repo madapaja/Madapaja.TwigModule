@@ -15,11 +15,6 @@ use Ray\Di\Injector;
 
 class FileLoaderTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @var Injector
-     */
-    private $injector;
-
     public function getInjector() : Injector
     {
         return new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource']));

@@ -23,6 +23,7 @@ class FakeHttpResponder implements TransferInterface
 
     public function __invoke(ResourceObject $ro, array $server)
     {
+        unset($server);
         $ro->toString();
         self::$content = $ro->view;
         self::$code = $ro->code;
