@@ -24,44 +24,21 @@ use BEAR\Resource\Exception\ResourceNotFoundException as NotFound;
 use BEAR\Resource\Exception\ServerErrorException as ServerError;
 use BEAR\Sunday\Extension\Router\RouterMatch as Request;
 
-
 final class TwigErrorPageHandler implements ErrorInterface
 {
-    /**
-     * @var string
-     */
-    const CONTENT_TYPE = 'application/vnd.error+json';
-
     /**
      * @var TransferInterface
      */
     private $transfer;
-
     /**
-     * @var Twig_Environment
+     * @var TwigErrorPage
      */
-    private $twig;
+    private $errorPage;
 
-    /**
-     * @var int
-     */
-    private $code = 500;
-
-    /**
-     * @var array
-     */
-    private $status = ['message' => '500 Server Error'];
-
-    /**
-     * @var string
-     */
-    private $templateDir;
-
-    public function __construct(string $templateDir, Twig_Environment $twig, TransferInterface $transfer)
+    public function __construct(TwigErrorPage $errorPage, TransferInterface $transfer)
     {
         $this->transfer = $transfer;
-        $this->twig = $twig;
-        $this->templateDir = $templateDir;
+        $this->errorPage = $errorPage;
     }
 
     /**
@@ -69,10 +46,18 @@ final class TwigErrorPageHandler implements ErrorInterface
      */
     public function handle(\Exception $e, Request $request)
     {
+        $code = $e->getCode();
         if ($this->isCodeExists($e)) {
-            $this->code = $e->getCode();
-            $this->status =  ['message' => (new Code)->statusText[$this->code]];
+            $this->errorPage->code = $code;
+            $this->errorPage->body = [
+                'status' =>  [
+                    'code' => $code,
+                    'message' => (new Code)->statusText[$code]
+                ]
+            ];
         }
+
+        return $this;
     }
 
     /**
@@ -80,12 +65,7 @@ final class TwigErrorPageHandler implements ErrorInterface
      */
     public function transfer()
     {
-        $templateFile = sprintf('%s/error.%s.html.twg', $this->code, $this->templateDir);
-
-        $templateFile = file_exists($templateFile) ? $templateFile : $this->templateDir . '/error.html.twig';
-        $this->twig->load($templateFile);
-        $this->errorPage->headers['content-type'] = self::CONTENT_TYPE;
-        $this->transfer->__invoke($this->errorPage, []);
+        ($this->transfer)($this->errorPage, []);
     }
 
     private function isCodeExists(\Exception $e) : bool
