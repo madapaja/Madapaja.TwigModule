@@ -50,14 +50,6 @@ class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
     /**
      * @depends testHandle
      */
-    public function testTransfer404(TwigErrorHandler $handler)
-    {
-        $handler->transfer();
-        $this->assertSame(404, FakeHttpResponder::$code);
-        $this->assertSame('text/html; charset=utf-8', FakeHttpResponder::$headers['content-type']);
-        $this->assertSame('<html>404 404</html>', FakeHttpResponder::$content);
-    }
-
     public function testTransfer()
     {
         $request = new RouterMatch;
