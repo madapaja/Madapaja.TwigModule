@@ -6,7 +6,6 @@
  */
 namespace Madapaja\TwigModule;
 
-use BEAR\AppMeta\AppMeta;
 use BEAR\Resource\Exception\ResourceNotFoundException as NotFound;
 use BEAR\Resource\Exception\ServerErrorException as ServerError;
 use BEAR\Sunday\Extension\Router\RouterMatch;

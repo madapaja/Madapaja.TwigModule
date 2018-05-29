@@ -6,7 +6,6 @@
  */
 namespace Madapaja\TwigModule;
 
-use BEAR\AppMeta\AbstractAppMeta;
 use BEAR\Package\Provide\Error\LogRef;
 use BEAR\Resource\Code;
 use BEAR\Resource\Exception\BadRequestException as BadRequest;
@@ -28,10 +27,6 @@ final class TwigErrorHandler implements ErrorInterface
     private $errorPage;
 
     /**
-     * @var AbstractAppMeta
-     */
-    private $appMeta;
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -51,9 +46,9 @@ final class TwigErrorHandler implements ErrorInterface
         unset($request);
         $code = $this->getCode($e);
         $eStr = (string) $e;
-        $logRef = crc32($eStr);
+        $logRef = \crc32($eStr);
         if ($code >= 500) {
-            $this->logger->error(sprintf('logref:%s %s', $logRef, $eStr));
+            $this->logger->error(\sprintf('logref:%s %s', $logRef, $eStr));
         }
         $this->errorPage->code = $code;
         $this->errorPage->body = [
@@ -63,7 +58,7 @@ final class TwigErrorHandler implements ErrorInterface
             ],
             'e' => [
                 'code' => $e->getCode(),
-                'class' => get_class($e),
+                'class' => \get_class($e),
                 'message' => $e->getMessage()
             ],
             'logref' => (string) $logRef
