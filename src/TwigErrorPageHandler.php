@@ -13,6 +13,7 @@ use BEAR\Resource\Exception\ServerErrorException as ServerError;
 use BEAR\Resource\TransferInterface;
 use BEAR\Sunday\Extension\Error\ErrorInterface;
 use BEAR\Sunday\Extension\Router\RouterMatch as Request;
+use Psr\Log\LoggerInterface;
 
 final class TwigErrorPageHandler implements ErrorInterface
 {
@@ -25,10 +26,16 @@ final class TwigErrorPageHandler implements ErrorInterface
      */
     private $errorPage;
 
-    public function __construct(TwigErrorPage $errorPage, TransferInterface $transfer)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(TwigErrorPage $errorPage, TransferInterface $transfer, LoggerInterface $logger)
     {
         $this->transfer = $transfer;
         $this->errorPage = $errorPage;
+        $this->logger = $logger;
     }
 
     /**
@@ -37,16 +44,22 @@ final class TwigErrorPageHandler implements ErrorInterface
     public function handle(\Exception $e, Request $request)
     {
         unset($request);
-        $code = $e->getCode();
-        if ($this->isCodeExists($e)) {
-            $this->errorPage->code = $code;
-            $this->errorPage->body = [
-                'status' => [
-                    'code' => $code,
-                    'message' => (new Code)->statusText[$code]
-                ]
-            ];
+        $code = $this->isCodeExists($e) ? $e->getCode() : 503;
+        if ($code >= 500) {
+            $eStr = (string) $e;
+            $this->logger->error(\sprintf('logref:%s %s', \crc32($eStr), $eStr));
         }
+        $this->errorPage->code = $code;
+        $this->errorPage->body = [
+            'status' => [
+                'code' => $code,
+                'message' => (new Code)->statusText[$code]
+            ],
+            'e' => [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage()
+            ]
+        ];
 
         return $this;
     }
