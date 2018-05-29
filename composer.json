@@ -36,11 +36,10 @@
     }
   },
   "scripts": {
-    "test": ["@cs", "php -n ./vendor/bin/phpunit"],
-    "cs": ["php -n ./vendor/bin/phpcs --standard=./phpcs.xml src"],
-    "cs-fix": ["php -n ./vendor/bin/phpcbf src"],
+    "test": ["@setup", "vendor/bin/phpunit"],
+    "tests": ["@cs", "phpmd src,tests text ./phpmd.xml", "phpstan analyse -l max src tests -c phpstan.neon --no-progress", "@test"],
     "coverage": ["php -dzend_extension=xdebug.so ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"],
-    "md": ["phpmd src text phpmd.xml"],
-    "check-all": ["@cs", "@md", "@coverage"]
+    "cs": ["php-cs-fixer fix -v --dry-run", "phpcs --standard=phpcs.xml src;"],
+    "cs-fix": ["php-cs-fixer fix -v", "phpcbf src tests"]
   }
 }
