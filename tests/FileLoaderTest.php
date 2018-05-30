@@ -32,11 +32,11 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
 
     public function testTwigOptions()
     {
-        /** @var $renderer TwigRenderer */
+        /** @var TwigRenderer $renderer */
         $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource'], ['debug' => true])))->getInstance(TwigRenderer::class);
         $this->assertTrue($renderer->twig->isDebug());
 
-        /** @var $renderer TwigRenderer */
+        /** @var TwigRenderer $renderer */
         $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource'], ['debug' => false])))->getInstance(TwigRenderer::class);
         $this->assertFalse($renderer->twig->isDebug());
     }
