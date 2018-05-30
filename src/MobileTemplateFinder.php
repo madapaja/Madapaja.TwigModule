@@ -42,7 +42,7 @@ class MobileTemplateFinder implements TemplateFinderInterface
      */
     public function __invoke(string $name) : string
     {
-        $templatePath = $this->templateFinder->__invoke($name);
+        $templatePath = ($this->templateFinder)($name);
         $detect = new \Mobile_Detect(null, $this->userAgent);
         $isMobile = $detect->isMobile() && ! $detect->isTablet();
         if ($isMobile) {

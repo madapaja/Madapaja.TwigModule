@@ -86,7 +86,7 @@ class TwigRenderer implements RenderInterface
         $loader = $this->twig->getLoader();
         if ($loader instanceof \Twig_Loader_Filesystem) {
             $classFile = $this->getReflection($ro)->getFileName();
-            $templateFile = $this->templateFinder->__invoke($classFile);
+            $templateFile = ($this->templateFinder)($classFile);
 
             return $this->twig->load($templateFile);
         }
