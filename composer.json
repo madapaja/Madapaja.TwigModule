@@ -32,8 +32,11 @@
     }
   },
   "autoload-dev":{
-    "psr-4":{
-      "Madapaja\\TwigModule\\": "tests/Fake/src"
+    "psr-4": {
+      "Madapaja\\TwigModule\\": [
+        "tests",
+        "tests/Fake/src"
+      ]
     }
   },
   "scripts": {

@@ -10,6 +10,8 @@ use BEAR\Resource\ResourceObject;
 
 class Index extends ResourceObject
 {
+    public $templatePath;
+
     public function onGet($name = 'BEAR.Sunday')
     {
         $this['name'] = $name;

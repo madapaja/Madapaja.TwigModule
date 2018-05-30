@@ -23,7 +23,7 @@ class OptionProviderTest extends PHPUnit_Framework_TestCase
 
     public function testOptionProvider()
     {
-        /** @var $renderer TwigRenderer */
+        /** @var TwigRenderer $renderer */
         $renderer = (new Injector(new OptionProviderTestModule($this->tmpDir, true)))->getInstance(TwigRenderer::class);
 
         $this->assertSame($this->tmpDir . '/twig', $renderer->twig->getCache());
@@ -32,7 +32,7 @@ class OptionProviderTest extends PHPUnit_Framework_TestCase
 
     public function testOptionProviderDebugFalse()
     {
-        /** @var $renderer TwigRenderer */
+        /** @var TwigRenderer $renderer */
         $renderer = (new Injector(new OptionProviderTestModule($this->tmpDir, false)))->getInstance(TwigRenderer::class);
         $this->assertFalse($renderer->twig->isDebug());
     }

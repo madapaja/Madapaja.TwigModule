@@ -4,12 +4,12 @@
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
-namespace Madapaja\TwigModule\Resource\Page;
+namespace Madapaja\TwigModule;
 
 use BEAR\Resource\Code;
-use Madapaja\TwigModule\TwigAppMetaTestModule;
-use Madapaja\TwigModule\TwigFileLoaderTestModule;
-use Madapaja\TwigModule\TwigRenderer;
+use Madapaja\TwigModule\Resource\Page\Index;
+use Madapaja\TwigModule\Resource\Page\NoTemplate;
+use Madapaja\TwigModule\Resource\Page\Page;
 use PHPUnit_Framework_TestCase;
 use Ray\Di\Injector;
 
@@ -32,11 +32,11 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
 
     public function testTwigOptions()
     {
-        /** @var $renderer TwigRenderer */
+        /** @var TwigRenderer $renderer */
         $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource'], ['debug' => true])))->getInstance(TwigRenderer::class);
         $this->assertTrue($renderer->twig->isDebug());
 
-        /** @var $renderer TwigRenderer */
+        /** @var TwigRenderer $renderer */
         $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource'], ['debug' => false])))->getInstance(TwigRenderer::class);
         $this->assertFalse($renderer->twig->isDebug());
     }

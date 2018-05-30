@@ -25,8 +25,11 @@ class AppPathProviderTest extends PHPUnit_Framework_TestCase
             }
         }
 
-        /** @var $renderer TwigRenderer */
+        /** @var TwigRenderer $renderer */
         $renderer = (new Injector(new AppPathProviderTestModule($appDir)))->getInstance(TwigRenderer::class);
-        $this->assertSame($paths, $renderer->twig->getLoader()->getPaths());
+        /** @var \Twig_Loader_Filesystem $loader */
+        $loader = $renderer->twig->getLoader();
+        $this->assertInstanceOf(\Twig_Loader_Filesystem::class, $loader);
+        $this->assertSame($paths, $loader->getPaths());
     }
 }
