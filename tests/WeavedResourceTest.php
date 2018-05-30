@@ -4,10 +4,9 @@
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
-namespace Madapaja\TwigModule\Resource\Page;
+namespace Madapaja\TwigModule;
 
-use Madapaja\TwigModule\TwigRenderer;
-use Madapaja\TwigModule\TwigWeavedResourceTestModule;
+use Madapaja\TwigModule\Resource\Page\Index;
 use PHPUnit_Framework_TestCase;
 use Ray\Di\Injector;
 
