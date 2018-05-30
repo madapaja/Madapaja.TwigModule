@@ -17,7 +17,6 @@ before_script:
   - composer self-update
   - composer update $DEPENDENCIES
 script:
-  - vendor/bin/phpmd src text phpmd.xml
   - ./vendor/bin/phpunit --coverage-clover=coverage.clover;
   - if [ "$TRAVIS_PHP_VERSION" = "7.1" ]; then wget https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.4.0/php-cs-fixer.phar -O php-cs-fixer && php php-cs-fixer fix --config=.php_cs -v --dry-run --using-cache=no --path-mode=intersection `git diff --name-only --diff-filter=ACMRTUXB $TRAVIS_COMMIT_RANGE`; fi
 
