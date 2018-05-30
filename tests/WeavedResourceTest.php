@@ -36,6 +36,6 @@ class WeavedResourceTest extends PHPUnit_Framework_TestCase
     {
         $ro = $this->injector->getInstance(Index::class);
 
-        $this->assertSame('Hello, BEAR.Sunday!', trim((string) $ro->onGet()));
+        $this->assertSame('Hello, BEAR.Sunday!', \trim((string) $ro->onGet()));
     }
 }

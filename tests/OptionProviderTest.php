@@ -16,8 +16,8 @@ class OptionProviderTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->tmpDir = __DIR__ . '/tmp/optionProvider/tmp';
-        if (! is_dir($this->tmpDir)) {
-            mkdir($this->tmpDir, 0777, true);
+        if (! \is_dir($this->tmpDir)) {
+            \mkdir($this->tmpDir, 0777, true);
         }
     }
 
@@ -27,13 +27,13 @@ class OptionProviderTest extends PHPUnit_Framework_TestCase
         $renderer = (new Injector(new OptionProviderTestModule($this->tmpDir, true)))->getInstance(TwigRenderer::class);
 
         $this->assertSame($this->tmpDir . '/twig', $renderer->twig->getCache());
-        $this->assertSame(true, $renderer->twig->isDebug());
+        $this->assertTrue($renderer->twig->isDebug());
     }
 
     public function testOptionProviderDebugFalse()
     {
         /** @var $renderer TwigRenderer */
         $renderer = (new Injector(new OptionProviderTestModule($this->tmpDir, false)))->getInstance(TwigRenderer::class);
-        $this->assertSame(false, $renderer->twig->isDebug());
+        $this->assertFalse($renderer->twig->isDebug());
     }
 }

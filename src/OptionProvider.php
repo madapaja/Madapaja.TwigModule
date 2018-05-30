@@ -26,7 +26,7 @@ class OptionProvider implements ProviderInterface
      * @Named("isDebug=Madapaja\TwigModule\Annotation\TwigDebug")
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function __construct(AbstractAppMeta $appMeta, $isDebug = false)
+    public function __construct(AbstractAppMeta $appMeta, bool $isDebug = false)
     {
         $this->appMeta = $appMeta;
         $this->isDebug = $isDebug;

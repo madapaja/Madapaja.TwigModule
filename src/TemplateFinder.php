@@ -13,9 +13,9 @@ class TemplateFinder implements TemplateFinderInterface
      */
     public function __invoke(string $resourceFilePath) : string
     {
-        $pos = strpos($resourceFilePath, '/Resource/');
-        $relativePath = substr($resourceFilePath, $pos + 10);
-        $templateFile =  str_replace('.php', '.html.twig', $relativePath);
+        $pos = \strpos($resourceFilePath, '/Resource/');
+        $relativePath = \substr($resourceFilePath, $pos + 10);
+        $templateFile = \str_replace('.php', '.html.twig', $relativePath);
 
         return $templateFile;
     }
