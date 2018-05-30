@@ -70,12 +70,10 @@ class TwigRenderer implements RenderInterface
         try {
             return $this->loadTemplate($ro);
         } catch (\Twig_Error_Loader $e) {
-            if ($ro->code !== 200) {
-                return;
+            if ($ro->code === 200) {
+                throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
             }
         }
-
-        throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
     }
 
     private function isNoContent(ResourceObject $ro) : bool
