@@ -7,7 +7,6 @@
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
-use BEAR\Sunday\Extension\Error\ErrorInterface;
 use Madapaja\TwigModule\Annotation\TwigLoader;
 use Madapaja\TwigModule\Annotation\TwigOptions;
 use Madapaja\TwigModule\Annotation\TwigPaths;
