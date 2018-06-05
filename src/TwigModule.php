@@ -54,7 +54,6 @@ class TwigModule extends AbstractModule
         $this->bindTwigOptions();
         $this->bind(RenderInterface::class)->annotatedWith('error_page')->to(ErrorPagerRenderer::class);
         $this->bind(ErrorInterface::class)->to(TwigErrorHandler::class);
-        $this->bind(TwigErrorPage::class);
     }
 
     private function bindRender()
