@@ -9,11 +9,12 @@ namespace Madapaja\TwigModule;
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
 use Madapaja\TwigModule\Annotation\TwigErrorPath;
+use Twig\Environment;
 
 class ErrorPagerRenderer implements RenderInterface
 {
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     private $twig;
 
@@ -22,16 +23,16 @@ class ErrorPagerRenderer implements RenderInterface
     /**
      * @TwigErrorPath("errorPage")
      */
-    public function __construct(\Twig_Environment $twig, string $errorPage)
+    public function __construct(Environment $twig, string $errorPage)
     {
         $this->twig = $twig;
         $this->errorPage = $errorPage;
     }
 
     /**
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      *
      * @return string
      */
