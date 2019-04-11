@@ -8,8 +8,8 @@ namespace Madapaja\TwigModule;
 
 use Madapaja\TwigModule\Annotation\TwigLoader;
 use Ray\Di\AbstractModule;
-use Twig_Loader_Array;
-use Twig_LoaderInterface;
+use Twig\Loader\ArrayLoader;
+use Twig\Loader\LoaderInterface;
 
 class TwigArrayLoaderTestModule extends AbstractModule
 {
@@ -30,10 +30,10 @@ class TwigArrayLoaderTestModule extends AbstractModule
 EOD
         ]);
         $this
-            ->bind(Twig_LoaderInterface::class)
+            ->bind(LoaderInterface::class)
             ->annotatedWith(TwigLoader::class)
             ->toConstructor(
-                Twig_Loader_Array::class,
+                ArrayLoader::class,
                 'templates=twig_templates'
             );
     }

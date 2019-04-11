@@ -6,15 +6,15 @@
  */
 namespace Madapaja\TwigModule;
 
-use Twig_Extension;
-use Twig_SimpleFilter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class MyTwigExtension extends Twig_Extension
+class MyTwigExtension extends AbstractExtension
 {
     public function getFilters()
     {
         return [
-            new Twig_SimpleFilter('rot13', function ($string) {
+            new TwigFilter('rot13', function ($string) {
                 return str_rot13($string);
             }),
         ];

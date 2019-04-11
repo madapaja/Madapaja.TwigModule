@@ -8,6 +8,7 @@ namespace Madapaja\TwigModule;
 
 use PHPUnit_Framework_TestCase;
 use Ray\Di\Injector;
+use Twig\Loader\FilesystemLoader;
 
 class AppPathProviderTest extends PHPUnit_Framework_TestCase
 {
@@ -27,9 +28,9 @@ class AppPathProviderTest extends PHPUnit_Framework_TestCase
 
         /** @var TwigRenderer $renderer */
         $renderer = (new Injector(new AppPathProviderTestModule($appDir)))->getInstance(TwigRenderer::class);
-        /** @var \Twig_Loader_Filesystem $loader */
+        /** @var FilesystemLoader $loader */
         $loader = $renderer->twig->getLoader();
-        $this->assertInstanceOf(\Twig_Loader_Filesystem::class, $loader);
+        $this->assertInstanceOf(FilesystemLoader::class, $loader);
         $this->assertSame($paths, $loader->getPaths());
     }
 }
