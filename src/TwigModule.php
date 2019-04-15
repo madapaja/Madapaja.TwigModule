@@ -29,10 +29,10 @@ class TwigModule extends AbstractModule
     private $options;
 
     /**
-     * @param array $paths Twig template paths
-     * @param array $options Twig_Environment options
-     *
+     * @param array               $paths   Twig template paths
+     * @param array               $options Twig_Environment options
      * @param AbstractModule|null $module
+     *
      * @see http://twig.sensiolabs.org/api/master/Twig_Environment.html
      */
     public function __construct($paths = [], $options = [], AbstractModule $module = null)
@@ -66,7 +66,8 @@ class TwigModule extends AbstractModule
         $this
             ->bind(LoaderInterface::class)
             ->annotatedWith(TwigLoader::class)
-            ->toConstructor(FilesystemLoader::class,
+            ->toConstructor(
+                FilesystemLoader::class,
                 'paths=Madapaja\TwigModule\Annotation\TwigPaths'
             );
     }

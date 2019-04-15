@@ -6,7 +6,6 @@
  */
 namespace Madapaja\TwigModule;
 
-use BEAR\Package\Provide\Error\LogRef;
 use BEAR\Resource\Code;
 use BEAR\Resource\Exception\BadRequestException as BadRequest;
 use BEAR\Resource\Exception\ResourceNotFoundException as NotFound;
