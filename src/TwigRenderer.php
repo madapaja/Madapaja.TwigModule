@@ -10,7 +10,10 @@ use BEAR\Resource\Code;
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
 use Ray\Aop\WeavedInterface;
-use Twig_Environment;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Loader\FilesystemLoader;
+use Twig\TemplateWrapper;
 
 class TwigRenderer implements RenderInterface
 {
@@ -22,7 +25,7 @@ class TwigRenderer implements RenderInterface
     const EXT = '.html.twig';
 
     /**
-     * @var Twig_Environment
+     * @var \Twig\Environment
      */
     public $twig;
 
@@ -31,7 +34,7 @@ class TwigRenderer implements RenderInterface
      */
     private $templateFinder;
 
-    public function __construct(Twig_Environment $twig, TemplateFinderInterface $templateFinder = null)
+    public function __construct(Environment $twig, TemplateFinderInterface $templateFinder = null)
     {
         $this->twig = $twig;
         $this->templateFinder = $templateFinder ?: new TemplateFinder;
@@ -63,13 +66,13 @@ class TwigRenderer implements RenderInterface
     }
 
     /**
-     * @return null|\Twig_TemplateWrapper
+     * @return null|\Twig\TemplateWrapper
      */
     private function load(ResourceObject $ro)
     {
         try {
             return $this->loadTemplate($ro);
-        } catch (\Twig_Error_Loader $e) {
+        } catch (LoaderError $e) {
             if ($ro->code === 200) {
                 throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
             }
@@ -81,10 +84,10 @@ class TwigRenderer implements RenderInterface
         return $ro->code === Code::NO_CONTENT || $ro->view === '';
     }
 
-    private function loadTemplate(ResourceObject $ro) : \Twig_TemplateWrapper
+    private function loadTemplate(ResourceObject $ro) : TemplateWrapper
     {
         $loader = $this->twig->getLoader();
-        if ($loader instanceof \Twig_Loader_Filesystem) {
+        if ($loader instanceof FilesystemLoader) {
             $classFile = $this->getReflection($ro)->getFileName();
             $templateFile = ($this->templateFinder)($classFile);
 

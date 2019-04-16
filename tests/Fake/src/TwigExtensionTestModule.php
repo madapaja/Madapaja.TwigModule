@@ -8,7 +8,7 @@ namespace Madapaja\TwigModule;
 
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
-use Twig_Environment;
+use Twig\Environment;
 
 class TwigExtensionTestModule extends AbstractModule
 {
@@ -27,7 +27,7 @@ class TwigExtensionTestModule extends AbstractModule
     {
         $this->install(new TwigModule($this->paths));
         $this
-            ->bind(Twig_Environment::class)
+            ->bind(Environment::class)
             ->toProvider(ExtendedTwigEnvironmentProvider::class)
             ->in(Scope::SINGLETON);
     }

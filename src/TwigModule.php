@@ -12,9 +12,9 @@ use Madapaja\TwigModule\Annotation\TwigOptions;
 use Madapaja\TwigModule\Annotation\TwigPaths;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
-use Twig_LoaderInterface;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Twig\Loader\LoaderInterface;
 
 class TwigModule extends AbstractModule
 {
@@ -29,8 +29,9 @@ class TwigModule extends AbstractModule
     private $options;
 
     /**
-     * @param array $paths   Twig template paths
-     * @param array $options Twig_Environment options
+     * @param array               $paths   Twig template paths
+     * @param array               $options Twig_Environment options
+     * @param AbstractModule|null $module
      *
      * @see http://twig.sensiolabs.org/api/master/Twig_Environment.html
      */
@@ -63,10 +64,10 @@ class TwigModule extends AbstractModule
     private function bindTwigLoader()
     {
         $this
-            ->bind(Twig_LoaderInterface::class)
+            ->bind(LoaderInterface::class)
             ->annotatedWith(TwigLoader::class)
             ->toConstructor(
-                Twig_Loader_Filesystem::class,
+                FilesystemLoader::class,
                 'paths=Madapaja\TwigModule\Annotation\TwigPaths'
             );
     }
@@ -74,10 +75,10 @@ class TwigModule extends AbstractModule
     private function bindTwigEnvironment()
     {
         $this
-            ->bind(Twig_Environment::class)
+            ->bind(Environment::class)
             ->annotatedWith('original')
             ->toConstructor(
-                Twig_Environment::class,
+                Environment::class,
                 [
                     'loader' => TwigLoader::class,
                     'options' => TwigOptions::class
@@ -85,9 +86,9 @@ class TwigModule extends AbstractModule
             );
 
         $this
-            ->bind(Twig_Environment::class)
+            ->bind(Environment::class)
             ->toConstructor(
-                Twig_Environment::class,
+                Environment::class,
                 [
                     'loader' => TwigLoader::class,
                     'options' => TwigOptions::class

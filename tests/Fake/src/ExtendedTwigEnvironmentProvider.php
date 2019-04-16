@@ -8,7 +8,7 @@ namespace Madapaja\TwigModule;
 
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
-use Twig_Environment;
+use Twig\Environment;
 
 class ExtendedTwigEnvironmentProvider implements ProviderInterface
 {
@@ -16,10 +16,11 @@ class ExtendedTwigEnvironmentProvider implements ProviderInterface
 
     /**
      * @Named("original")
+     * @param Environment $twig
      */
-    public function __construct(Twig_Environment $twig)
+    public function __construct(Environment $twig)
     {
-        // $twig is an original Twig_Environment instance
+        // $twig is an original Twig\Environment instance
         $this->twig = $twig;
     }
 

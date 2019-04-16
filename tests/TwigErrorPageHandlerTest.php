@@ -10,6 +10,7 @@ use BEAR\Resource\Exception\ResourceNotFoundException as NotFound;
 use BEAR\Resource\Exception\ServerErrorException as ServerError;
 use BEAR\Sunday\Extension\Router\RouterMatch;
 use Psr\Log\NullLogger;
+use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
@@ -21,7 +22,7 @@ class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $twig = new \Twig_Environment(
+        $twig = new Environment(
             new FilesystemLoader(
                 __DIR__ . '/Fake/templates'
             )
