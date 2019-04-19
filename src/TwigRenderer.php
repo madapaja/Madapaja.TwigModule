@@ -46,7 +46,14 @@ class TwigRenderer implements RenderInterface
     public function render(ResourceObject $ro)
     {
         $this->setContentType($ro);
-        $ro->view = $this->isNoContent($ro) ? '' : $this->renderView($ro);
+
+        if ($this->isNoContent($ro)) {
+            $ro->view = '';
+        } elseif ($this->isRedirect($ro)) {
+            $ro->view = $this->renderRedirectView($ro);
+        } else {
+            $ro->view = $this->renderView($ro);
+        }
 
         return $ro->view;
     }
@@ -63,6 +70,23 @@ class TwigRenderer implements RenderInterface
         $template = $this->load($ro);
 
         return $template ? $template->render($this->buildBody($ro)) : '';
+    }
+
+    private function renderRedirectView(ResourceObject $ro)
+    {
+        $url = $ro->headers['Location'];
+
+        return sprintf('<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="refresh" content="0;url=%1$s" />
+        <title>Redirecting to %1$s</title>
+    </head>
+    <body>
+        Redirecting to <a href="%1$s">%1$s</a>.
+    </body>
+</html>', htmlspecialchars($url, ENT_QUOTES, 'UTF-8'));
     }
 
     /**
@@ -82,6 +106,17 @@ class TwigRenderer implements RenderInterface
     private function isNoContent(ResourceObject $ro) : bool
     {
         return $ro->code === Code::NO_CONTENT || $ro->view === '';
+    }
+
+    private function isRedirect(ResourceObject $ro) : bool
+    {
+        return in_array($ro->code, [
+            Code::MOVED_PERMANENTLY,
+            Code::FOUND,
+            Code::SEE_OTHER,
+            Code::TEMPORARY_REDIRECT,
+            Code::PERMANENT_REDIRECT,
+        ], true) && isset($ro->headers['Location']);
     }
 
     private function loadTemplate(ResourceObject $ro) : TemplateWrapper
