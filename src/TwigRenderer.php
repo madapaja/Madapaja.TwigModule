@@ -9,8 +9,8 @@ namespace Madapaja\TwigModule;
 use BEAR\Resource\Code;
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
-use Ray\Aop\WeavedInterface;
 use Madapaja\TwigModule\Annotation\TwigRedirectPath;
+use Ray\Aop\WeavedInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
@@ -110,7 +110,7 @@ class TwigRenderer implements RenderInterface
 
     private function isRedirect(ResourceObject $ro) : bool
     {
-        return in_array($ro->code, [
+        return \in_array($ro->code, [
             Code::MOVED_PERMANENTLY,
             Code::FOUND,
             Code::SEE_OTHER,
