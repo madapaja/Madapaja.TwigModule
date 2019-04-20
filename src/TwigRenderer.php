@@ -10,6 +10,7 @@ use BEAR\Resource\Code;
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
 use Ray\Aop\WeavedInterface;
+use Madapaja\TwigModule\Annotation\TwigRedirectPath;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
@@ -30,13 +31,22 @@ class TwigRenderer implements RenderInterface
     public $twig;
 
     /**
+     * @var string
+     */
+    private $redirectPage;
+
+    /**
      * @var TemplateFinderInterface
      */
     private $templateFinder;
 
-    public function __construct(Environment $twig, TemplateFinderInterface $templateFinder = null)
+    /**
+     * @TwigRedirectPath("redirectPage")
+     */
+    public function __construct(Environment $twig, string $redirectPage, TemplateFinderInterface $templateFinder = null)
     {
         $this->twig = $twig;
+        $this->redirectPage = $redirectPage;
         $this->templateFinder = $templateFinder ?: new TemplateFinder;
     }
 
@@ -76,17 +86,7 @@ class TwigRenderer implements RenderInterface
     {
         $url = $ro->headers['Location'];
 
-        return sprintf('<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="refresh" content="0;url=%1$s" />
-        <title>Redirecting to %1$s</title>
-    </head>
-    <body>
-        Redirecting to <a href="%1$s">%1$s</a>.
-    </body>
-</html>', htmlspecialchars($url, ENT_QUOTES, 'UTF-8'));
+        return $this->twig->render($this->redirectPage, ['url' => $url]);
     }
 
     /**
