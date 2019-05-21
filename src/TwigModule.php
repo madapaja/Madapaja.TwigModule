@@ -10,6 +10,7 @@ use BEAR\Resource\RenderInterface;
 use Madapaja\TwigModule\Annotation\TwigLoader;
 use Madapaja\TwigModule\Annotation\TwigOptions;
 use Madapaja\TwigModule\Annotation\TwigPaths;
+use Madapaja\TwigModule\Annotation\TwigRedirectPath;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 use Twig\Environment;
@@ -52,6 +53,7 @@ class TwigModule extends AbstractModule
         $this->bindTwigEnvironment();
         $this->bindTwigPaths();
         $this->bindTwigOptions();
+        $this->bindTwigRedirectPath();
     }
 
     private function bindRender()
@@ -114,6 +116,11 @@ class TwigModule extends AbstractModule
             return;
         }
         $this->bind()->annotatedWith(TwigOptions::class)->toProvider(OptionProvider::class);
+    }
+
+    private function bindTwigRedirectPath()
+    {
+        $this->bind()->annotatedWith(TwigRedirectPath::class)->toInstance('/redirect/redirect.html.twig');
     }
 
     private function isNotEmpty($var)

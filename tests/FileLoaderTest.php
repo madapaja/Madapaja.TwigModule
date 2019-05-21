@@ -10,6 +10,7 @@ use BEAR\Resource\Code;
 use Madapaja\TwigModule\Resource\Page\Index;
 use Madapaja\TwigModule\Resource\Page\NoTemplate;
 use Madapaja\TwigModule\Resource\Page\Page;
+use Madapaja\TwigModule\Resource\Page\Redirect;
 use PHPUnit_Framework_TestCase;
 use Ray\Di\Injector;
 
@@ -121,5 +122,26 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
         $ro = $injector->getInstance(Index::class);
         $ro->onGet();
         $this->assertSame('Hello, BEAR.Sunday!', \trim((string) $ro));
+    }
+
+    public function testNoRedirectOnGet()
+    {
+        $injector = $this->getInjector();
+        $ro = $injector->getInstance(Redirect::class);
+        $ro->onGet();
+
+        $this->assertSame(Code::OK, $ro->code);
+        $this->assertSame('foo is bar.', \trim((string) $ro));
+    }
+
+    public function testRedirectOnPost()
+    {
+        $injector = $this->getInjector();
+        $ro = $injector->getInstance(Redirect::class);
+        $ro->onPost();
+
+        $this->assertSame(Code::FOUND, $ro->code);
+        $this->assertSame('/path/to/baz', $ro->headers['Location']);
+        $this->assertRegexp('#^.*Redirecting to /path/to/baz.*$#s', \trim((string) $ro));
     }
 }

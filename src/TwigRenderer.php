@@ -9,6 +9,7 @@ namespace Madapaja\TwigModule;
 use BEAR\Resource\Code;
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
+use Madapaja\TwigModule\Annotation\TwigRedirectPath;
 use Ray\Aop\WeavedInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -30,13 +31,22 @@ class TwigRenderer implements RenderInterface
     public $twig;
 
     /**
+     * @var string
+     */
+    private $redirectPage;
+
+    /**
      * @var TemplateFinderInterface
      */
     private $templateFinder;
 
-    public function __construct(Environment $twig, TemplateFinderInterface $templateFinder = null)
+    /**
+     * @TwigRedirectPath("redirectPage")
+     */
+    public function __construct(Environment $twig, string $redirectPage, TemplateFinderInterface $templateFinder = null)
     {
         $this->twig = $twig;
+        $this->redirectPage = $redirectPage;
         $this->templateFinder = $templateFinder ?: new TemplateFinder;
     }
 
@@ -46,7 +56,14 @@ class TwigRenderer implements RenderInterface
     public function render(ResourceObject $ro)
     {
         $this->setContentType($ro);
-        $ro->view = $this->isNoContent($ro) ? '' : $this->renderView($ro);
+
+        if ($this->isNoContent($ro)) {
+            $ro->view = '';
+        } elseif ($this->isRedirect($ro)) {
+            $ro->view = $this->renderRedirectView($ro);
+        } else {
+            $ro->view = $this->renderView($ro);
+        }
 
         return $ro->view;
     }
@@ -63,6 +80,13 @@ class TwigRenderer implements RenderInterface
         $template = $this->load($ro);
 
         return $template ? $template->render($this->buildBody($ro)) : '';
+    }
+
+    private function renderRedirectView(ResourceObject $ro)
+    {
+        $url = $ro->headers['Location'];
+
+        return $this->twig->render($this->redirectPage, ['url' => $url]);
     }
 
     /**
@@ -82,6 +106,17 @@ class TwigRenderer implements RenderInterface
     private function isNoContent(ResourceObject $ro) : bool
     {
         return $ro->code === Code::NO_CONTENT || $ro->view === '';
+    }
+
+    private function isRedirect(ResourceObject $ro) : bool
+    {
+        return \in_array($ro->code, [
+            Code::MOVED_PERMANENTLY,
+            Code::FOUND,
+            Code::SEE_OTHER,
+            Code::TEMPORARY_REDIRECT,
+            Code::PERMANENT_REDIRECT,
+        ], true) && isset($ro->headers['Location']);
     }
 
     private function loadTemplate(ResourceObject $ro) : TemplateWrapper
