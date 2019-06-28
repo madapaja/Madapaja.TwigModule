@@ -59,19 +59,23 @@ class TwigRenderer implements RenderInterface
 
         if ($this->isNoContent($ro)) {
             $ro->view = '';
-        } elseif ($this->isRedirect($ro)) {
-            $ro->view = $this->renderRedirectView($ro);
-        } else {
-            $ro->view = $this->renderView($ro);
+
+            return $ro->view;
         }
+        if ($this->isRedirect($ro)) {
+            $ro->view = $this->renderRedirectView($ro);
+
+            return $ro->view;
+        }
+        $ro->view = $this->renderView($ro);
 
         return $ro->view;
     }
 
     private function setContentType(ResourceObject $ro)
     {
-        if (! isset($ro->headers['content-type'])) {
-            $ro->headers['content-type'] = 'text/html; charset=utf-8';
+        if (! isset($ro->headers['Content-Type'])) {
+            $ro->headers['Content-Type'] = 'text/html; charset=utf-8';
         }
     }
 
@@ -84,9 +88,11 @@ class TwigRenderer implements RenderInterface
 
     private function renderRedirectView(ResourceObject $ro)
     {
-        $url = $ro->headers['Location'];
-
-        return $this->twig->render($this->redirectPage, ['url' => $url]);
+        try {
+            return $this->twig->render($this->redirectPage, ['url' => $ro->headers['Location']]);
+        } catch (LoaderError $e) {
+            return '';
+        }
     }
 
     /**
