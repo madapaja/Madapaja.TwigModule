@@ -88,12 +88,11 @@ class TwigRenderer implements RenderInterface
 
     private function renderRedirectView(ResourceObject $ro)
     {
-        $url = $ro->headers['Location'];
-        if (\file_exists($this->redirectPage)) {
-            return $this->twig->render($this->redirectPage, ['url' => $url]);
+        try {
+            return $this->twig->render($this->redirectPage, ['url' => $ro->headers['Location']]);
+        } catch (LoaderError $e) {
+            return '';
         }
-
-        return '';
     }
 
     /**
