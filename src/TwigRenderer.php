@@ -74,8 +74,8 @@ class TwigRenderer implements RenderInterface
 
     private function setContentType(ResourceObject $ro)
     {
-        if (! isset($ro->headers['content-type'])) {
-            $ro->headers['content-type'] = 'text/html; charset=utf-8';
+        if (! isset($ro->headers['Content-Type'])) {
+            $ro->headers['Content-Type'] = 'text/html; charset=utf-8';
         }
     }
 
