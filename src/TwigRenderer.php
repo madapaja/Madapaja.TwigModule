@@ -59,11 +59,15 @@ class TwigRenderer implements RenderInterface
 
         if ($this->isNoContent($ro)) {
             $ro->view = '';
-        } elseif ($this->isRedirect($ro)) {
-            $ro->view = $this->renderRedirectView($ro);
-        } else {
-            $ro->view = $this->renderView($ro);
+
+            return $ro->view;
         }
+        if ($this->isRedirect($ro)) {
+            $ro->view = $this->renderRedirectView($ro);
+
+            return $ro->view;
+        }
+        $ro->view = $this->renderView($ro);
 
         return $ro->view;
     }
