@@ -6,16 +6,17 @@
  */
 namespace Madapaja\TwigModule;
 
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
-class MobileTemplateFinderTest extends \PHPUnit_Framework_TestCase
+class MobileTemplateFinderTest extends TestCase
 {
     /**
      * @var Injector
      */
     private $injector;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->injector = new Injector(new MobileTwigModule());
     }

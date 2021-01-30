@@ -7,10 +7,10 @@
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
-class AppMetaTest extends PHPUnit_Framework_TestCase
+class AppMetaTest extends TestCase
 {
     public function testRenderer()
     {

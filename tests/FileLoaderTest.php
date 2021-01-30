@@ -7,14 +7,15 @@
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\Code;
+use Madapaja\TwigModule\Exception\TemplateNotFound;
 use Madapaja\TwigModule\Resource\Page\Index;
 use Madapaja\TwigModule\Resource\Page\NoTemplate;
 use Madapaja\TwigModule\Resource\Page\Page;
 use Madapaja\TwigModule\Resource\Page\Redirect;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
-class FileLoaderTest extends PHPUnit_Framework_TestCase
+class FileLoaderTest extends TestCase
 {
     public function getInjector() : Injector
     {
@@ -66,11 +67,9 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
         $this->assertSame('Hello, Madapaja!', \trim((string) $ro->onGet('Madapaja')));
     }
 
-    /**
-     * @expectedException \Madapaja\TwigModule\Exception\TemplateNotFound
-     */
     public function testTemplateNotFoundException()
     {
+        $this->expectException(TemplateNotFound::class);
         $injector = $this->getInjector();
         $ro = $injector->getInstance(NoTemplate::class);
         $prop = (new \ReflectionClass($ro))->getProperty('renderer');
@@ -142,6 +141,6 @@ class FileLoaderTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame(Code::FOUND, $ro->code);
         $this->assertSame('/path/to/baz', $ro->headers['Location']);
-        $this->assertRegexp('#^.*Redirecting to /path/to/baz.*$#s', \trim((string) $ro));
+        $this->assertMatchesRegularExpression('#^.*Redirecting to /path/to/baz.*$#s', \trim((string) $ro));
     }
 }
