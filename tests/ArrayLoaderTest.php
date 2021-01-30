@@ -6,20 +6,21 @@
  */
 namespace Madapaja\TwigModule;
 
+use Madapaja\TwigModule\Exception\TemplateNotFound;
 use Madapaja\TwigModule\Resource\Page\Index;
 use Madapaja\TwigModule\Resource\Page\NoTemplate;
 use Madapaja\TwigModule\Resource\Page\Page;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
-class ArrayLoaderTest extends PHPUnit_Framework_TestCase
+class ArrayLoaderTest extends TestCase
 {
     /**
      * @var Injector
      */
     private $injector;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->injector = new Injector(new TwigArrayLoaderTestModule);
     }
@@ -47,11 +48,9 @@ class ArrayLoaderTest extends PHPUnit_Framework_TestCase
         $this->assertSame('Hello, Madapaja!', (string) $ro->onGet('Madapaja'));
     }
 
-    /**
-     * @expectedException \Madapaja\TwigModule\Exception\TemplateNotFound
-     */
     public function testTemplateNotFoundException()
     {
+        $this->expectException(TemplateNotFound::class);
         $ro = $this->injector->getInstance(NoTemplate::class);
         $prop = (new \ReflectionClass($ro))->getProperty('renderer');
         $prop->setAccessible(true);

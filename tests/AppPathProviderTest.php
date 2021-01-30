@@ -6,11 +6,11 @@
  */
 namespace Madapaja\TwigModule;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 use Twig\Loader\FilesystemLoader;
 
-class AppPathProviderTest extends PHPUnit_Framework_TestCase
+class AppPathProviderTest extends TestCase
 {
     public function testAppPathProvider()
     {

@@ -7,17 +7,17 @@
 namespace Madapaja\TwigModule;
 
 use Madapaja\TwigModule\Resource\Page\TwigFilter;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
-class ExtensionTest extends PHPUnit_Framework_TestCase
+class ExtensionTest extends TestCase
 {
     /**
      * @var Injector
      */
     private $injector;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->injector = new Injector(new TwigExtensionTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource/']));
     }

@@ -14,6 +14,7 @@ class Code extends ResourceObject
     {
         $this->code = 200;
         $this->headers['Last-Modified'] = 'Tue, 15 Nov 1994 12:45:26 GMT';
+        $this->body = '';
 
         return $this;
     }

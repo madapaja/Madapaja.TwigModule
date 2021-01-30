@@ -9,18 +9,19 @@ namespace Madapaja\TwigModule;
 use BEAR\Resource\Exception\ResourceNotFoundException as NotFound;
 use BEAR\Resource\Exception\ServerErrorException as ServerError;
 use BEAR\Sunday\Extension\Router\RouterMatch;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class TwigErrorPageHandlerTest extends \PHPUnit_Framework_TestCase
+class TwigErrorPageHandlerTest extends TestCase
 {
     /**
      * @var TwigErrorHandler
      */
     private $handler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $twig = new Environment(
             new FilesystemLoader(

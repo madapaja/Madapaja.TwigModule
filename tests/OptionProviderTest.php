@@ -6,14 +6,14 @@
  */
 namespace Madapaja\TwigModule;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
-class OptionProviderTest extends PHPUnit_Framework_TestCase
+class OptionProviderTest extends TestCase
 {
     public $tmpDir;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->tmpDir = __DIR__ . '/tmp/optionProvider/tmp';
         if (! \is_dir($this->tmpDir)) {

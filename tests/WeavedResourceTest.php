@@ -7,17 +7,17 @@
 namespace Madapaja\TwigModule;
 
 use Madapaja\TwigModule\Resource\Page\Index;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
-class WeavedResourceTest extends PHPUnit_Framework_TestCase
+class WeavedResourceTest extends TestCase
 {
     /**
      * @var Injector
      */
     private $injector;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->injector = new Injector(new TwigWeavedResourceTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource']));
     }
