@@ -30,6 +30,7 @@ class MobileTemplateFinder implements TemplateFinderInterface
      *
      * @param mixed $userAgent
      */
+    #[TwigPaths('paths')]
     public function __construct($userAgent = '', array $paths = [])
     {
         $this->userAgent = $userAgent;

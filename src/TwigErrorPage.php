@@ -30,6 +30,7 @@ class TwigErrorPage extends ResourceObject
      * @Inject
      * @Named("error_page")
      */
+    #[Inject, Named('error_page')]
     public function setRenderer(RenderInterface $renderer)
     {
         $this->renderer = $renderer;

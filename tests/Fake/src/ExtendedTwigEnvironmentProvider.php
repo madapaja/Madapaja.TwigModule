@@ -18,6 +18,7 @@ class ExtendedTwigEnvironmentProvider implements ProviderInterface
      * @Named("original")
      * @param Environment $twig
      */
+    #[Named('original')]
     public function __construct(Environment $twig)
     {
         // $twig is an original Twig\Environment instance

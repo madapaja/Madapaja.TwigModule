@@ -43,6 +43,7 @@ class TwigRenderer implements RenderInterface
     /**
      * @TwigRedirectPath("redirectPage")
      */
+    #[TwigRedirectPath('redirectPage')]
     public function __construct(Environment $twig, string $redirectPage, TemplateFinderInterface $templateFinder = null)
     {
         $this->twig = $twig;

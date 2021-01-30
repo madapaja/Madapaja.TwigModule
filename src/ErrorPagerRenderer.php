@@ -23,6 +23,7 @@ class ErrorPagerRenderer implements RenderInterface
     /**
      * @TwigErrorPath("errorPage")
      */
+    #[TwigErrorPath('errorPage')]
     public function __construct(Environment $twig, string $errorPage)
     {
         $this->twig = $twig;
