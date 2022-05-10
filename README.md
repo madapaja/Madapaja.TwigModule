@@ -7,4 +7,4 @@ Madapaja.TwigModule is [Twig](http://twig.sensiolabs.org/) v2 module for [BEAR.S
 
 # Documentation
 
-The documentation is available in [English](http://bearsunday.github.io/manuals/1.0/en/html-v2.html) and [Japanese](http://bearsunday.github.io/manuals/1.0/ja/html-v2.html).
+The documentation is available in [English](https://bearsunday.github.io/manuals/1.0/en/html-twig-v2.html) and [Japanese](https://bearsunday.github.io/manuals/1.0/ja/html-twig-v2.html).
