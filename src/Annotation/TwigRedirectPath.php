@@ -14,9 +14,10 @@ use Ray\Di\Di\Qualifier;
  * @Annotation
  * @Target("METHOD")
  * @Qualifier
+ * @NamedArgumentConstructor
  */
 #[Attribute(Attribute::TARGET_METHOD), Qualifier]
-final class TwigRedirectPath implements NamedArgumentConstructorAnnotation
+final class TwigRedirectPath
 {
     /** @var string */
     public $value;

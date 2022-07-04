@@ -14,9 +14,10 @@ use Ray\Di\Di\Qualifier;
  * @Annotation
  * @Target("METHOD")
  * @Qualifier
+ * @NamedArgumentConstructor
  */
 #[Attribute(Attribute::TARGET_METHOD), Qualifier]
-final class TwigErrorPath implements NamedArgumentConstructorAnnotation
+final class TwigErrorPath
 {
     /** @var string */
     public $value;
