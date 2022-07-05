@@ -7,7 +7,6 @@
 namespace Madapaja\TwigModule\Annotation;
 
 use Attribute;
-use Doctrine\Common\Annotations\NamedArgumentConstructorAnnotation;
 use Ray\Di\Di\Qualifier;
 
 /**
