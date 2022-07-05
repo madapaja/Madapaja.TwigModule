@@ -7,16 +7,16 @@
 namespace Madapaja\TwigModule\Annotation;
 
 use Attribute;
-use Doctrine\Common\Annotations\NamedArgumentConstructorAnnotation;
 use Ray\Di\Di\Qualifier;
 
 /**
  * @Annotation
  * @Target("METHOD")
  * @Qualifier
+ * @NamedArgumentConstructor
  */
 #[Attribute(Attribute::TARGET_METHOD), Qualifier]
-final class TwigOptions implements NamedArgumentConstructorAnnotation
+final class TwigOptions
 {
     /** @var string */
     public $value;

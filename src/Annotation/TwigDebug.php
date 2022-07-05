@@ -14,9 +14,10 @@ use Ray\Di\Di\Qualifier;
  * @Annotation
  * @Target("METHOD")
  * @Qualifier
+ * @NamedArgumentConstructor
  */
 #[Attribute(Attribute::TARGET_METHOD), Qualifier]
-final class TwigDebug implements NamedArgumentConstructorAnnotation
+final class TwigDebug
 {
     /** @var string */
     public $value;
