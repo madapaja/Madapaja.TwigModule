@@ -7,15 +7,17 @@
 namespace Madapaja\TwigModule\Annotation;
 
 use Attribute;
+use Doctrine\Common\Annotations\Annotation\NamedArgumentConstructor;
+use Doctrine\Common\Annotations\NamedArgumentConstructorAnnotation;
 use Ray\Di\Di\Qualifier;
 
 /**
  * @Annotation
  * @Target("METHOD")
  * @Qualifier
- * @NamedArgumentConstructor
+ * @NamedArgumentConstructor()
  */
-#[Attribute(Attribute::TARGET_METHOD), Qualifier]
+#[Attribute(Attribute::TARGET_METHOD | Attribute::TARGET_PARAMETER), Qualifier]
 final class TwigLoader
 {
     /** @var string */
