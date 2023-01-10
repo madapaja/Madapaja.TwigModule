@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * This file is part of the Madapaja.TwigModule package.
- */
-
 namespace Madapaja\TwigModule;
 
 use BEAR\AppMeta\AbstractAppMeta;
@@ -16,6 +12,7 @@ use Ray\Di\ProviderInterface;
 use function file_exists;
 use function mkdir;
 
+/** @implements ProviderInterface<array{"debug":bool, "cache":string}> */
 class OptionProvider implements ProviderInterface
 {
     /** @SuppressWarnings(PHPMD.BooleanArgumentFlag) */
