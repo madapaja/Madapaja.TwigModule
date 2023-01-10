@@ -22,6 +22,6 @@ class TemplateFinder implements TemplateFinderInterface
         $pos = strpos($resourceFilePath, '/Resource/');
         $relativePath = substr($resourceFilePath, $pos + 10);
 
-        return str_replace('.php', '.html.twig', $relativePath);
+        return str_replace('.php', TwigRenderer::EXT, $relativePath);
     }
 }

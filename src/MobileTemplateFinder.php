@@ -36,7 +36,7 @@ class MobileTemplateFinder implements TemplateFinderInterface
         $detect = new Mobile_Detect(null, $this->userAgent);
         $isMobile = $detect->isMobile() && ! $detect->isTablet();
         if ($isMobile) {
-            $mobilePath = str_replace('.html.twig', '.mobile.twig', $templatePath);
+            $mobilePath = str_replace(TwigRenderer::EXT, '.mobile.twig', $templatePath);
             foreach ($this->paths as $path) {
                 $mobileFile = sprintf('%s/%s', $path, $mobilePath);
                 if (file_exists($mobileFile)) {
