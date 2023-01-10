@@ -7,7 +7,6 @@ declare(strict_types=1);
  */
 
 use Composer\Autoload\ClassLoader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Koriym\Attributes\AttributeReader;
 use Ray\ServiceLocator\ServiceLocator;
 
