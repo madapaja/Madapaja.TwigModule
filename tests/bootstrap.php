@@ -17,7 +17,6 @@ error_reporting(E_ALL);
 $loader = require dirname(__DIR__) . '/vendor/autoload.php';
 /** @var ClassLoader $loader */
 $loader->addPsr4('Madapaja\TwigModule\\', [__DIR__]);
-AnnotationRegistry::registerLoader([$loader, 'loadClass']);
 $_ENV['TEST_DIR'] = __DIR__;
 $_ENV['TMP_DIR'] = __DIR__ . '/tmp';
 // no annotation in PHP 8
