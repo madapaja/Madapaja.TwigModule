@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * This file is part of the Madapaja.TwigModule package.
- */
-
 use Composer\Autoload\ClassLoader;
 use Koriym\Attributes\AttributeReader;
 use Ray\ServiceLocator\ServiceLocator;
