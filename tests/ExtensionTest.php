@@ -27,6 +27,6 @@ class ExtensionTest extends TestCase
     public function testTwigFilter(): void
     {
         $ro = $this->injector->getInstance(TwigFilter::class);
-        $this->assertSame('Twig => "' . str_rot13('Twig') . '"', (string) trim($ro->onGet()));
+        $this->assertSame('Twig => "' . str_rot13('Twig') . '"', (string) trim((string) $ro->onGet()));
     }
 }
