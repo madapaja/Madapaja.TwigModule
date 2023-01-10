@@ -11,6 +11,7 @@ namespace Madapaja\TwigModule;
 use BEAR\AppMeta\AbstractAppMeta;
 use Ray\Di\ProviderInterface;
 
+/** @implements ProviderInterface<array> */
 class AppPathProvider implements ProviderInterface
 {
     public function __construct(

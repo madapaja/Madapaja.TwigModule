@@ -16,6 +16,7 @@ use Ray\Di\ProviderInterface;
 use function file_exists;
 use function mkdir;
 
+/** @implements ProviderInterface<array{"debug":bool, "cache":string}> */
 class OptionProvider implements ProviderInterface
 {
     /** @SuppressWarnings(PHPMD.BooleanArgumentFlag) */
