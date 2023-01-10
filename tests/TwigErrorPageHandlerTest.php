@@ -1,9 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\Exception\ResourceNotFoundException as NotFound;
@@ -16,49 +18,44 @@ use Twig\Loader\FilesystemLoader;
 
 class TwigErrorPageHandlerTest extends TestCase
 {
-    /**
-     * @var TwigErrorHandler
-     */
-    private $handler;
+    private TwigErrorHandler $handler;
 
     public function setUp(): void
     {
         $twig = new Environment(
             new FilesystemLoader(
-                __DIR__ . '/Fake/templates'
-            )
+                __DIR__ . '/Fake/templates',
+            ),
         );
-        $errorPage = new TwigErrorPage;
+        $errorPage = new TwigErrorPage();
         $errorPage->setRenderer(new ErrorPagerRenderer($twig, '/error/error.html.twig'));
         $this->handler = new TwigErrorHandler(
             $errorPage,
             new FakeHttpResponder(),
-            new NullLogger
+            new NullLogger(),
         );
     }
 
     public function testHandle()
     {
-        $request = new RouterMatch;
+        $request = new RouterMatch();
         $request->method = 'get';
         $request->path = '/';
         $request->query = [];
-        $handler = $this->handler->handle(new NotFound, $request);
+        $handler = $this->handler->handle(new NotFound(), $request);
         $this->assertInstanceOf(TwigErrorHandler::class, $handler);
 
         return $handler;
     }
 
-    /**
-     * @depends testHandle
-     */
-    public function testTransfer()
+    /** @depends testHandle */
+    public function testTransfer(): void
     {
-        $request = new RouterMatch;
+        $request = new RouterMatch();
         $request->method = 'get';
         $request->path = '/';
         $request->query = [];
-        $handler = $this->handler->handle(new ServerError, $request);
+        $handler = $this->handler->handle(new ServerError(), $request);
         $handler->transfer();
         $this->assertSame(503, FakeHttpResponder::$code);
         $this->assertSame('text/html; charset=utf-8', FakeHttpResponder::$headers['content-type']);

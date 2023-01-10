@@ -14,9 +14,7 @@ class MyTwigExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('rot13', function ($string) {
-                return str_rot13($string);
-            }),
+            new TwigFilter('rot13', fn($string) => str_rot13($string)),
         ];
     }
 

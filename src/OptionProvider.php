@@ -1,36 +1,29 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule;
 
 use BEAR\AppMeta\AbstractAppMeta;
+use Madapaja\TwigModule\Annotation\TwigDebug;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
+use function file_exists;
+use function mkdir;
+
 class OptionProvider implements ProviderInterface
 {
-    /**
-     * @var AbstractAppMeta
-     */
-    private $appMeta;
-
-    /**
-     * @var bool
-     */
-    private $isDebug;
-
-    /**
-     * @Named("isDebug=Madapaja\TwigModule\Annotation\TwigDebug")
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
-     */
-    #[Named('isDebug=Madapaja\TwigModule\Annotation\TwigDebug')]
-    public function __construct(AbstractAppMeta $appMeta, bool $isDebug = false)
-    {
-        $this->appMeta = $appMeta;
-        $this->isDebug = $isDebug;
+    /** @SuppressWarnings(PHPMD.BooleanArgumentFlag) */
+    public function __construct(
+        private AbstractAppMeta $appMeta,
+        #[Named(TwigDebug::class)]
+        private bool $isDebug = false,
+    ) {
     }
 
     /**
@@ -39,12 +32,11 @@ class OptionProvider implements ProviderInterface
     public function get()
     {
         $tmpDir = $this->appMeta->tmpDir . '/twig';
-        ! \file_exists($tmpDir) && \mkdir($tmpDir);
-        $options = [
-            'debug' => $this->isDebug,
-            'cache' => $tmpDir
-        ];
+        ! file_exists($tmpDir) && mkdir($tmpDir);
 
-        return $options;
+        return [
+            'debug' => $this->isDebug,
+            'cache' => $tmpDir,
+        ];
     }
 }

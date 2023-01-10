@@ -14,17 +14,12 @@ use Ray\Di\AbstractModule;
 
 class OptionProviderTestModule extends AbstractModule
 {
-    private $tmpDir;
-    private $isDebug;
-
     /**
      * @param string $tmpDir
      * @param bool   $isDebug
      */
-    public function __construct($tmpDir, $isDebug)
+    public function __construct(private $tmpDir, private $isDebug)
     {
-        $this->tmpDir = $tmpDir;
-        $this->isDebug = $isDebug;
         parent::__construct(null);
     }
 

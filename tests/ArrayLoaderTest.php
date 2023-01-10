@@ -1,9 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule;
 
 use Madapaja\TwigModule\Exception\TemplateNotFound;
@@ -12,52 +14,50 @@ use Madapaja\TwigModule\Resource\Page\NoTemplate;
 use Madapaja\TwigModule\Resource\Page\Page;
 use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
+use ReflectionClass;
 
 class ArrayLoaderTest extends TestCase
 {
-    /**
-     * @var Injector
-     */
-    private $injector;
+    private Injector $injector;
 
     public function setUp(): void
     {
-        $this->injector = new Injector(new TwigArrayLoaderTestModule);
+        $this->injector = new Injector(new TwigArrayLoaderTestModule());
     }
 
-    public function testRenderer()
+    public function testRenderer(): void
     {
         $ro = $this->injector->getInstance(Index::class);
-        $prop = (new \ReflectionClass($ro))->getProperty('renderer');
+        $prop = (new ReflectionClass($ro))->getProperty('renderer');
         $prop->setAccessible(true);
 
         $this->assertInstanceOf(TwigRenderer::class, $prop->getValue($ro));
     }
 
-    public function testIndex()
+    public function testIndex(): void
     {
         $ro = $this->injector->getInstance(Index::class);
 
         $this->assertSame('Hello, BEAR.Sunday!', (string) $ro->onGet());
     }
 
-    public function testIndexWithArg()
+    public function testIndexWithArg(): void
     {
         $ro = $this->injector->getInstance(Index::class);
 
         $this->assertSame('Hello, Madapaja!', (string) $ro->onGet('Madapaja'));
     }
 
-    public function testTemplateNotFoundException()
+    public function testTemplateNotFoundException(): void
     {
         $this->expectException(TemplateNotFound::class);
         $ro = $this->injector->getInstance(NoTemplate::class);
-        $prop = (new \ReflectionClass($ro))->getProperty('renderer');
+        $prop = (new ReflectionClass($ro))->getProperty('renderer');
         $prop->setAccessible(true);
         $prop->getValue($ro)->render($ro);
     }
 
-    public function testPage()
+    public function testPage(): void
     {
         $ro = $this->injector->getInstance(Page::class);
 

@@ -1,43 +1,36 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
 use Madapaja\TwigModule\Annotation\TwigErrorPath;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class ErrorPagerRenderer implements RenderInterface
 {
-    /**
-     * @var Environment
-     */
-    private $twig;
-
-    private $errorPage;
-
-    /**
-     * @TwigErrorPath("errorPage")
-     */
-    #[TwigErrorPath('errorPage')]
-    public function __construct(Environment $twig, string $errorPage)
-    {
-        $this->twig = $twig;
-        $this->errorPage = $errorPage;
+    public function __construct(
+        private Environment $twig,
+        #[TwigErrorPath]
+        private string $errorPage,
+    ) {
     }
 
     /**
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     *
-     * @return string
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function render(ResourceObject $ro)
+    public function render(ResourceObject $ro): string
     {
         $ro->view = $this->twig->render($this->errorPage, $ro->body);
 

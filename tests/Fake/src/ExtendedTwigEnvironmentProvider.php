@@ -12,17 +12,12 @@ use Twig\Environment;
 
 class ExtendedTwigEnvironmentProvider implements ProviderInterface
 {
-    private $twig;
-
     /**
      * @Named("original")
-     * @param Environment $twig
      */
     #[Named('original')]
-    public function __construct(Environment $twig)
+    public function __construct(private Environment $twig)
     {
-        // $twig is an original Twig\Environment instance
-        $this->twig = $twig;
     }
 
     public function get()

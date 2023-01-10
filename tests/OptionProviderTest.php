@@ -1,13 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule;
 
 use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
+
+use function is_dir;
+use function mkdir;
 
 class OptionProviderTest extends TestCase
 {
@@ -16,12 +21,14 @@ class OptionProviderTest extends TestCase
     public function setUp(): void
     {
         $this->tmpDir = __DIR__ . '/tmp/optionProvider/tmp';
-        if (! \is_dir($this->tmpDir)) {
-            \mkdir($this->tmpDir, 0777, true);
+        if (is_dir($this->tmpDir)) {
+            return;
         }
+
+        mkdir($this->tmpDir, 0777, true);
     }
 
-    public function testOptionProvider()
+    public function testOptionProvider(): void
     {
         /** @var TwigRenderer $renderer */
         $renderer = (new Injector(new OptionProviderTestModule($this->tmpDir, true)))->getInstance(TwigRenderer::class);
@@ -30,7 +37,7 @@ class OptionProviderTest extends TestCase
         $this->assertTrue($renderer->twig->isDebug());
     }
 
-    public function testOptionProviderDebugFalse()
+    public function testOptionProviderDebugFalse(): void
     {
         /** @var TwigRenderer $renderer */
         $renderer = (new Injector(new OptionProviderTestModule($this->tmpDir, false)))->getInstance(TwigRenderer::class);

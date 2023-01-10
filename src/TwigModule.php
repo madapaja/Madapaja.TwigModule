@@ -1,9 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
@@ -17,18 +19,10 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\Loader\LoaderInterface;
 
+use function is_array;
+
 class TwigModule extends AbstractModule
 {
-    /**
-     * @var array
-     */
-    private $paths;
-
-    /**
-     * @var array
-     */
-    private $options;
-
     /**
      * @param array               $paths   Twig template paths
      * @param array               $options Twig_Environment options
@@ -36,10 +30,11 @@ class TwigModule extends AbstractModule
      *
      * @see http://twig.sensiolabs.org/api/master/Twig_Environment.html
      */
-    public function __construct($paths = [], $options = [], AbstractModule $module = null)
-    {
-        $this->paths = $paths;
-        $this->options = $options;
+    public function __construct(
+        private array $paths = [],
+        private array $options = [],
+        AbstractModule|null $module = null,
+    ) {
         parent::__construct($module);
     }
 
@@ -56,25 +51,25 @@ class TwigModule extends AbstractModule
         $this->bindTwigRedirectPath();
     }
 
-    private function bindRender()
+    private function bindRender(): void
     {
         $this->bind(RenderInterface::class)
              ->to(TwigRenderer::class)
              ->in(Scope::SINGLETON);
     }
 
-    private function bindTwigLoader()
+    private function bindTwigLoader(): void
     {
         $this
             ->bind(LoaderInterface::class)
             ->annotatedWith(TwigLoader::class)
             ->toConstructor(
                 FilesystemLoader::class,
-                'paths=Madapaja\TwigModule\Annotation\TwigPaths'
+                'paths=Madapaja\TwigModule\Annotation\TwigPaths',
             );
     }
 
-    private function bindTwigEnvironment()
+    private function bindTwigEnvironment(): void
     {
         $this
             ->bind(Environment::class)
@@ -83,8 +78,8 @@ class TwigModule extends AbstractModule
                 Environment::class,
                 [
                     'loader' => TwigLoader::class,
-                    'options' => TwigOptions::class
-                ]
+                    'options' => TwigOptions::class,
+                ],
             );
 
         $this
@@ -93,38 +88,40 @@ class TwigModule extends AbstractModule
                 Environment::class,
                 [
                     'loader' => TwigLoader::class,
-                    'options' => TwigOptions::class
-                ]
+                    'options' => TwigOptions::class,
+                ],
             );
     }
 
-    private function bindTwigPaths()
+    private function bindTwigPaths(): void
     {
         if ($this->isNotEmpty($this->paths)) {
             $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
 
             return;
         }
+
         $this->bind()->annotatedWith(TwigPaths::class)->toProvider(AppPathProvider::class);
     }
 
-    private function bindTwigOptions()
+    private function bindTwigOptions(): void
     {
         if ($this->isNotEmpty($this->options)) {
             $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
 
             return;
         }
+
         $this->bind()->annotatedWith(TwigOptions::class)->toProvider(OptionProvider::class);
     }
 
-    private function bindTwigRedirectPath()
+    private function bindTwigRedirectPath(): void
     {
         $this->bind()->annotatedWith(TwigRedirectPath::class)->toInstance('/redirect/redirect.html.twig');
     }
 
     private function isNotEmpty($var)
     {
-        return \is_array($var) && ! empty($var);
+        return is_array($var) && ! empty($var);
     }
 }

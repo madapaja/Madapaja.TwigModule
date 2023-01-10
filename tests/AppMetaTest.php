@@ -1,9 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\RenderInterface;
@@ -12,7 +14,7 @@ use Ray\Di\Injector;
 
 class AppMetaTest extends TestCase
 {
-    public function testRenderer()
+    public function testRenderer(): void
     {
         /** @var TwigRenderer $renderer */
         $renderer = (new Injector(new TwigAppMetaTestModule()))->getInstance(RenderInterface::class);

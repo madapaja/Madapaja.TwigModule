@@ -1,9 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule;
 
 use BEAR\AppMeta\AbstractAppMeta;
@@ -13,14 +15,6 @@ use Ray\Di\AbstractModule;
 
 class AppPathProviderTestModule extends AbstractModule
 {
-    private $dir;
-
-    public function __construct($dir)
-    {
-        $this->dir = $dir;
-        parent::__construct(null);
-    }
-
     /**
      * {@inheritdoc}
      */
