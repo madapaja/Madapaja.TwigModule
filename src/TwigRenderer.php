@@ -1,9 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule;
 
 use BEAR\Resource\Code;
@@ -11,31 +13,34 @@ use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
 use Madapaja\TwigModule\Annotation\TwigRedirectPath;
 use Ray\Aop\WeavedInterface;
+use ReflectionClass;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
 use Twig\TemplateWrapper;
 
+use function in_array;
+use function is_array;
+
 class TwigRenderer implements RenderInterface
 {
     /**
      * File extension
-     *
-     * @var string
      */
     public const EXT = '.html.twig';
 
-    /**
-     * @var \Twig\Environment
-     */
+    /** @var Environment */
     public $twig;
+    private TemplateFinderInterface|TemplateFinder $templateFinder;
 
-    private \Madapaja\TwigModule\TemplateFinderInterface|\Madapaja\TwigModule\TemplateFinder $templateFinder;
-
-    public function __construct(Environment $twig, #[\Madapaja\TwigModule\Annotation\TwigRedirectPath]private string $redirectPage, TemplateFinderInterface $templateFinder = null)
-    {
+    public function __construct(
+        Environment $twig,
+        #[TwigRedirectPath]
+        private string $redirectPage,
+        TemplateFinderInterface|null $templateFinder = null,
+    ) {
         $this->twig = $twig;
-        $this->templateFinder = $templateFinder ?: new TemplateFinder;
+        $this->templateFinder = $templateFinder ?: new TemplateFinder();
     }
 
     /**
@@ -50,21 +55,25 @@ class TwigRenderer implements RenderInterface
 
             return $ro->view;
         }
+
         if ($this->isRedirect($ro)) {
             $ro->view = $this->renderRedirectView($ro);
 
             return $ro->view;
         }
+
         $ro->view = $this->renderView($ro);
 
         return $ro->view;
     }
 
-    private function setContentType(ResourceObject $ro)
+    private function setContentType(ResourceObject $ro): void
     {
-        if (! isset($ro->headers['Content-Type'])) {
-            $ro->headers['Content-Type'] = 'text/html; charset=utf-8';
+        if (isset($ro->headers['Content-Type'])) {
+            return;
         }
+
+        $ro->headers['Content-Type'] = 'text/html; charset=utf-8';
     }
 
     private function renderView(ResourceObject $ro)
@@ -83,7 +92,7 @@ class TwigRenderer implements RenderInterface
         }
     }
 
-    private function load(ResourceObject $ro): ?TemplateWrapper
+    private function load(ResourceObject $ro): TemplateWrapper|null
     {
         try {
             return $this->loadTemplate($ro);
@@ -96,14 +105,14 @@ class TwigRenderer implements RenderInterface
         return null;
     }
 
-    private function isNoContent(ResourceObject $ro) : bool
+    private function isNoContent(ResourceObject $ro): bool
     {
         return $ro->code === Code::NO_CONTENT || $ro->view === '';
     }
 
-    private function isRedirect(ResourceObject $ro) : bool
+    private function isRedirect(ResourceObject $ro): bool
     {
-        return \in_array($ro->code, [
+        return in_array($ro->code, [
             Code::MOVED_PERMANENTLY,
             Code::FOUND,
             Code::SEE_OTHER,
@@ -112,7 +121,7 @@ class TwigRenderer implements RenderInterface
         ], true) && isset($ro->headers['Location']);
     }
 
-    private function loadTemplate(ResourceObject $ro) : TemplateWrapper
+    private function loadTemplate(ResourceObject $ro): TemplateWrapper
     {
         $loader = $this->twig->getLoader();
         if ($loader instanceof FilesystemLoader) {
@@ -125,18 +134,18 @@ class TwigRenderer implements RenderInterface
         return $this->twig->load($this->getReflection($ro)->name . self::EXT);
     }
 
-    private function getReflection(ResourceObject $ro) : \ReflectionClass
+    private function getReflection(ResourceObject $ro): ReflectionClass
     {
         if ($ro instanceof WeavedInterface) {
-            return (new \ReflectionClass($ro))->getParentClass();
+            return (new ReflectionClass($ro))->getParentClass();
         }
 
-        return new \ReflectionClass($ro);
+        return new ReflectionClass($ro);
     }
 
-    private function buildBody(ResourceObject $ro) : array
+    private function buildBody(ResourceObject $ro): array
     {
-        $body = \is_array($ro->body) ? $ro->body : [];
+        $body = is_array($ro->body) ? $ro->body : [];
         $body += ['_ro' => $ro];
 
         return $body;

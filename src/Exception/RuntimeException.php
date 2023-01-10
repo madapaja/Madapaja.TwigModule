@@ -1,9 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule\Exception;
 
 class RuntimeException extends \RuntimeException

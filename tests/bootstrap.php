@@ -1,20 +1,21 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
 
-use Doctrine\Common\Annotations\AnnotationReader;
+use Composer\Autoload\ClassLoader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Koriym\Attributes\AttributeReader;
 use Ray\ServiceLocator\ServiceLocator;
 
-\error_reporting(E_ALL);
+error_reporting(E_ALL);
 
 // loader
-$loader = require \dirname(__DIR__) . '/vendor/autoload.php';
-/* @var $loader \Composer\Autoload\ClassLoader */
+$loader = require dirname(__DIR__) . '/vendor/autoload.php';
+/** @var ClassLoader $loader */
 $loader->addPsr4('Madapaja\TwigModule\\', [__DIR__]);
 AnnotationRegistry::registerLoader([$loader, 'loadClass']);
 $_ENV['TEST_DIR'] = __DIR__;

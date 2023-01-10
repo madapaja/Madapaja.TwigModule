@@ -1,9 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule;
 
 use BEAR\AppMeta\AbstractAppMeta;
@@ -11,21 +13,21 @@ use Ray\Di\ProviderInterface;
 
 class AppPathProvider implements ProviderInterface
 {
-    public function __construct(private AbstractAppMeta $appMeta)
-    {
+    public function __construct(
+        private AbstractAppMeta $appMeta,
+    ) {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get()
+    public function get(): array
     {
         $appDir = $this->appMeta->appDir;
-        $paths = [
-            $appDir . '/src/Resource',
-            $appDir . '/var/templates'
-        ];
 
-        return $paths;
+        return [
+            $appDir . '/src/Resource',
+            $appDir . '/var/templates',
+        ];
     }
 }

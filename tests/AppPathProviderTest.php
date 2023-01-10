@@ -1,18 +1,23 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of the Madapaja.TwigModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
+
 namespace Madapaja\TwigModule;
 
 use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 use Twig\Loader\FilesystemLoader;
 
+use function is_dir;
+use function mkdir;
+
 class AppPathProviderTest extends TestCase
 {
-    public function testAppPathProvider()
+    public function testAppPathProvider(): void
     {
         $appDir = __DIR__ . '/Fake';
         $paths = [
@@ -21,9 +26,11 @@ class AppPathProviderTest extends TestCase
         ];
 
         foreach ($paths as $path) {
-            if (! \is_dir($path)) {
-                \mkdir($path, 0777, true);
+            if (is_dir($path)) {
+                continue;
             }
+
+            mkdir($path, 0777, true);
         }
 
         /** @var TwigRenderer $renderer */
