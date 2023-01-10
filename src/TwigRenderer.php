@@ -40,11 +40,8 @@ class TwigRenderer implements RenderInterface
      */
     private $templateFinder;
 
-    /**
-     * @TwigRedirectPath("redirectPage")
-     */
-    #[TwigRedirectPath('redirectPage')]
-    public function __construct(Environment $twig, string $redirectPage, TemplateFinderInterface $templateFinder = null)
+    public function __construct(Environment $twig, #[\Madapaja\TwigModule\Annotation\TwigRedirectPath]
+    string $redirectPage, TemplateFinderInterface $templateFinder = null)
     {
         $this->twig = $twig;
         $this->redirectPage = $redirectPage;
@@ -99,7 +96,7 @@ class TwigRenderer implements RenderInterface
     /**
      * @return null|\Twig\TemplateWrapper
      */
-    private function load(ResourceObject $ro)
+    private function load(ResourceObject $ro): ?TemplateWrapper
     {
         try {
             return $this->loadTemplate($ro);
@@ -108,6 +105,8 @@ class TwigRenderer implements RenderInterface
                 throw new Exception\TemplateNotFound($e->getMessage(), 500, $e);
             }
         }
+
+        return null;
     }
 
     private function isNoContent(ResourceObject $ro) : bool

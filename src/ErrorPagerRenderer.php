@@ -20,11 +20,8 @@ class ErrorPagerRenderer implements RenderInterface
 
     private $errorPage;
 
-    /**
-     * @TwigErrorPath("errorPage")
-     */
-    #[TwigErrorPath('errorPage')]
-    public function __construct(Environment $twig, string $errorPage)
+    public function __construct(Environment $twig, #[\Madapaja\TwigModule\Annotation\TwigErrorPath]
+    string $errorPage)
     {
         $this->twig = $twig;
         $this->errorPage = $errorPage;
