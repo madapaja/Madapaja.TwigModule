@@ -13,23 +13,10 @@ use Ray\Di\ProviderInterface;
 class OptionProvider implements ProviderInterface
 {
     /**
-     * @var AbstractAppMeta
-     */
-    private $appMeta;
-
-    /**
-     * @var bool
-     */
-    private $isDebug;
-
-    /**
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function __construct(AbstractAppMeta $appMeta, #[\Ray\Di\Di\Named('Madapaja\TwigModule\Annotation\TwigDebug')]
-    bool $isDebug = false)
+    public function __construct(private AbstractAppMeta $appMeta, #[\Ray\Di\Di\Named(\Madapaja\TwigModule\Annotation\TwigDebug::class)]private bool $isDebug = false)
     {
-        $this->appMeta = $appMeta;
-        $this->isDebug = $isDebug;
     }
 
     /**

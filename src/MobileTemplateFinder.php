@@ -10,30 +10,11 @@ use Madapaja\TwigModule\Annotation\TwigPaths;
 
 class MobileTemplateFinder implements TemplateFinderInterface
 {
-    /**
-     * @var string
-     */
-    private $userAgent;
+    private \Madapaja\TwigModule\TemplateFinder $templateFinder;
 
-    /**
-     * @var TemplateFinder
-     */
-    private $templateFinder;
-
-    /**
-     * @var array
-     */
-    private $paths;
-
-    /**
-     * @param mixed $userAgent
-     */
-    public function __construct($userAgent = '', #[\Madapaja\TwigModule\Annotation\TwigPaths]
-    array $paths = [])
+    public function __construct(private mixed $userAgent = '', #[\Madapaja\TwigModule\Annotation\TwigPaths]private array $paths = [])
     {
-        $this->userAgent = $userAgent;
         $this->templateFinder = new TemplateFinder;
-        $this->paths = $paths;
     }
 
     /**

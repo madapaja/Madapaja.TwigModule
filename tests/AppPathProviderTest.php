@@ -27,7 +27,7 @@ class AppPathProviderTest extends TestCase
         }
 
         /** @var TwigRenderer $renderer */
-        $renderer = (new Injector(new AppPathProviderTestModule($appDir)))->getInstance(TwigRenderer::class);
+        $renderer = (new Injector(new AppPathProviderTestModule()))->getInstance(TwigRenderer::class);
         /** @var FilesystemLoader $loader */
         $loader = $renderer->twig->getLoader();
         $this->assertInstanceOf(FilesystemLoader::class, $loader);

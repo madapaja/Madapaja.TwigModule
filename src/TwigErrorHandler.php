@@ -16,25 +16,8 @@ use Psr\Log\LoggerInterface;
 
 final class TwigErrorHandler implements ErrorInterface
 {
-    /**
-     * @var TransferInterface
-     */
-    private $transfer;
-    /**
-     * @var TwigErrorPage
-     */
-    private $errorPage;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(TwigErrorPage $errorPage, TransferInterface $transfer, LoggerInterface $logger)
+    public function __construct(private TwigErrorPage $errorPage, private TransferInterface $transfer, private LoggerInterface $logger)
     {
-        $this->transfer = $transfer;
-        $this->errorPage = $errorPage;
-        $this->logger = $logger;
     }
 
     /**
@@ -57,7 +40,7 @@ final class TwigErrorHandler implements ErrorInterface
             ],
             'e' => [
                 'code' => $e->getCode(),
-                'class' => \get_class($e),
+                'class' => $e::class,
                 'message' => $e->getMessage()
             ],
             'logref' => (string) $logRef

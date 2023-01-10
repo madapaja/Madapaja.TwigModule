@@ -13,18 +13,8 @@ use Twig\Environment;
 
 class ErrorPagerRenderer implements RenderInterface
 {
-    /**
-     * @var Environment
-     */
-    private $twig;
-
-    private $errorPage;
-
-    public function __construct(Environment $twig, #[\Madapaja\TwigModule\Annotation\TwigErrorPath]
-    string $errorPage)
+    public function __construct(private Environment $twig, #[\Madapaja\TwigModule\Annotation\TwigErrorPath]private string $errorPage)
     {
-        $this->twig = $twig;
-        $this->errorPage = $errorPage;
     }
 
     /**

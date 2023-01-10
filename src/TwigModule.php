@@ -20,26 +20,14 @@ use Twig\Loader\LoaderInterface;
 class TwigModule extends AbstractModule
 {
     /**
-     * @var array
-     */
-    private $paths;
-
-    /**
-     * @var array
-     */
-    private $options;
-
-    /**
      * @param array               $paths   Twig template paths
      * @param array               $options Twig_Environment options
      * @param AbstractModule|null $module
      *
      * @see http://twig.sensiolabs.org/api/master/Twig_Environment.html
      */
-    public function __construct($paths = [], $options = [], AbstractModule $module = null)
+    public function __construct(private $paths = [], private $options = [], AbstractModule $module = null)
     {
-        $this->paths = $paths;
-        $this->options = $options;
         parent::__construct($module);
     }
 

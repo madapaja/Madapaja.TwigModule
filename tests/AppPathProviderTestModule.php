@@ -13,14 +13,6 @@ use Ray\Di\AbstractModule;
 
 class AppPathProviderTestModule extends AbstractModule
 {
-    private $dir;
-
-    public function __construct($dir)
-    {
-        $this->dir = $dir;
-        parent::__construct(null);
-    }
-
     /**
      * {@inheritdoc}
      */

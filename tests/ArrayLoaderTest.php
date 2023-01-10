@@ -15,10 +15,7 @@ use Ray\Di\Injector;
 
 class ArrayLoaderTest extends TestCase
 {
-    /**
-     * @var Injector
-     */
-    private $injector;
+    private \Ray\Di\Injector $injector;
 
     public function setUp(): void
     {

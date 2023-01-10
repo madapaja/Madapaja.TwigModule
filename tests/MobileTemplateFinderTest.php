@@ -11,10 +11,7 @@ use Ray\Di\Injector;
 
 class MobileTemplateFinderTest extends TestCase
 {
-    /**
-     * @var Injector
-     */
-    private $injector;
+    private \Ray\Di\Injector $injector;
 
     public function setUp(): void
     {

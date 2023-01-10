@@ -23,28 +23,18 @@ class TwigRenderer implements RenderInterface
      *
      * @var string
      */
-    const EXT = '.html.twig';
+    public const EXT = '.html.twig';
 
     /**
      * @var \Twig\Environment
      */
     public $twig;
 
-    /**
-     * @var string
-     */
-    private $redirectPage;
+    private \Madapaja\TwigModule\TemplateFinderInterface|\Madapaja\TwigModule\TemplateFinder $templateFinder;
 
-    /**
-     * @var TemplateFinderInterface
-     */
-    private $templateFinder;
-
-    public function __construct(Environment $twig, #[\Madapaja\TwigModule\Annotation\TwigRedirectPath]
-    string $redirectPage, TemplateFinderInterface $templateFinder = null)
+    public function __construct(Environment $twig, #[\Madapaja\TwigModule\Annotation\TwigRedirectPath]private string $redirectPage, TemplateFinderInterface $templateFinder = null)
     {
         $this->twig = $twig;
-        $this->redirectPage = $redirectPage;
         $this->templateFinder = $templateFinder ?: new TemplateFinder;
     }
 
@@ -88,14 +78,11 @@ class TwigRenderer implements RenderInterface
     {
         try {
             return $this->twig->render($this->redirectPage, ['url' => $ro->headers['Location']]);
-        } catch (LoaderError $e) {
+        } catch (LoaderError) {
             return '';
         }
     }
 
-    /**
-     * @return null|\Twig\TemplateWrapper
-     */
     private function load(ResourceObject $ro): ?TemplateWrapper
     {
         try {

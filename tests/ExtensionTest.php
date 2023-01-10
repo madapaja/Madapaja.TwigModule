@@ -12,10 +12,7 @@ use Ray\Di\Injector;
 
 class ExtensionTest extends TestCase
 {
-    /**
-     * @var Injector
-     */
-    private $injector;
+    private \Ray\Di\Injector $injector;
 
     public function setUp(): void
     {

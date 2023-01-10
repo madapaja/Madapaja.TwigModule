@@ -16,10 +16,7 @@ use Twig\Loader\FilesystemLoader;
 
 class TwigErrorPageHandlerTest extends TestCase
 {
-    /**
-     * @var TwigErrorHandler
-     */
-    private $handler;
+    private \Madapaja\TwigModule\TwigErrorHandler $handler;
 
     public function setUp(): void
     {

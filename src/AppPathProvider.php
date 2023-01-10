@@ -11,14 +11,8 @@ use Ray\Di\ProviderInterface;
 
 class AppPathProvider implements ProviderInterface
 {
-    /**
-     * @var AbstractAppMeta
-     */
-    private $appMeta;
-
-    public function __construct(AbstractAppMeta $appMeta)
+    public function __construct(private AbstractAppMeta $appMeta)
     {
-        $this->appMeta = $appMeta;
     }
 
     /**
