@@ -13,10 +13,10 @@ class TemplateFinder implements TemplateFinderInterface
     /**
      * {@inheritdoc}
      */
-    public function __invoke(string $resourceFilePath): string
+    public function __invoke(string $name): string
     {
-        $pos = strpos($resourceFilePath, '/Resource/');
-        $relativePath = substr($resourceFilePath, $pos + 10);
+        $pos = strpos($name, '/Resource/');
+        $relativePath = substr($name, $pos + 10);
 
         return str_replace('.php', TwigRenderer::EXT, $relativePath);
     }
