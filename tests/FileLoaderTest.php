@@ -6,6 +6,7 @@ namespace Madapaja\TwigModule;
 
 use BEAR\Resource\Code;
 use Madapaja\TwigModule\Exception\TemplateNotFound;
+use Madapaja\TwigModule\Fake\src\ResourceNoTemplate\Page\RedirectNoTemplate;
 use Madapaja\TwigModule\Resource\Page\Index;
 use Madapaja\TwigModule\Resource\Page\NoTemplate;
 use Madapaja\TwigModule\Resource\Page\Page;
@@ -143,5 +144,16 @@ class FileLoaderTest extends TestCase
         $this->assertSame(Code::FOUND, $ro->code);
         $this->assertSame('/path/to/baz', $ro->headers['Location']);
         $this->assertMatchesRegularExpression('#^.*Redirecting to /path/to/baz.*$#s', trim((string) $ro));
+    }
+
+    public function testRedirectOnPostNoRedirectTemplate(): void
+    {
+        $injector = new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/ResourceNoTemplate']));
+        $ro = $injector->getInstance(RedirectNoTemplate::class);
+        $ro->onPost();
+        (string) $ro;
+        $this->assertSame(Code::FOUND, $ro->code);
+        $this->assertSame('/path/to/baz', $ro->headers['Location']);
+        $this->assertSame('', $ro->view);
     }
 }
