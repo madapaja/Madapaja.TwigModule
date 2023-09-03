@@ -17,7 +17,7 @@ class ExtensionTest extends TestCase
 
     public function setUp(): void
     {
-        $this->injector = new Injector(new TwigExtensionTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource/']));
+        $this->injector = new Injector(new TwigExtensionTestModule([__DIR__ . '/Fake/src/Resource/']));
     }
 
     public function testTwigFilter(): void

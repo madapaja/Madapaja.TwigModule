@@ -24,7 +24,7 @@ class OptionProvider implements ProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get()
     {

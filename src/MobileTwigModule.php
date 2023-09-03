@@ -9,10 +9,11 @@ use Ray\Di\AbstractModule;
 class MobileTwigModule extends AbstractModule
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function configure()
     {
         $this->bind(TemplateFinderInterface::class)->to(MobileTemplateFinder::class);
+        $this->bind(TemplateFinderInterface::class)->annotatedWith('original')->to(TemplateFinder::class);
     }
 }

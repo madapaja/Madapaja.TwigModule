@@ -12,6 +12,9 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
+use function assert;
+use function is_array;
+
 class ErrorPagerRenderer implements RenderInterface
 {
     public function __construct(
@@ -28,6 +31,7 @@ class ErrorPagerRenderer implements RenderInterface
      */
     public function render(ResourceObject $ro): string
     {
+        assert(is_array($ro->body));
         $ro->view = $this->twig->render($this->errorPage, $ro->body);
 
         return $ro->view;

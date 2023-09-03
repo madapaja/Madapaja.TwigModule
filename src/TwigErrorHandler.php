@@ -26,7 +26,7 @@ final class TwigErrorHandler implements ErrorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function handle(Throwable $e, Request $request)
     {
@@ -56,7 +56,7 @@ final class TwigErrorHandler implements ErrorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function transfer()
     {
