@@ -15,13 +15,15 @@ use Ray\Di\AbstractModule;
 use Ray\Di\Injector;
 
 use function assert;
+use function serialize;
+use function unserialize;
 
 class TwigErrorPageModuleTest extends TestCase
 {
     public function testError(): void
     {
         $module = new TwigErrorPageModule(new TwigModule());
-        $module->install(new class extends AbstractModule{
+        $module->install(new class extends AbstractModule {
             protected function configure(): void
             {
                 $this->bind(LoggerInterface::class)->to(NullLogger::class);
@@ -35,5 +37,11 @@ class TwigErrorPageModuleTest extends TestCase
         $this->assertArrayHasKey('status', FakeTransfer::$ro->body);
         $this->assertArrayHasKey('e', FakeTransfer::$ro->body);
         $this->assertArrayHasKey('logref', FakeTransfer::$ro->body);
+    }
+
+    public function testSerializeTwigErrorPage(): void
+    {
+        $errorPage = unserialize(serialize(new TwigErrorPage()));
+        $this->assertInstanceOf(TwigErrorPage::class, $errorPage);
     }
 }
