@@ -22,7 +22,7 @@ class FileLoaderTest extends TestCase
 {
     public function getInjector(): Injector
     {
-        return new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource']));
+        return new Injector(new TwigFileLoaderTestModule([__DIR__ . '/Fake/src/Resource']));
     }
 
     public function testRenderer(): void
@@ -38,11 +38,11 @@ class FileLoaderTest extends TestCase
     public function testTwigOptions(): void
     {
         /** @var TwigRenderer $renderer */
-        $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource'], ['debug' => true])))->getInstance(TwigRenderer::class);
+        $renderer = (new Injector(new TwigFileLoaderTestModule([__DIR__ . '/Fake/src/Resource'], ['debug' => true])))->getInstance(TwigRenderer::class);
         $this->assertTrue($renderer->twig->isDebug());
 
         /** @var TwigRenderer $renderer */
-        $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource'], ['debug' => false])))->getInstance(TwigRenderer::class);
+        $renderer = (new Injector(new TwigFileLoaderTestModule([__DIR__ . '/Fake/src/Resource'], ['debug' => false])))->getInstance(TwigRenderer::class);
         $this->assertFalse($renderer->twig->isDebug());
     }
 
@@ -155,7 +155,7 @@ class FileLoaderTest extends TestCase
 
     public function testRedirectOnPostNoRedirectTemplate(): void
     {
-        $injector = new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/ResourceNoTemplate']));
+        $injector = new Injector(new TwigFileLoaderTestModule([__DIR__ . '/Fake/src/ResourceNoTemplate']));
         $ro = $injector->getInstance(RedirectNoTemplate::class);
         $ro->onPost();
         $view = (string) $ro;

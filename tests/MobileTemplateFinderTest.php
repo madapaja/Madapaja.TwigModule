@@ -29,9 +29,9 @@ class MobileTemplateFinderTest extends TestCase
     public function testMobileTemplate(): void
     {
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A523 Safari/8536.25';
-        $paths = [$_ENV['TEST_DIR'] . '/Fake/src/Resource'];
+        $paths = [__DIR__ . '/Fake/src/Resource'];
         $templateFinder = new MobileTemplateFinder($paths, new TemplateFinder());
-        $file = ($templateFinder)($_ENV['TEST_DIR'] . '/Resource/Page/Index.php');
+        $file = ($templateFinder)(__DIR__ . '/Resource/Page/Index.php');
         $expected = 'Page/Index.mobile.twig';
         $this->assertSame($expected, $file);
     }
@@ -39,9 +39,9 @@ class MobileTemplateFinderTest extends TestCase
     public function testPcTemplate(): void
     {
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)';
-        $paths = [$_ENV['TEST_DIR'] . '/Fake/src/Resource'];
+        $paths = [__DIR__ . '/Fake/src/Resource'];
         $templateFinder = new MobileTemplateFinder($paths, new TemplateFinder());
-        $file = ($templateFinder)($_ENV['TEST_DIR'] . '/Resource/Page/Index.php');
+        $file = ($templateFinder)(__DIR__ . '/Resource/Page/Index.php');
         $expected = 'Page/Index.html.twig';
         $this->assertSame($expected, $file);
     }
