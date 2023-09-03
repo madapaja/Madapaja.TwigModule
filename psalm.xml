@@ -5,6 +5,13 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
+    <issueHandlers>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <directory name="src/" />
+            </errorLevel>
+        </UndefinedClass>
+    </issueHandlers>
     <projectFiles>
         <directory name="src" />
         <ignoreFiles>

@@ -14,5 +14,6 @@ class MobileTwigModule extends AbstractModule
     protected function configure()
     {
         $this->bind(TemplateFinderInterface::class)->to(MobileTemplateFinder::class);
+        $this->bind(TemplateFinderInterface::class)->annotatedWith('original')->to(TemplateFinder::class);
     }
 }
