@@ -20,8 +20,8 @@ use function is_array;
 class TwigModule extends AbstractModule
 {
     /**
-     * @param array               $paths   Twig template paths
-     * @param array               $options Twig_Environment options
+     * @param array<string>       $paths   Twig template paths
+     * @param array<mixed>        $options Twig_Environment options
      * @param AbstractModule|null $module
      *
      * @see http://twig.sensiolabs.org/api/master/Twig_Environment.html
@@ -116,7 +116,7 @@ class TwigModule extends AbstractModule
         $this->bind()->annotatedWith(TwigRedirectPath::class)->toInstance('/redirect/redirect.html.twig');
     }
 
-    private function isNotEmpty($var): bool
+    private function isNotEmpty(mixed $var): bool
     {
         return is_array($var) && ! empty($var);
     }

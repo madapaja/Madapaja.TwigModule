@@ -4,7 +4,8 @@
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
-namespace Madapaja\TwigModule\Fake\src\ResourceNotemplate\Page;
+
+namespace Madapaja\TwigModule\ResourceNoTemplate\Page;
 
 use BEAR\Resource\Code;
 use BEAR\Resource\ResourceObject;

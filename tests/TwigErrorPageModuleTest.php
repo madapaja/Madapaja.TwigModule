@@ -15,6 +15,7 @@ use Ray\Di\AbstractModule;
 use Ray\Di\Injector;
 
 use function assert;
+use function is_array;
 use function serialize;
 use function unserialize;
 
@@ -34,6 +35,7 @@ class TwigErrorPageModuleTest extends TestCase
         $error = $injector->getInstance(ErrorInterface::class);
         assert($error instanceof ErrorInterface);
         $error->handle(new RuntimeException(), new RouterMatch())->transfer();
+        assert(is_array(FakeTransfer::$ro->body));
         $this->assertArrayHasKey('status', FakeTransfer::$ro->body);
         $this->assertArrayHasKey('e', FakeTransfer::$ro->body);
         $this->assertArrayHasKey('logref', FakeTransfer::$ro->body);

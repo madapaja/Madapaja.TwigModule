@@ -12,7 +12,7 @@ use function mkdir;
 
 class OptionProviderTest extends TestCase
 {
-    public $tmpDir;
+    public string $tmpDir;
 
     public function setUp(): void
     {

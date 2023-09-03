@@ -11,8 +11,10 @@ use Ray\Di\Di\Named;
 
 class TwigErrorPage extends ResourceObject
 {
-    /** @var array */
+    /** @var array<string, string> */
     public $headers = ['content-type' => 'text/html; charset=utf-8'];
+
+    /** @var RenderInterface */
     protected $renderer;
 
     public function __sleep()
@@ -23,12 +25,14 @@ class TwigErrorPage extends ResourceObject
     /**
      * @Inject
      * @Named("error_page")
+     * {@inheritDoc}
      */
     #[Inject]
-
     #[Named('error_page')]
-    public function setRenderer(RenderInterface $renderer): void
+    public function setRenderer(RenderInterface $renderer)
     {
         $this->renderer = $renderer;
+
+        return $this;
     }
 }

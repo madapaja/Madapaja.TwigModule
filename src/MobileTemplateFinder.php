@@ -17,6 +17,7 @@ use function str_replace;
 
 class MobileTemplateFinder implements TemplateFinderInterface
 {
+    /** @param array<string> $paths */
     public function __construct(
         #[TwigPaths]
         private array $paths,
@@ -32,7 +33,7 @@ class MobileTemplateFinder implements TemplateFinderInterface
     {
         if (! class_exists(MobileDetect::class)) {
             // @codeCoverageIgnoreStart
-            class_alias(Mobile_Detect::class, MobileDetect::class);
+            class_alias(Mobile_Detect::class, MobileDetect::class); // @phpstan-ignore-line
             // @codeCoverageIgnoreEnd
         }
 
