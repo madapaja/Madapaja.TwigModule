@@ -31,7 +31,9 @@ class MobileTemplateFinder implements TemplateFinderInterface
     public function __invoke(string $name): string
     {
         if (! class_exists(MobileDetect::class)) {
+            // @codeCoverageIgnoreStart
             class_alias(Mobile_Detect::class, MobileDetect::class);
+            // @codeCoverageIgnoreEnd
         }
 
         $detect = new MobileDetect();
