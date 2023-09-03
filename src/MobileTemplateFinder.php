@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Madapaja\TwigModule;
 
+use Detection\MobileDetect;
 use Madapaja\TwigModule\Annotation\TwigPaths;
-use Mobile_Detect;
 
 use function file_exists;
 use function sprintf;
@@ -29,7 +29,8 @@ class MobileTemplateFinder implements TemplateFinderInterface
     public function __invoke(string $name): string
     {
         $templatePath = ($this->templateFinder)($name);
-        $detect = new Mobile_Detect(null, $this->userAgent);
+        $isMobileDetectV3 = class_exists(MobileDetect::class);
+        $detect = $isMobileDetectV3 ? new MobileDetect(null, $this->userAgent) : new \Mobile_Detect(null, $this->userAgent);
         $isMobile = $detect->isMobile() && ! $detect->isTablet();
         if ($isMobile) {
             $mobilePath = str_replace(TwigRenderer::EXT, '.mobile.twig', $templatePath);

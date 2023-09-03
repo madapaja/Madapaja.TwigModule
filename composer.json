@@ -19,7 +19,7 @@
     "bear/sunday": "^1.2",
     "bear/app-meta": "^1.1",
     "twig/twig": "^2.15.3 || ^v3.4.3",
-    "mobiledetect/mobiledetectlib": "^2.7",
+    "mobiledetect/mobiledetectlib": "^2.7 || ^3.74",
     "ray/di": "^2.7",
     "doctrine/annotations": "^1.13.3"
   },
