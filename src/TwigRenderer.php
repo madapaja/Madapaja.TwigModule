@@ -72,14 +72,14 @@ class TwigRenderer implements RenderInterface
         $ro->headers['Content-Type'] = 'text/html; charset=utf-8';
     }
 
-    private function renderView(ResourceObject $ro)
+    private function renderView(ResourceObject $ro): string
     {
         $template = $this->load($ro);
 
         return $template ? $template->render($this->buildBody($ro)) : '';
     }
 
-    private function renderRedirectView(ResourceObject $ro)
+    private function renderRedirectView(ResourceObject $ro): string
     {
         try {
             return $this->twig->render($this->redirectPage, ['url' => $ro->headers['Location']]);

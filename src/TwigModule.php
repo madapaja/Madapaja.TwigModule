@@ -116,7 +116,7 @@ class TwigModule extends AbstractModule
         $this->bind()->annotatedWith(TwigRedirectPath::class)->toInstance('/redirect/redirect.html.twig');
     }
 
-    private function isNotEmpty($var)
+    private function isNotEmpty($var): bool
     {
         return is_array($var) && ! empty($var);
     }
