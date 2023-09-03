@@ -26,7 +26,7 @@ class MobileTemplateFinder implements TemplateFinderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function __invoke(string $name): string
     {

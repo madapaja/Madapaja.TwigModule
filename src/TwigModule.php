@@ -35,7 +35,7 @@ class TwigModule extends AbstractModule
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function configure()
     {

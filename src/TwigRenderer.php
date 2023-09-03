@@ -40,7 +40,7 @@ class TwigRenderer implements RenderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function render(ResourceObject $ro)
     {

@@ -11,7 +11,7 @@ use function substr;
 class TemplateFinder implements TemplateFinderInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function __invoke(string $name): string
     {

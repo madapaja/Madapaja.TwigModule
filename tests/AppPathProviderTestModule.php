@@ -12,7 +12,7 @@ use Ray\Di\AbstractModule;
 class AppPathProviderTestModule extends AbstractModule
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function configure()
     {
