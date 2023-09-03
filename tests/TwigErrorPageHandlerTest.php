@@ -32,7 +32,7 @@ class TwigErrorPageHandlerTest extends TestCase
         );
     }
 
-    public function testHandle()
+    public function testHandle(): void
     {
         $request = new RouterMatch();
         $request->method = 'get';
@@ -40,8 +40,6 @@ class TwigErrorPageHandlerTest extends TestCase
         $request->query = [];
         $handler = $this->handler->handle(new NotFound(), $request);
         $this->assertInstanceOf(TwigErrorHandler::class, $handler);
-
-        return $handler;
     }
 
     /** @depends testHandle */

@@ -12,6 +12,8 @@ use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 use ReflectionClass;
 
+use function assert;
+
 class ArrayLoaderTest extends TestCase
 {
     private Injector $injector;
@@ -50,7 +52,9 @@ class ArrayLoaderTest extends TestCase
         $ro = $this->injector->getInstance(NoTemplate::class);
         $prop = (new ReflectionClass($ro))->getProperty('renderer');
         $prop->setAccessible(true);
-        $prop->getValue($ro)->render($ro);
+        $roValue = $prop->getValue($ro);
+        assert($roValue instanceof TwigRenderer);
+        $roValue->render($ro);
     }
 
     public function testPage(): void

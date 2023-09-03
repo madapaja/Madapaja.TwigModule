@@ -16,7 +16,7 @@ class AppPathProvider implements ProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get(): array
     {

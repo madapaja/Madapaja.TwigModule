@@ -40,7 +40,7 @@ class TwigRenderer implements RenderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function render(ResourceObject $ro)
     {
@@ -72,14 +72,14 @@ class TwigRenderer implements RenderInterface
         $ro->headers['Content-Type'] = 'text/html; charset=utf-8';
     }
 
-    private function renderView(ResourceObject $ro)
+    private function renderView(ResourceObject $ro): string
     {
         $template = $this->load($ro);
 
         return $template ? $template->render($this->buildBody($ro)) : '';
     }
 
-    private function renderRedirectView(ResourceObject $ro)
+    private function renderRedirectView(ResourceObject $ro): string
     {
         try {
             return $this->twig->render($this->redirectPage, ['url' => $ro->headers['Location']]);
@@ -121,7 +121,7 @@ class TwigRenderer implements RenderInterface
     {
         $loader = $this->twig->getLoader();
         if ($loader instanceof FilesystemLoader) {
-            $classFile = $this->getReflection($ro)->getFileName();
+            $classFile = (string) $this->getReflection($ro)->getFileName();
             $templateFile = ($this->templateFinder)($classFile);
 
             return $this->twig->load($templateFile);
@@ -130,15 +130,20 @@ class TwigRenderer implements RenderInterface
         return $this->twig->load($this->getReflection($ro)->name . self::EXT);
     }
 
+    /** @return ReflectionClass<ResourceObject> */
     private function getReflection(ResourceObject $ro): ReflectionClass
     {
         if ($ro instanceof WeavedInterface) {
-            return (new ReflectionClass($ro))->getParentClass();
+            /** @var ReflectionClass<ResourceObject> $ref */
+            $ref = (new ReflectionClass($ro))->getParentClass();
+
+            return $ref;
         }
 
         return new ReflectionClass($ro);
     }
 
+    /** @return array<string, mixed> */
     private function buildBody(ResourceObject $ro): array
     {
         $body = is_array($ro->body) ? $ro->body : [];

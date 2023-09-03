@@ -17,7 +17,7 @@ class WeavedResourceTest extends TestCase
 
     public function setUp(): void
     {
-        $this->injector = new Injector(new TwigWeavedResourceTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource']));
+        $this->injector = new Injector(new TwigWeavedResourceTestModule([__DIR__ . '/Fake/src/Resource']));
     }
 
     public function testRenderer(): void

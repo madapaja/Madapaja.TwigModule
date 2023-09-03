@@ -10,17 +10,19 @@ use Madapaja\TwigModule\Resource\Page\Index;
 use Madapaja\TwigModule\Resource\Page\NoTemplate;
 use Madapaja\TwigModule\Resource\Page\Page;
 use Madapaja\TwigModule\Resource\Page\Redirect;
+use Madapaja\TwigModule\ResourceNoTemplate\Page\RedirectNoTemplate;
 use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 use ReflectionClass;
 
+use function assert;
 use function trim;
 
 class FileLoaderTest extends TestCase
 {
     public function getInjector(): Injector
     {
-        return new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource']));
+        return new Injector(new TwigFileLoaderTestModule([__DIR__ . '/Fake/src/Resource']));
     }
 
     public function testRenderer(): void
@@ -36,11 +38,11 @@ class FileLoaderTest extends TestCase
     public function testTwigOptions(): void
     {
         /** @var TwigRenderer $renderer */
-        $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource'], ['debug' => true])))->getInstance(TwigRenderer::class);
+        $renderer = (new Injector(new TwigFileLoaderTestModule([__DIR__ . '/Fake/src/Resource'], ['debug' => true])))->getInstance(TwigRenderer::class);
         $this->assertTrue($renderer->twig->isDebug());
 
         /** @var TwigRenderer $renderer */
-        $renderer = (new Injector(new TwigFileLoaderTestModule([$_ENV['TEST_DIR'] . '/Fake/src/Resource'], ['debug' => false])))->getInstance(TwigRenderer::class);
+        $renderer = (new Injector(new TwigFileLoaderTestModule([__DIR__ . '/Fake/src/Resource'], ['debug' => false])))->getInstance(TwigRenderer::class);
         $this->assertFalse($renderer->twig->isDebug());
     }
 
@@ -75,7 +77,9 @@ class FileLoaderTest extends TestCase
         $ro = $injector->getInstance(NoTemplate::class);
         $prop = (new ReflectionClass($ro))->getProperty('renderer');
         $prop->setAccessible(true);
-        $prop->getValue($ro)->render($ro);
+        $renderer = $prop->getValue($ro);
+        assert($renderer instanceof TwigRenderer);
+        $renderer->render($ro);
     }
 
     public function testNoViewWhenCode301(): void
@@ -85,7 +89,9 @@ class FileLoaderTest extends TestCase
         $ro->code = 303;
         $prop = (new ReflectionClass($ro))->getProperty('renderer');
         $prop->setAccessible(true);
-        $view = $prop->getValue($ro)->render($ro);
+        $renderer = $prop->getValue($ro);
+        assert($renderer instanceof TwigRenderer);
+        $view = $renderer->render($ro);
         $this->assertSame('', $view);
     }
 
@@ -96,7 +102,9 @@ class FileLoaderTest extends TestCase
         $ro->code = Code::NO_CONTENT;
         $prop = (new ReflectionClass($ro))->getProperty('renderer');
         $prop->setAccessible(true);
-        $view = $prop->getValue($ro)->render($ro);
+        $renderer = $prop->getValue($ro);
+        assert($renderer instanceof TwigRenderer);
+        $view = $renderer->render($ro);
         $this->assertSame('', $view);
     }
 
@@ -143,5 +151,17 @@ class FileLoaderTest extends TestCase
         $this->assertSame(Code::FOUND, $ro->code);
         $this->assertSame('/path/to/baz', $ro->headers['Location']);
         $this->assertMatchesRegularExpression('#^.*Redirecting to /path/to/baz.*$#s', trim((string) $ro));
+    }
+
+    public function testRedirectOnPostNoRedirectTemplate(): void
+    {
+        $injector = new Injector(new TwigFileLoaderTestModule([__DIR__ . '/Fake/src/ResourceNoTemplate']));
+        $ro = $injector->getInstance(RedirectNoTemplate::class);
+        $ro->onPost();
+        $view = (string) $ro;
+        $this->assertSame(Code::FOUND, $ro->code);
+        $this->assertSame('/path/to/baz', $ro->headers['Location']);
+        $this->assertSame('', $ro->view);
+        $this->assertSame('', $view);
     }
 }
