@@ -92,7 +92,7 @@ class TwigModule extends AbstractModule
 
     private function bindTwigPaths(): void
     {
-        if ($this->isNotEmpty($this->paths)) {
+        if (! empty($this->paths)) {
             $this->bind()->annotatedWith(TwigPaths::class)->toInstance($this->paths);
 
             return;
@@ -103,7 +103,7 @@ class TwigModule extends AbstractModule
 
     private function bindTwigOptions(): void
     {
-        if ($this->isNotEmpty($this->options)) {
+        if (! empty($this->options)) {
             $this->bind()->annotatedWith(TwigOptions::class)->toInstance($this->options);
 
             return;
@@ -115,10 +115,5 @@ class TwigModule extends AbstractModule
     private function bindTwigRedirectPath(): void
     {
         $this->bind()->annotatedWith(TwigRedirectPath::class)->toInstance('/redirect/redirect.html.twig');
-    }
-
-    private function isNotEmpty(mixed $var): bool
-    {
-        return is_array($var) && ! empty($var);
     }
 }
