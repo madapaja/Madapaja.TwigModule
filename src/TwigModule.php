@@ -15,7 +15,20 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\Loader\LoaderInterface;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/**
+ * Provides Twig and derived bindings
+ *
+ * The following bindings are provided:
+ *
+ * LoaderInterface
+ * Environment
+ * ::TwigPaths
+ * ::TwigRedirectPath
+ * ::TwigOptions
+ * /
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class TwigModule extends AbstractModule
 {
     /**
