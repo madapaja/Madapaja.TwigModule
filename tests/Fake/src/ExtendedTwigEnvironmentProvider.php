@@ -10,6 +10,9 @@ use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 use Twig\Environment;
 
+/**
+ * @template-implements ProviderInterface<Environment>
+ */
 class ExtendedTwigEnvironmentProvider implements ProviderInterface
 {
     #[Named('original')]
