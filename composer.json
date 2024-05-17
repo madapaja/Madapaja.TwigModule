@@ -14,7 +14,7 @@
     }
   ],
   "require": {
-    "php": "^8.0",
+    "php": "^8.1",
     "bear/resource": "^1.20",
     "bear/sunday": "^1.2",
     "bear/app-meta": "^1.8",
