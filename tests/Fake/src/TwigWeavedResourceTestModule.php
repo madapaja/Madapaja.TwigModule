@@ -11,7 +11,7 @@ use Ray\Di\AbstractModule;
 
 class TwigWeavedResourceTestModule extends AbstractModule
 {
-    public function __construct(private array $paths = [])
+    public function __construct(private readonly array $paths = [])
     {
         parent::__construct();
     }

@@ -22,14 +22,11 @@ class TwigErrorPage extends ResourceObject
         return ['renderer'];
     }
 
-    /**
-     * @Inject
-     * @Named("error_page")
-     * {@inheritDoc}
-     */
+    /** @Inject */
     #[Inject]
     #[Named('error_page')]
-    public function setRenderer(RenderInterface $renderer)
+    public function setRenderer(#[Named('error_page')]
+    RenderInterface $renderer,)
     {
         $this->renderer = $renderer;
 

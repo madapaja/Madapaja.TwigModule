@@ -20,9 +20,9 @@ class MobileTemplateFinder implements TemplateFinderInterface
     /** @param array<string> $paths */
     public function __construct(
         #[TwigPaths]
-        private array $paths,
+        private readonly array $paths,
         #[Named('original')]
-        private TemplateFinderInterface $templateFinder,
+        private readonly TemplateFinderInterface $templateFinder,
     ) {
     }
 

@@ -28,8 +28,8 @@ class TwigModule extends AbstractModule
      * @see http://twig.sensiolabs.org/api/master/Twig_Environment.html
      */
     public function __construct(
-        private array $paths = [],
-        private array $options = [],
+        private readonly array $paths = [],
+        private readonly array $options = [],
         AbstractModule|null $module = null,
     ) {
         parent::__construct($module);

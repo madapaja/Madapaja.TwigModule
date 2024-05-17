@@ -12,11 +12,9 @@ use Twig\Environment;
 
 class ExtendedTwigEnvironmentProvider implements ProviderInterface
 {
-    /**
-     * @Named("original")
-     */
     #[Named('original')]
-    public function __construct(private Environment $twig)
+    public function __construct(#[\Ray\Di\Di\Named('original')]
+    private readonly Environment $twig)
     {
     }
 

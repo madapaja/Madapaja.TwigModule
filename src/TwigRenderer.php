@@ -23,16 +23,16 @@ class TwigRenderer implements RenderInterface
     /**
      * File extension
      */
-    public const EXT = '.html.twig';
+    final public const EXT = '.html.twig';
 
     /** @var Environment */
     public $twig;
-    private TemplateFinderInterface|TemplateFinder $templateFinder;
+    private readonly TemplateFinderInterface|TemplateFinder $templateFinder;
 
     public function __construct(
         Environment $twig,
         #[TwigRedirectPath]
-        private string $redirectPage,
+        private readonly string $redirectPage,
         TemplateFinderInterface|null $templateFinder = null,
     ) {
         $this->twig = $twig;
