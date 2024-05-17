@@ -15,8 +15,6 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\Loader\LoaderInterface;
 
-use function is_array;
-
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class TwigModule extends AbstractModule
 {
