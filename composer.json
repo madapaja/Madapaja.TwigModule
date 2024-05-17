@@ -54,7 +54,11 @@
     "coverage": ["php -dzend_extension=xdebug.so -dxdebug.mode=coverage phpunit --coverage-text --coverage-html=build/coverage"],
     "cs": ["phpcs --standard=phpcs.xml src"],
     "cs-fix": ["phpcbf src tests"],
-    "sa": ["psalm", "phpstan"]
+    "sa": ["psalm", "phpstan"],
+    "clean": [
+      "phpstan clear-result-cache",
+      "psalm --clear-cache"
+    ]
   },
   "config": {
     "allow-plugins": {
