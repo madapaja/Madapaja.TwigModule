@@ -10,7 +10,7 @@ use Ray\Di\AbstractModule;
 
 class TwigFileLoaderTestModule extends AbstractModule
 {
-    public function __construct(private array $paths = [], private array $options = [])
+    public function __construct(private readonly array $paths = [], private readonly array $options = [])
     {
         parent::__construct();
     }

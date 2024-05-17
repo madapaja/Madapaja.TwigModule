@@ -17,9 +17,9 @@ class OptionProvider implements ProviderInterface
 {
     /** @SuppressWarnings(PHPMD.BooleanArgumentFlag) */
     public function __construct(
-        private AbstractAppMeta $appMeta,
+        private readonly AbstractAppMeta $appMeta,
         #[Named(TwigDebug::class)]
-        private bool $isDebug = false,
+        private readonly bool $isDebug = false,
     ) {
     }
 

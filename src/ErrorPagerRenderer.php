@@ -18,9 +18,9 @@ use function is_array;
 class ErrorPagerRenderer implements RenderInterface
 {
     public function __construct(
-        private Environment $twig,
+        private readonly Environment $twig,
         #[TwigErrorPath]
-        private string $errorPage,
+        private readonly string $errorPage,
     ) {
     }
 

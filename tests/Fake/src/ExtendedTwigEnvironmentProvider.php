@@ -10,13 +10,14 @@ use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 use Twig\Environment;
 
+/**
+ * @template-implements ProviderInterface<Environment>
+ */
 class ExtendedTwigEnvironmentProvider implements ProviderInterface
 {
-    /**
-     * @Named("original")
-     */
     #[Named('original')]
-    public function __construct(private Environment $twig)
+    public function __construct(#[\Ray\Di\Di\Named('original')]
+    private readonly Environment $twig)
     {
     }
 

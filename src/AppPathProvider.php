@@ -11,7 +11,7 @@ use Ray\Di\ProviderInterface;
 class AppPathProvider implements ProviderInterface
 {
     public function __construct(
-        private AbstractAppMeta $appMeta,
+        private readonly AbstractAppMeta $appMeta,
     ) {
     }
 

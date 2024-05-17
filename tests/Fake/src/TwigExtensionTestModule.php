@@ -12,7 +12,7 @@ use Twig\Environment;
 
 class TwigExtensionTestModule extends AbstractModule
 {
-    public function __construct(private array $paths = [])
+    public function __construct(private readonly array $paths = [])
     {
         parent::__construct();
     }

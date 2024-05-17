@@ -6,6 +6,15 @@ namespace Madapaja\TwigModule;
 
 use Ray\Di\AbstractModule;
 
+/**
+ * Provides TemplateFinderInterface and derived bindings
+ *
+ * Module for finding mobile templates.
+ *
+ * The following bindings are provided:
+ *
+ *  TemplateFinderInterface
+ */
 class MobileTwigModule extends AbstractModule
 {
     /**

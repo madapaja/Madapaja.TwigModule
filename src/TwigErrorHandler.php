@@ -19,9 +19,9 @@ use function sprintf;
 final class TwigErrorHandler implements ErrorInterface
 {
     public function __construct(
-        private TwigErrorPage $errorPage,
-        private TransferInterface $transfer,
-        private LoggerInterface $logger,
+        private readonly TwigErrorPage $errorPage,
+        private readonly TransferInterface $transfer,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
