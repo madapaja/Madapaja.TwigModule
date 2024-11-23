@@ -1,6 +1,6 @@
 {
   "symbol-whitelist" : [
-    "Mobile_Detect"
+    "Mobile_Detect", "Detection\\MobileDetect"
   ],
   "php-core-extensions" : [
     "Core",
