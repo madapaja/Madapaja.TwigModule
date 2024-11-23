@@ -25,10 +25,8 @@ class AppPathProvider implements ProviderInterface
         $appDir = $this->appMeta->appDir;
 
         return [
-            $appDir . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR,
-            'Resource',
-            $appDir . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR,
-            'templates',
+            $appDir . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Resource',
+            $appDir . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . 'templates',
         ];
     }
 }
