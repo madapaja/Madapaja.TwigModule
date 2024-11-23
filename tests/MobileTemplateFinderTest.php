@@ -9,6 +9,7 @@ use BEAR\AppMeta\Meta;
 use PHPUnit\Framework\TestCase;
 use Ray\Di\AbstractModule;
 use Ray\Di\Injector;
+
 use function test_path;
 
 class MobileTemplateFinderTest extends TestCase

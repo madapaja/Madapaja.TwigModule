@@ -6,5 +6,5 @@ require dirname(__DIR__, 1) . '/vendor/autoload.php';
 
 function test_path(string $path): string
 {
-    return str_replace('\\', DIRECTORY_SEPARATOR,  $path);
+    return str_replace('\\', DIRECTORY_SEPARATOR, $path);
 }

@@ -9,7 +9,7 @@ use function is_int;
 use function str_replace;
 use function strpos;
 use function substr;
-use function var_dump;
+
 use const DIRECTORY_SEPARATOR;
 
 class TemplateFinder implements TemplateFinderInterface

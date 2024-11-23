@@ -12,8 +12,6 @@ use Psr\Log\NullLogger;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-use function test_path;
-
 class TwigErrorPageHandlerTest extends TestCase
 {
     private TwigErrorHandler $handler;
