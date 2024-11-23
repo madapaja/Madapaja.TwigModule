@@ -40,7 +40,8 @@
         "tests",
         "tests/Fake/src"
       ]
-    }
+    },
+    "files": ["tests/test_path.php"]
   },
   "scripts": {
     "test": ["phpunit"],
