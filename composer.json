@@ -18,8 +18,8 @@
     "bear/resource": "^1.20",
     "bear/sunday": "^1.2",
     "bear/app-meta": "^1.8",
-    "twig/twig": "^v3.4.3",
-    "mobiledetect/mobiledetectlib": "^2.7 || ^3.74",
+    "twig/twig": "^v2.16.1 || ^v3.15",
+    "mobiledetect/mobiledetectlib": "^3.74.3",
     "ray/di": "^2.17",
     "ray/aop": "^2.17",
     "psr/log": "^3.0"
