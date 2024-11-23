@@ -12,11 +12,13 @@ use BEAR\Sunday\Extension\Transfer\TransferInterface;
 class FakeHttpResponder implements TransferInterface
 {
     public static $code;
+    /** @var array<string, string> */
     public static $headers = [];
     public static $content;
 
     public static function reset()
     {
+        /** @var array<string, string> */
         static::$headers = [];
         static::$content = null;
     }

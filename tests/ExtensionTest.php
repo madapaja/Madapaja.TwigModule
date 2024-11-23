@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
 use function str_rot13;
+use function test_path;
 use function trim;
 
 class ExtensionTest extends TestCase

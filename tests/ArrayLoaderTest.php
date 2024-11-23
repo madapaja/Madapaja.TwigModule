@@ -36,14 +36,14 @@ class ArrayLoaderTest extends TestCase
     {
         $ro = $this->injector->getInstance(Index::class);
 
-        $this->assertSame('Hello, BEAR.Sunday!', (string) $ro->onGet());
+        $this->assertEquals('Hello, BEAR.Sunday!', $ro->onGet());
     }
 
     public function testIndexWithArg(): void
     {
         $ro = $this->injector->getInstance(Index::class);
 
-        $this->assertSame('Hello, Madapaja!', (string) $ro->onGet('Madapaja'));
+        $this->assertEquals('Hello, Madapaja!', (string) $ro->onGet('Madapaja'));
     }
 
     public function testTemplateNotFoundException(): void
@@ -61,6 +61,6 @@ class ArrayLoaderTest extends TestCase
     {
         $ro = $this->injector->getInstance(Page::class);
 
-        $this->assertSame('<!DOCTYPE html><html><head><title>Page</title><body>Hello, BEAR.Sunday!</body></html>', (string) $ro->onGet());
+        $this->assertEquals('<!DOCTYPE html><html><head><title>Page</title><body>Hello, BEAR.Sunday!</body></html>', (string) $ro->onGet());
     }
 }

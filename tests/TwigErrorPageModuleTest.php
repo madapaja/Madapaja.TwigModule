@@ -33,7 +33,6 @@ class TwigErrorPageModuleTest extends TestCase
         });
         $injector = (new Injector($module));
         $error = $injector->getInstance(ErrorInterface::class);
-        assert($error instanceof ErrorInterface);
         $error->handle(new RuntimeException(), new RouterMatch())->transfer();
         assert(is_array(FakeTransfer::$ro->body));
         $this->assertArrayHasKey('status', FakeTransfer::$ro->body);

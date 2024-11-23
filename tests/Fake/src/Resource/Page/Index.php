@@ -7,6 +7,7 @@
 namespace Madapaja\TwigModule\Resource\Page;
 
 use BEAR\Resource\ResourceObject;
+use function test_path;
 
 class Index extends ResourceObject
 {
@@ -21,7 +22,7 @@ class Index extends ResourceObject
 
     public function onPost($name = 'BEAR.Sunday')
     {
-        $this->templatePath = __DIR__ . '/IndexPost.html.twig';
+        $this->templatePath = test_path(__DIR__ . '/IndexPost.html.twig');
         $this['name'] = $name;
         $this['isPost'] = true;
 

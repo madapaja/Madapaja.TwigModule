@@ -16,6 +16,7 @@ use Ray\Di\Injector;
 use ReflectionClass;
 
 use function assert;
+use function test_path;
 use function trim;
 
 class FileLoaderTest extends TestCase

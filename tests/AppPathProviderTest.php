@@ -10,6 +10,7 @@ use Twig\Loader\FilesystemLoader;
 
 use function is_dir;
 use function mkdir;
+use function test_path;
 
 class AppPathProviderTest extends TestCase
 {
