@@ -33,7 +33,7 @@ class MobileTemplateFinderTest extends TestCase
         $paths = [test_path(__DIR__ . '/Fake/src/Resource')];
         $templateFinder = new MobileTemplateFinder($paths, new TemplateFinder());
         $file = ($templateFinder)(test_path(__DIR__ . '/Resource/Page/Index.php'));
-        $expected = 'Page/Index.mobile.twig';
+        $expected = test_path('Page/Index.mobile.twig');
         $this->assertSame($expected, $file);
     }
 
@@ -43,7 +43,7 @@ class MobileTemplateFinderTest extends TestCase
         $paths = [test_path(__DIR__ . '/Fake/src/Resource')];
         $templateFinder = new MobileTemplateFinder($paths, new TemplateFinder());
         $file = ($templateFinder)(test_path(__DIR__ . '/Resource/Page/Index.php'));
-        $expected = 'Page/Index.html.twig';
+        $expected = test_path('Page/Index.html.twig');
         $this->assertSame($expected, $file);
     }
 

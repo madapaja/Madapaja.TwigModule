@@ -16,11 +16,11 @@ class AppPathProviderTest extends TestCase
 {
     public function testAppPathProvider(): void
     {
-        $appDir = __DIR__ . '/Fake';
         $paths = [
-            test_path($appDir . '/src/Resource'),
-            test_path($appDir . '/var/templates')
+            test_path(__DIR__ . '/Fake/src/Resource'),
+            test_path(__DIR__ . '/Fake/var/templates')
         ];
+
 
         foreach ($paths as $path) {
             if (is_dir($path)) {
