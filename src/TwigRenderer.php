@@ -143,7 +143,7 @@ class TwigRenderer implements RenderInterface
         return new ReflectionClass($ro);
     }
 
-    /** @return array<string, mixed> */
+    /** @return array<mixed> */
     private function buildBody(ResourceObject $ro): array
     {
         $body = is_array($ro->body) ? $ro->body : [];

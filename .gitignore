@@ -4,3 +4,5 @@
 /.php_cs.cache
 /.phpunit.result.cache
 /.phpcs-cache
+/vendor-bin/tools/vendor/
+

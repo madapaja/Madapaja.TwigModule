@@ -1,9 +1,11 @@
 parameters:
-  level: max
-  paths:
+    level: max
+    paths:
     - src
     - tests
-  excludePaths:
+    excludePaths:
     - */tests/tmp/*
     - */tests/Fake/*
-  ignoreErrors:
+    ignoreErrors:
+        - '#PHPDoc tag @SuppressWarnings has invalid value#'
+        - '#Cannot cast mixed to string#'

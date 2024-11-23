@@ -9,6 +9,7 @@ use Ray\Di\Injector;
 
 use function is_dir;
 use function mkdir;
+use function test_path;
 
 class OptionProviderTest extends TestCase
 {
@@ -16,7 +17,7 @@ class OptionProviderTest extends TestCase
 
     public function setUp(): void
     {
-        $this->tmpDir = __DIR__ . '/tmp/optionProvider/tmp';
+        $this->tmpDir = test_path(__DIR__ . '/tmp/optionProvider/tmp');
         if (is_dir($this->tmpDir)) {
             return;
         }

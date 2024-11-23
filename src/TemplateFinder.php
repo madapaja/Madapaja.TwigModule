@@ -10,6 +10,8 @@ use function str_replace;
 use function strpos;
 use function substr;
 
+use const DIRECTORY_SEPARATOR;
+
 class TemplateFinder implements TemplateFinderInterface
 {
     /**
@@ -17,7 +19,7 @@ class TemplateFinder implements TemplateFinderInterface
      */
     public function __invoke(string $name): string
     {
-        $pos = strpos($name, '/Resource/');
+        $pos = strpos($name, DIRECTORY_SEPARATOR . 'Resource' . DIRECTORY_SEPARATOR);
         assert(is_int($pos));
         $relativePath = substr($name, $pos + 10);
 

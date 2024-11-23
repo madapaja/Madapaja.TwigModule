@@ -10,15 +10,15 @@ use Twig\Loader\FilesystemLoader;
 
 use function is_dir;
 use function mkdir;
+use function test_path;
 
 class AppPathProviderTest extends TestCase
 {
     public function testAppPathProvider(): void
     {
-        $appDir = __DIR__ . '/Fake';
         $paths = [
-            $appDir . '/src/Resource',
-            $appDir . '/var/templates',
+            test_path(__DIR__ . '/Fake/src/Resource'),
+            test_path(__DIR__ . '/Fake/var/templates'),
         ];
 
         foreach ($paths as $path) {
