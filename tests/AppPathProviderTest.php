@@ -18,8 +18,8 @@ class AppPathProviderTest extends TestCase
     {
         $appDir = __DIR__ . '/Fake';
         $paths = [
-            $appDir . '/src/Resource',
-            $appDir . '/var/templates',
+            test_path($appDir . '/src/Resource'),
+            test_path($appDir . '/var/templates')
         ];
 
         foreach ($paths as $path) {
