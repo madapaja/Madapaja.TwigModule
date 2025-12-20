@@ -41,6 +41,8 @@ class TwigRenderer implements RenderInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-taint-escape html
      */
     public function render(ResourceObject $ro)
     {

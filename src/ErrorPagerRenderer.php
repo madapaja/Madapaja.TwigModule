@@ -28,6 +28,8 @@ class ErrorPagerRenderer implements RenderInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     *
+     * @psalm-taint-escape html
      */
     public function render(ResourceObject $ro): string
     {
