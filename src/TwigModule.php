@@ -9,6 +9,7 @@ use Madapaja\TwigModule\Annotation\TwigLoader;
 use Madapaja\TwigModule\Annotation\TwigOptions;
 use Madapaja\TwigModule\Annotation\TwigPaths;
 use Madapaja\TwigModule\Annotation\TwigRedirectPath;
+use Madapaja\TwigModule\Annotation\TwigRootPath;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 use Twig\Environment;
@@ -25,6 +26,7 @@ use Twig\Loader\LoaderInterface;
  * ::TwigPaths
  * ::TwigRedirectPath
  * ::TwigOptions
+ * ::TwigRootPath
  * /
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -56,6 +58,7 @@ class TwigModule extends AbstractModule
         $this->bindTwigEnvironment();
         $this->bindTwigPaths();
         $this->bindTwigOptions();
+        $this->bindTwigRootPath();
         $this->bindTwigRedirectPath();
     }
 
@@ -73,7 +76,10 @@ class TwigModule extends AbstractModule
             ->annotatedWith(TwigLoader::class)
             ->toConstructor(
                 FilesystemLoader::class,
-                'paths=Madapaja\TwigModule\Annotation\TwigPaths',
+                [
+                    'paths' => TwigPaths::class,
+                    'rootPath' => TwigRootPath::class,
+                ],
             );
     }
 
@@ -121,6 +127,11 @@ class TwigModule extends AbstractModule
         }
 
         $this->bind()->annotatedWith(TwigOptions::class)->toProvider(OptionProvider::class);
+    }
+
+    private function bindTwigRootPath(): void
+    {
+        $this->bind()->annotatedWith(TwigRootPath::class)->toProvider(AppRootPathProvider::class);
     }
 
     private function bindTwigRedirectPath(): void
