@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Madapaja\TwigModule;
 
 use BEAR\Sunday\Compile\CompileStepInterface;
-use Madapaja\TwigModule\Exception\TemplateAlreadyLoaded;
+use Madapaja\TwigModule\Exception\TemplateNotWritten;
 use Twig\Cache\FilesystemCache;
 use Twig\Environment;
 
+use function array_diff;
+use function array_keys;
+use function array_values;
 use function count;
+use function reset;
 use function sprintf;
 
 class TwigCompileStep implements CompileStepInterface
@@ -26,30 +30,46 @@ class TwigCompileStep implements CompileStepInterface
     /**
      * {@inheritDoc}
      *
-     * Must run before anything renders: Environment::loadTemplate() returns early for a template class
-     * already defined in the process, so a swapped-in cache is skipped rather than written.
+     * Twig writes a template class at most once per process, so anything that loaded a template before
+     * this step ran makes the swapped-in cache skip it silently. Every expected artifact is accounted
+     * for before returning.
      */
     public function __invoke(string $stepDir): int
     {
-        $names = ($this->templateNames)($this->twig->getLoader());
+        $loader = $this->twig->getLoader();
+        $targets = [];
+        // One artifact per loader cache key: names resolving to the same file share a template class,
+        // which happens whenever roots nest or a namespace aliases a subdirectory
+        foreach (($this->templateNames)($loader) as $name) {
+            $targets[$loader->getCacheKey($name)] = $name;
+        }
+
         // The live instance, not getCache()'s string form, which would rebuild
         // FilesystemCache and re-derive its bytecode invalidation flag
         $serveCache = $this->twig->getCache(false);
-        $stepCache = new CountingCache(new FilesystemCache($stepDir));
+        $stepCache = new RecordingCache(new FilesystemCache($stepDir));
         $this->twig->setCache($stepCache);
 
         try {
-            foreach ($names as $name) {
+            foreach ($targets as $name) {
                 $this->twig->load($name);
             }
         } finally {
             $this->twig->setCache($serveCache);
         }
 
-        if ($names !== [] && $stepCache->writes() === 0) {
-            throw new TemplateAlreadyLoaded(sprintf('None of %d templates was written; they were loaded before this step ran.', count($names)));
+        $written = $stepCache->written();
+        $missing = array_diff(array_values($targets), array_keys($written));
+        if ($missing !== []) {
+            throw new TemplateNotWritten(sprintf(
+                'Wrote %d of %d templates into %s; "%s" was not written.',
+                count($written),
+                count($targets),
+                $stepDir,
+                (string) reset($missing),
+            ));
         }
 
-        return $stepCache->writes();
+        return count($written);
     }
 }

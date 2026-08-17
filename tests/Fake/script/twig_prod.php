@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Madapaja\TwigModule;
 
+use BEAR\AppMeta\AbstractAppMeta;
 use Ray\Di\Injector;
 use Twig\Environment;
 
@@ -26,7 +27,8 @@ assert($appDir !== '');
 $injector = new Injector(new TwigProdTestModule($appDir));
 
 if ($mode === 'compile') {
-    $stepDir = $appDir . '/var/build/' . TwigCompileStep::NAME;
+    // As the compiler does it: {buildDir}/{binding key}, created by the caller
+    $stepDir = $injector->getInstance(AbstractAppMeta::class)->buildDir . '/' . TwigCompileStep::NAME;
     mkdir($stepDir, 0777, true);
     $step = $injector->getInstance(TwigCompileStep::class);
     echo $step($stepDir);

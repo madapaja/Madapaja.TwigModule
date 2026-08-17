@@ -13,7 +13,6 @@ use Madapaja\TwigModule\Annotation\TwigRootPath;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 use Twig\Loader\LoaderInterface;
 
 /**
@@ -75,7 +74,7 @@ class TwigModule extends AbstractModule
             ->bind(LoaderInterface::class)
             ->annotatedWith(TwigLoader::class)
             ->toConstructor(
-                FilesystemLoader::class,
+                RootRelativeLoader::class,
                 [
                     'paths' => TwigPaths::class,
                     'rootPath' => TwigRootPath::class,

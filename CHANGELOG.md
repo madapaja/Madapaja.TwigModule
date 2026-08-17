@@ -4,12 +4,15 @@
 
 ### Added
 
-- `TwigProdModule`: compiles templates in the build phase and serves them read-only from `{appDir}/var/build/twig`.
+- `TwigProdModule`: compiles templates in the build phase and serves them read-only from `{buildDir}/twig`.
 - `FilesystemLoader` receives `rootPath`, so cache keys no longer depend on the working directory.
 
 ### Changed
 
 - PHP 8.2 or later is required, following `bear/sunday`.
+- The Twig loader is now `RootRelativeLoader`, a `FilesystemLoader` subclass that reports template paths
+  relative to the root path. Compiled artifacts no longer embed the absolute path of the machine that
+  compiled them, so a Twig error in production names the deployed template.
 
 ### Migration
 

@@ -10,12 +10,15 @@ use BEAR\AppMeta\AbstractAppMeta;
 
 class FakeAppMeta extends AbstractAppMeta
 {
+    public const CONTEXT = 'prod-app';
+
     /** @param non-empty-string $appDir */
     public function __construct(string $appDir)
     {
         $this->name = 'Madapaja\TwigModule';
         $this->appDir = $appDir;
-        $this->tmpDir = $appDir . '/var/tmp';
-        $this->logDir = $appDir . '/var/log';
+        $this->buildDir = $appDir . '/var/build/' . self::CONTEXT;
+        $this->tmpDir = $appDir . '/var/tmp/' . self::CONTEXT;
+        $this->logDir = $appDir . '/var/log/' . self::CONTEXT;
     }
 }

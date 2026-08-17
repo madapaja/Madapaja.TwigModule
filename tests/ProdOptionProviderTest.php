@@ -13,16 +13,17 @@ class ProdOptionProviderTest extends TestCase
     public function testCacheReadsTheBuildDir(): void
     {
         $appDir = __DIR__ . '/Fake';
-        $options = (new ProdOptionProvider(new FakeAppMeta($appDir)))->get();
+        $meta = new FakeAppMeta($appDir);
+        $options = (new ProdOptionProvider($meta))->get();
         $cache = $options['cache'];
 
         $this->assertInstanceOf(CompiledCache::class, $cache);
         $this->assertStringStartsWith(
-            $appDir . '/var/build/twig/',
+            $meta->buildDir . '/twig/',
             $cache->generateKey('page/index.html.twig', '__TwigTemplate_test'),
         );
         $this->assertFalse($options['debug']);
         $this->assertArrayNotHasKey('auto_reload', $options);
-        $this->assertFalse(is_dir($appDir . '/var/build'));
+        $this->assertFalse(is_dir($meta->buildDir));
     }
 }

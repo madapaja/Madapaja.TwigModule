@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use function copy;
 use function escapeshellarg;
 use function exec;
+use function file_get_contents;
 use function glob;
 use function implode;
 use function is_dir;
@@ -53,15 +54,18 @@ class TwigProdModuleTest extends TestCase
         $this->assertSame(0, $status);
         $this->assertSame('3', trim($output));
 
-        $buildDir = $this->appDir . '/var/build/twig';
-        $compiled = (array) glob($buildDir . '/*/*.php');
+        $stepDir = $this->appDir . '/var/build/' . FakeAppMeta::CONTEXT . '/twig';
+        $compiled = (array) glob($stepDir . '/*/*.php');
         $this->assertCount(3, $compiled);
+        foreach ($compiled as $artifact) {
+            $this->assertStringNotContainsString($this->appDir, (string) file_get_contents((string) $artifact));
+        }
 
         [$status, $output] = $this->php('serve');
         $this->assertSame(0, $status);
         $this->assertStringContainsString('Hello, BEAR!', $output);
-        $this->assertSame($compiled, (array) glob($buildDir . '/*/*.php'));
-        $this->assertFalse(is_dir($this->appDir . '/var/tmp/twig'));
+        $this->assertSame($compiled, (array) glob($stepDir . '/*/*.php'));
+        $this->assertFalse(is_dir($this->appDir . '/var/tmp/' . FakeAppMeta::CONTEXT . '/twig'));
     }
 
     /** @return array{0:int, 1:string} */

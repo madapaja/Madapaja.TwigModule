@@ -35,11 +35,11 @@ class ProdOptionProvider implements ProviderInterface
      */
     public function get()
     {
-        $buildDir = $this->appMeta->appDir . '/var/build/' . TwigCompileStep::NAME;
+        $stepDir = $this->appMeta->buildDir . '/' . TwigCompileStep::NAME;
 
         return [
             'debug' => $this->isDebug,
-            'cache' => new CompiledCache(new FilesystemCache($buildDir)),
+            'cache' => new CompiledCache(new FilesystemCache($stepDir)),
         ];
     }
 }
