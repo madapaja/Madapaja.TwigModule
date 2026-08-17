@@ -16,7 +16,7 @@
   "require": {
     "php": "^8.1",
     "bear/resource": "^1.23",
-    "bear/sunday": "^1.7",
+    "bear/sunday": "^1.9@dev",
     "bear/app-meta": "^1.8",
     "twig/twig": "^v3.15",
     "ray/di": "^2.17",
