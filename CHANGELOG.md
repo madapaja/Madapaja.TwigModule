@@ -12,7 +12,8 @@
 - PHP 8.2 or later is required, following `bear/sunday`.
 - The Twig loader is now `RootRelativeLoader`, a `FilesystemLoader` subclass that reports template paths
   relative to the root path. Compiled artifacts no longer embed the absolute path of the machine that
-  compiled them, so a Twig error in production names the deployed template.
+  compiled them, so a Twig error in production names the deployed template. A template root bound outside
+  `appDir` keeps its absolute path, in the cache key as much as in the reported path, and stays unportable.
 
 ### Migration
 
