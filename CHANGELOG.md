@@ -7,6 +7,10 @@
 - `TwigProdModule`: compiles templates in the build phase and serves them read-only from `{appDir}/var/build/twig`.
 - `FilesystemLoader` receives `rootPath`, so cache keys no longer depend on the working directory.
 
+### Changed
+
+- PHP 8.2 or later is required, following `bear/sunday`.
+
 ### Migration
 
 Install `TwigProdModule` in the production context module, the one chained over the application module:
