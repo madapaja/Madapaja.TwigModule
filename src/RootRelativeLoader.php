@@ -7,6 +7,8 @@ namespace Madapaja\TwigModule;
 use Twig\Loader\FilesystemLoader;
 use Twig\Source;
 
+use function str_replace;
+
 /**
  * FilesystemLoader that reports template paths relative to the root path
  *
@@ -21,7 +23,8 @@ class RootRelativeLoader extends FilesystemLoader
         $source = parent::getSourceContext($name);
 
         // getCacheKey() is the same path with the root path prefix stripped, and leaves
-        // a template found outside the root absolute
-        return new Source($source->getCode(), $source->getName(), $this->getCacheKey($name));
+        // a template found outside the root absolute. It spells native (realpath), so
+        // normalize: the path is compiled into artifacts on one OS and read on another
+        return new Source($source->getCode(), $source->getName(), str_replace('\\', '/', $this->getCacheKey($name)));
     }
 }

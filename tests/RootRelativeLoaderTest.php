@@ -6,6 +6,8 @@ namespace Madapaja\TwigModule;
 
 use PHPUnit\Framework\TestCase;
 
+use function str_replace;
+
 class RootRelativeLoaderTest extends TestCase
 {
     public function testSourcePathIsRelativeToRootPath(): void
@@ -23,6 +25,6 @@ class RootRelativeLoaderTest extends TestCase
         $source = (new RootRelativeLoader([__DIR__ . '/Fake/compile'], __DIR__ . '/Fake/preloaded'))
             ->getSourceContext('base.html.twig');
 
-        $this->assertSame(__DIR__ . '/Fake/compile/base.html.twig', $source->getPath());
+        $this->assertSame(str_replace('\\', '/', __DIR__) . '/Fake/compile/base.html.twig', $source->getPath());
     }
 }
