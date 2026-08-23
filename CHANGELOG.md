@@ -5,11 +5,14 @@
 ### Added
 
 - `TwigProdModule`: compiles templates in the build phase and serves them read-only from `{buildDir}/twig`.
+  The sources are still resolved on every load to build the cache key, so an archive carries both.
 - `FilesystemLoader` receives `rootPath`, so cache keys no longer depend on the working directory.
 
 ### Changed
 
 - PHP 8.2 or later is required, following `bear/sunday`.
+- `AppPathProvider` returns only the default roots that exist, so an application whose templates all sit
+  beside their resources no longer needs an empty `var/templates`.
 - The Twig loader is now `RootRelativeLoader`, a `FilesystemLoader` subclass that reports template paths
   relative to the root path. Compiled artifacts no longer embed the absolute path of the machine that
   compiled them, so a Twig error in production names the deployed template. A template root bound outside
@@ -34,3 +37,7 @@ An application that pins `TwigOptions` itself keeps managing its own cache, so t
 
 Serving no longer compiles: a missing artifact raises `Exception\TemplateNotCompiled`. `bear/package` has to
 run the `twig` compile step during `bin/bear.compile`.
+
+An application that pins its own template paths has to derive them from `AbstractAppMeta::$appDir` through a
+provider of its own. A literal path list is bound by instance, so the build machine's absolute paths are
+written into the compiled DI script and the archive looks for directories that are not in it.
