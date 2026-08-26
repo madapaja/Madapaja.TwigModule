@@ -41,7 +41,7 @@ class AppPathProviderTest extends TestCase
 
     public function testRootThatDoesNotExistIsNotReturned(): void
     {
-        $appDir = sys_get_temp_dir() . '/twig-roots-' . uniqid();
+        $appDir = test_path(sys_get_temp_dir() . '/twig-roots-' . uniqid());
         mkdir($appDir . '/src/Resource', 0777, true);
         $provider = new AppPathProvider(new FakeAppMeta($appDir));
 
