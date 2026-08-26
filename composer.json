@@ -16,7 +16,7 @@
   "require": {
     "php": "^8.2",
     "bear/resource": "^1.23",
-    "bear/sunday": "^1.9@dev",
+    "bear/sunday": "^1.9",
     "bear/app-meta": "^1.13",
     "twig/twig": "^v3.15",
     "ray/di": "^2.17",
@@ -69,5 +69,8 @@
   },
   "suggest": {
     "mobiledetect/mobiledetectlib": "MobileTwigModule"
+  },
+  "conflict": {
+    "bear/package": "<1.24"
   }
 }
