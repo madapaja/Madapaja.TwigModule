@@ -19,6 +19,8 @@ use function sys_get_temp_dir;
 use function uniqid;
 use function unlink;
 
+use const PHP_OS_FAMILY;
+
 class TemplateNamesTest extends TestCase
 {
     private string $rootPath;
@@ -97,7 +99,8 @@ class TemplateNamesTest extends TestCase
 
             $this->assertSame(['real/a.twig'], $names);
         } finally {
-            unlink($dir . '/linked');
+            // Windows removes a directory symlink with rmdir(), not unlink()
+            PHP_OS_FAMILY === 'Windows' ? rmdir($dir . '/linked') : unlink($dir . '/linked');
             unlink($dir . '/real/a.twig');
             unlink($outside . '/b.twig');
             rmdir($dir . '/real');
