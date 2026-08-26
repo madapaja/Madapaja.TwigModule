@@ -10,7 +10,14 @@ use Twig\Loader\ArrayLoader;
 use Twig\Loader\ChainLoader;
 use Twig\Loader\FilesystemLoader;
 
+use function file_put_contents;
+use function mkdir;
+use function rmdir;
 use function sort;
+use function symlink;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
 
 class TemplateNamesTest extends TestCase
 {
@@ -70,5 +77,33 @@ class TemplateNamesTest extends TestCase
         $this->expectException(LoaderNotEnumerable::class);
 
         ($this->templateNames)(new ArrayLoader(['page.twig' => 'hello']));
+    }
+
+    public function testSymlinkedDirectoryIsNotEnumerated(): void
+    {
+        $base = sys_get_temp_dir() . '/' . uniqid('twig-names-', true);
+        $dir = $base . '/templates';
+        $outside = $base . '/outside';
+        mkdir($dir . '/real', 0777, true);
+        mkdir($outside);
+        file_put_contents($dir . '/real/a.twig', '');
+        file_put_contents($outside . '/b.twig', '');
+        if (! @symlink($outside, $dir . '/linked')) {
+            $this->markTestSkipped('symlink() is not available');
+        }
+
+        try {
+            $names = ($this->templateNames)(new FilesystemLoader([$dir], $this->rootPath));
+
+            $this->assertSame(['real/a.twig'], $names);
+        } finally {
+            unlink($dir . '/linked');
+            unlink($dir . '/real/a.twig');
+            unlink($outside . '/b.twig');
+            rmdir($dir . '/real');
+            rmdir($dir);
+            rmdir($outside);
+            rmdir($base);
+        }
     }
 }

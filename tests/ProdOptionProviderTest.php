@@ -23,7 +23,7 @@ class ProdOptionProviderTest extends TestCase
             $cache->generateKey('page/index.html.twig', '__TwigTemplate_test'),
         );
         $this->assertFalse($options['debug']);
-        $this->assertArrayNotHasKey('auto_reload', $options);
+        $this->assertFalse($options['auto_reload']);
         $this->assertFalse(is_dir($meta->buildDir));
     }
 }

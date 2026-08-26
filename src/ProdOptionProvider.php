@@ -14,9 +14,10 @@ use Twig\Cache\FilesystemCache;
 /**
  * Twig options that read the build directory instead of writing to the temporary one
  *
- * auto_reload is left unset so that it keeps following debug.
+ * auto_reload is false: the cache holds build artifacts that cannot be rewritten, so a source
+ * newer than its artifact must not turn a debug render into a write.
  *
- * @implements ProviderInterface<array{"debug":bool, "cache":CacheInterface}>
+ * @implements ProviderInterface<array{"debug":bool, "auto_reload":bool, "cache":CacheInterface}>
  */
 class ProdOptionProvider implements ProviderInterface
 {
@@ -39,6 +40,7 @@ class ProdOptionProvider implements ProviderInterface
 
         return [
             'debug' => $this->isDebug,
+            'auto_reload' => false,
             'cache' => new CompiledCache(new FilesystemCache($stepDir)),
         ];
     }
