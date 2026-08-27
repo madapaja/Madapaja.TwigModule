@@ -10,7 +10,9 @@ use Twig\Loader\FilesystemLoader;
 
 use function is_dir;
 use function mkdir;
+use function sys_get_temp_dir;
 use function test_path;
+use function uniqid;
 
 class AppPathProviderTest extends TestCase
 {
@@ -35,5 +37,21 @@ class AppPathProviderTest extends TestCase
         $loader = $renderer->twig->getLoader();
         $this->assertInstanceOf(FilesystemLoader::class, $loader);
         $this->assertSame($paths, $loader->getPaths());
+    }
+
+    public function testRootThatDoesNotExistIsNotReturned(): void
+    {
+        $appDir = test_path(sys_get_temp_dir() . '/twig-roots-' . uniqid());
+        mkdir($appDir . '/src/Resource', 0777, true);
+        $provider = new AppPathProvider(new FakeAppMeta($appDir));
+
+        $this->assertSame([test_path($appDir . '/src/Resource')], $provider->get());
+
+        mkdir($appDir . '/var/templates', 0777, true);
+
+        $this->assertSame([
+            test_path($appDir . '/src/Resource'),
+            test_path($appDir . '/var/templates'),
+        ], $provider->get());
     }
 }
