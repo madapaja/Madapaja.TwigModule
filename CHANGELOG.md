@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- `TwigProdModule` binds `TwigCompileStep` explicitly, so a compile raises no Ray.Di 2.24 just-in-time binding deprecation and passes a ray/compiler that rejects an unbound multibinding target
+
 ## [2.8.0] - 2026-08-27
 
 ### Added

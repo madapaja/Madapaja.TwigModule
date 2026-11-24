@@ -30,5 +30,6 @@ class TwigProdModule extends AbstractModule
         MultiBinder::newInstance($this, CompileStepInterface::class)
             ->addBinding(TwigCompileStep::NAME)
             ->to(TwigCompileStep::class);
+        $this->bind(TwigCompileStep::class);
     }
 }
