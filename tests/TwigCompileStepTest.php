@@ -90,4 +90,12 @@ class TwigCompileStepTest extends TestCase
         $this->assertSame(1, count($steps->steps));
         $this->assertInstanceOf(CompileStepInterface::class, $steps->steps[TwigCompileStep::NAME]);
     }
+
+    /** ray/compiler compiles only bound classes, so the step must not rely on just-in-time binding */
+    public function testStepClassIsBound(): void
+    {
+        $bindings = (new TwigProdModule())->getContainer()->getContainer();
+
+        $this->assertArrayHasKey(TwigCompileStep::class . '-', $bindings);
+    }
 }
